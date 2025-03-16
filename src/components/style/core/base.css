@@ -1,0 +1,76 @@
+/* =======================================================
+   🏗️ Base Styles for Overlay Library
+   - Provides default layout & structure
+   - Ensures consistent positioning for overlays
+   - Establishes a scalable foundation for spacing & alignment
+========================================================== */
+
+/* 🌍 Global Styles for the Overlay Library */
+:where(.overlay-library) {
+    font-family: var(--overlay-font-family);
+    line-height: 1.5;
+    font-size: var(--overlay-font-size-md);
+    color: var(--overlay-text-color);
+}
+
+/* 🎯 Default Layout for Overlay Components */
+:where(.overlay-library .overlay-container) {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 90vw;
+    z-index: var(--overlay-z-index);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--overlay-gap-md);
+    padding: var(--overlay-padding-md);
+}
+
+/* 📏 General Spacing & Alignment */
+:where(.overlay-library .overlay-flex) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--overlay-gap-sm);
+}
+
+:where(.overlay-library .overlay-grid) {
+    display: grid;
+    gap: var(--overlay-gap-md);
+}
+
+/* 🎭 Visibility Utilities */
+:where(.overlay-library .overlay-hidden) {
+    display: none !important;
+}
+
+:where(.overlay-library .overlay-visible) {
+    display: block !important;
+}
+
+/* 🚀 Overflow Handling */
+:where(.overlay-library .overlay-scroll) {
+    overflow: auto;
+    max-height: 80vh;
+}
+
+/* 🛑 Focus & Interaction */
+:where(.overlay-library button, .overlay-library input, .overlay-library select) {
+    cursor: pointer;
+}
+
+:where(.overlay-library button:focus, .overlay-library input:focus) {
+    outline: 2px solid var(--overlay-primary-color);
+    outline-offset: 2px;
+}
+
+/* 🖥️ Responsive Behavior */
+@media (max-width: 768px) {
+    :where(.overlay-library .overlay-container) {
+        width: 95vw;
+        padding: var(--overlay-padding-sm);
+    }
+}

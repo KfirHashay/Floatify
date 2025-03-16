@@ -1,0 +1,66 @@
+/* =======================================================
+   🎨 Overlay Library Design Tokens
+   - Defines global CSS variables for colors, spacing, shadows, etc.
+   - Supports theming (light/dark modes)
+   - Provides a scalable foundation for UI consistency
+========================================================== */
+
+/* Root: Default (Light Mode) */
+:root {
+    /* Primary Colors */
+    --overlay-primary-color: #007aff;
+    --overlay-secondary-color: #0051cb;
+    --overlay-text-color: #1a1a1a;
+    --overlay-bg-color: #ffffff;
+
+    /* Dark Mode Colors */
+    --overlay-dark-primary: #0a84ff;
+    --overlay-dark-secondary: #0055ff;
+    --overlay-dark-text: #ffffff;
+    --overlay-dark-bg: #000000;
+
+    /* Typography */
+    --overlay-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --overlay-font-size-sm: 14px;
+    --overlay-font-size-md: 16px;
+    --overlay-font-size-lg: 18px;
+    --overlay-font-weight-light: 300;
+    --overlay-font-weight-normal: 400;
+    --overlay-font-weight-bold: 600;
+
+    /* Spacing & Layout */
+    --overlay-padding-sm: 8px;
+    --overlay-padding-md: 12px;
+    --overlay-padding-lg: 16px;
+    --overlay-gap-sm: 4px;
+    --overlay-gap-md: 8px;
+    --overlay-gap-lg: 12px;
+    --overlay-border-radius: 12px;
+
+    /* Shadows */
+    --overlay-shadow-sm: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    --overlay-shadow-md: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    --overlay-shadow-lg: 0px 6px 20px rgba(0, 0, 0, 0.2);
+
+    /* Borders */
+    --overlay-border-color: rgba(0, 0, 0, 0.1);
+    --overlay-border-width: 1px;
+
+    /* Animations */
+    --overlay-transition: 0.3s ease-in-out;
+    --overlay-scale-hover: 1.02;
+
+    /* Z-index */
+    --overlay-z-index: 1000;
+}
+
+/* 🌙 Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --overlay-primary-color: var(--overlay-dark-primary);
+        --overlay-secondary-color: var(--overlay-dark-secondary);
+        --overlay-text-color: var(--overlay-dark-text);
+        --overlay-bg-color: var(--overlay-dark-bg);
+        --overlay-border-color: rgba(255, 255, 255, 0.1);
+    }
+}

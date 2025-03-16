@@ -1,0 +1,1 @@
+{"version":3,"file":"overlayAggregatorState.d.ts","sourceRoot":"","sources":["../../../../src/components/state/types/overlayAggregatorState.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AAEH,OAAO,EAAE,OAAO,EAAE,MAAM,gBAAgB,CAAC;AAEzC,MAAM,WAAW,sBAAsB;IACnC;;OAEG;IACH,QAAQ,EAAE,MAAM,CAAC,MAAM,EAAE,OAAO,CAAC,CAAC;IAElC;;OAEG;IACH,eAAe,EAAE,MAAM,GAAG,IAAI,CAAC;CAOlC"}

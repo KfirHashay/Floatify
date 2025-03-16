@@ -1,0 +1,90 @@
+/* =======================================================
+   🎨 Overlay Theming (Dark & Light Mode)
+   - Ensures proper contrast & styling for both themes
+========================================================== */
+
+:root {
+    /* 🌙 Dark Mode (Default) */
+    --di-background: rgba(18, 18, 18, 0.75);
+    --di-background-solid: rgb(18, 18, 18);
+    --di-background-rgb: 18, 18, 18;
+    --di-text: rgba(255, 255, 255, 0.97);
+    --di-shadow: rgba(0, 0, 0, 0.35);
+    --di-focus-ring: rgba(255, 255, 255, 0.7);
+
+    /* 🪟 Glass Effect */
+    --di-glass-opacity: 0.75;
+    --di-glass-blur: 16px;
+    --di-glass-border: rgba(255, 255, 255, 0.1);
+    --di-glass-shadow-primary: rgba(0, 0, 0, 0.35);
+    --di-glass-shadow-secondary: rgba(0, 0, 0, 0.25);
+
+    /* 🎯 Interactions */
+    --di-hover-scale: 1.03;
+    --di-active-scale: 0.97;
+    --di-hover-brightness: 1.1;
+    --di-active-brightness: 0.9;
+
+    /* 🔹 Accent Colors */
+    --di-accent: #0a84ff;
+    --di-accent-gradient: linear-gradient(120deg, #0a84ff, #0066cc);
+
+    /* 🔥 State Colors */
+    --di-alert-bg: rgba(255, 69, 58, 0.97);
+    --di-alert-rgb: 255, 69, 58;
+    --di-success-bg: rgba(48, 209, 88, 0.97);
+    --di-success-rgb: 48, 209, 88;
+    --di-warning-bg: rgba(255, 214, 10, 0.97);
+    --di-warning-rgb: 255, 214, 10;
+    --di-error-bg: rgba(255, 69, 58, 0.97);
+    --di-error-rgb: 255, 69, 58;
+}
+
+/* 🔆 Light Theme Adjustments */
+[data-theme='light'] {
+    --di-background: rgba(250, 250, 250, 0.75);
+    --di-background-solid: rgb(250, 250, 250);
+    --di-background-rgb: 250, 250, 250;
+    --di-text: rgba(10, 10, 10, 0.97);
+    --di-shadow: rgba(0, 0, 0, 0.2);
+    --di-focus-ring: rgba(0, 0, 0, 0.3);
+
+    /* 🪟 Glass effect adjustments */
+    --di-glass-border: rgba(0, 0, 0, 0.1);
+    --di-glass-shadow-primary: rgba(0, 0, 0, 0.2);
+    --di-glass-shadow-secondary: rgba(0, 0, 0, 0.15);
+}
+
+/* 🌗 Theme Transition */
+html {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* 🌙 Dark Theme Overrides */
+.overlay-styled .overlay-card {
+    background-color: var(--di-background);
+    color: var(--di-text);
+    box-shadow: 0 6px 16px var(--di-shadow);
+    border: 1px solid var(--di-glass-border);
+    backdrop-filter: blur(var(--di-glass-blur));
+    -webkit-backdrop-filter: blur(var(--di-glass-blur));
+}
+
+/* 🔆 Light Theme Overrides */
+[data-theme='light'] .overlay-styled .overlay-card {
+    background-color: var(--di-background);
+    color: var(--di-text);
+    box-shadow: 0 4px 12px var(--di-shadow);
+    border: 1px solid var(--di-glass-border);
+}
+
+/* 🔹 Focus State Enhancements */
+.overlay-card:focus-visible {
+    outline: 2px solid var(--di-focus-ring);
+    outline-offset: 3px;
+}
+
+/* ✅ Dark & Light Mode Transitions */
+.overlay-styled .overlay-card {
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}

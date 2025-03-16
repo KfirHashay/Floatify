@@ -1,0 +1,59 @@
+/* =======================================================
+   🎮 Overlay Actions (Styled)
+   - Styles close, next, and previous buttons
+   - Adds hover & focus effects
+========================================================== */
+
+.overlay-styled .overlay-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--overlay-gap-md);
+}
+
+/* Close Button */
+.overlay-styled .overlay-card-remove {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: var(--overlay-padding-sm);
+    color: var(--overlay-text-color);
+    transition: var(--overlay-transition);
+}
+
+.overlay-styled .overlay-card-remove:hover {
+    opacity: 0.7;
+}
+
+/* Swipe Buttons */
+.overlay-styled .overlay-card-swipe-prev,
+.overlay-styled .overlay-card-swipe-next {
+    background: var(--overlay-primary-color);
+    color: white;
+    font-size: var(--overlay-font-size-md);
+    padding: var(--overlay-padding-sm) var(--overlay-padding-md);
+    border-radius: var(--overlay-border-radius);
+    cursor: pointer;
+    transition: var(--overlay-transition);
+}
+
+.overlay-styled .overlay-card-swipe-prev:hover,
+.overlay-styled .overlay-card-swipe-next:hover {
+    background: var(--overlay-secondary-color);
+}
+
+.overlay-styled .overlay-card-swipe-prev:disabled,
+.overlay-styled .overlay-card-swipe-next:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Swipe Button Positioning */
+.overlay-styled .overlay-card-swipe-prev {
+    margin-right: auto;
+}
+
+.overlay-styled .overlay-card-swipe-next {
+    margin-left: auto;
+}

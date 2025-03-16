@@ -1,0 +1,1 @@
+{"version":3,"file":"Floatify.d.ts","sourceRoot":"","sources":["../../../src/components/core/Floatify.tsx"],"names":[],"mappings":"AAAA,OAAO,KAA8B,MAAM,OAAO,CAAC;AACnD,OAAO,oBAAoB,CAAC;AAE5B,UAAU,aAAa;IACnB,OAAO,EAAE,MAAM,CAAC;IAChB,QAAQ,CAAC,EAAE,MAAM,CAAC;CACrB;AAED,QAAA,MAAM,QAAQ,EAAE,KAAK,CAAC,EAAE,CAAC,aAAa,CAUrC,CAAC;AAEF,eAAe,QAAQ,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"OverlayCard.d.ts","sourceRoot":"","sources":["../../../../src/components/core/card/OverlayCard.tsx"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,WAAW,IAAI,eAAe,EAAE,MAAM,mBAAmB,CAAC;AAExE,UAAU,gBAAgB;IACtB,SAAS,EAAE,MAAM,CAAC;IAClB,IAAI,EAAE,eAAe,CAAC;CACzB;AAED,wBAAgB,WAAW,CAAC,EAAE,SAAS,EAAE,IAAI,EAAE,EAAE,gBAAgB,kDAsFhE"}
