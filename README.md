@@ -1,22 +1,67 @@
 # Floatify
-flexible notification system
 
-## Running the example locally
+A flexible overlay and notification library for React.
 
-1. From the repository root, build the library so the `dist` folder is generated:
-   ```bash
-   npm run build
-   ```
-2. In `example/package.json`, add a dependency pointing to the local package:
-   ```json
-   "floatify": "file:.."
-   ```
-3. Install the example dependencies which links the local build:
-   ```bash
-   cd example
-   npm install
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
+## Overview
+
+Floatify helps you display transient UI elements like toasts, alerts or walkthrough cards without cluttering your component tree. It manages multiple overlay channels through a central **AggregatorProvider** so that cards can be queued, swiped or dismissed from anywhere in your app.
+
+## Key Features
+
+- **Aggregator provider** for global overlay state management and concurrency modes.
+- **Overlay portal** that renders active cards via React Portal.
+- **Touch gestures** to swipe cards forward or backward and dismiss them.
+- **Built‑in theming** with dark and light styles that can be extended.
+
+## Installation
+
+The library is published to npm as `floatify`.
+
+```bash
+npm install floatify@^1.0.0
+```
+
+### Linking the local build
+
+If you want to play with the source locally, build the package and use the example app:
+
+```bash
+# from the project root
+npm run build
+cd example
+npm install       # installs and links "floatify": "file:.."
+npm run dev
+```
+
+## Quick Start
+
+```tsx
+import { Floatify, useAggregator } from 'floatify';
+
+function App() {
+  const { registerChannel, addCard } = useAggregator();
+
+  useEffect(() => {
+    registerChannel('alerts');
+    addCard('alerts', { id: 'welcome', title: 'Hello', content: 'Welcome!' });
+  }, []);
+
+  return (
+    <Floatify concurrencyMode="single">
+      {/* rest of your app */}
+    </Floatify>
+  );
+}
+```
+
+## Running the Example Project
+
+The `example` folder contains a small React app that demonstrates Floatify in action. After running the steps in the *Linking the local build* section above, visit `http://localhost:5173` to see overlays appear on timed intervals.
+
+## Contributing
+
+Pull requests and issues are welcome! The project is released under the ISC license as defined in `package.json`. Please open issues or feature requests in the repository's issue tracker.
+
+## Community & Support
+
+Check the project repository on GitHub for documentation updates and to report bugs or suggest enhancements.
