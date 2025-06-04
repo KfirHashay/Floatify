@@ -1204,5 +1204,9 @@ function AggregatorProvider({ children, concurrencyMode = 'single', autoDismiss 
     return (jsxRuntimeExports.jsxs(AggregatorContext.Provider, { value: contextValue, children: [children, jsxRuntimeExports.jsx(OverlayPortal, { portalRoot: portalRoot, concurrencyMode: concurrencyMode, unstyled: unstyled, autoDismiss: autoDismiss })] }));
 }
 
-exports.Floatify = AggregatorProvider;
+function Floatify(props) {
+    return jsxRuntimeExports.jsx(AggregatorProvider, { ...props });
+}
+
+exports.Floatify = Floatify;
 exports.useAggregator = useAggregator;

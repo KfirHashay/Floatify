@@ -1,9 +1,5 @@
-import React from 'react';
-import '../style/index.css';
-interface FloatifyProps {
-    message: string;
-    duration?: number;
-}
-declare const Floatify: React.FC<FloatifyProps>;
-export default Floatify;
+import { type AggregatorProviderProps } from '../state/context/aggregatorProvider';
+export type FloatifyProps = AggregatorProviderProps;
+export { default as AggregatorProvider } from '../state/context/aggregatorProvider';
+export default function Floatify(props: FloatifyProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=Floatify.d.ts.map
