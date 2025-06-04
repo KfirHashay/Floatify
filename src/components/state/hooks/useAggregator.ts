@@ -10,7 +10,9 @@
  */
 
 import { useContext, useCallback } from 'react';
-import { AggregatorContext } from '../context';
+// Importing the context directly avoids pulling in the provider
+// which would create a circular dependency during the build.
+import { AggregatorContext } from '../context/aggregatorContext';
 import { OverlayCard, Channel, OverlayState } from '../types';
 
 /**
