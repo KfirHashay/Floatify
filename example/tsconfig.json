@@ -14,7 +14,11 @@
         "skipLibCheck": true, // Speeds up compilation by skipping library type checking
         "jsx": "react-jsx", // Enables JSX support (for React 18)
         "lib": ["ESNext", "DOM"], // Supports latest JavaScript features & DOM APIs
-        "types": ["node"] // Ensures Node.js module types are available
+        "types": ["node"], // Ensures Node.js module types are available
+        "baseUrl": ".", // Needed for path alias to work
+        "paths": {
+            "floatify": ["../src"]
+        }
     },
     "include": ["src"], // Only compile files in `src/`
     "exclude": ["node_modules", "dist", "example", "tests"] // Ignore these directories
