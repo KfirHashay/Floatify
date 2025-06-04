@@ -4,6 +4,7 @@
  * Represents a single visual card or message
  * in the overlay system's queue. Replaces 'ToastItem'.
  */
+import type { ReactNode } from 'react';
 export interface OverlayCard {
     /**
      * A unique identifier, e.g., a UUID or timestamp-based string.
@@ -25,5 +26,9 @@ export interface OverlayCard {
      * Optional timestamp or numeric marker for sorting/analytics.
      */
     timestamp?: number;
+    /**
+     * Optional visual icon element to display with the card.
+     */
+    icon?: ReactNode;
 }
 //# sourceMappingURL=overlayCardTypes.d.ts.map
