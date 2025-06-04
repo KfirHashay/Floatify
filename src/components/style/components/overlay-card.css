@@ -75,3 +75,12 @@
 .overlay-styled .overlay-card:active {
     transform: scale(var(--di-active-scale));
 }
+
+/* 🔹 Swipe Animations */
+.overlay-styled .overlay-card--swipe-left {
+    animation: overlay-swipe-left 200ms ease-out forwards;
+}
+
+.overlay-styled .overlay-card--swipe-right {
+    animation: overlay-swipe-right 200ms ease-out forwards;
+}

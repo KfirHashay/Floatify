@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import useAggregator from '../../state/hooks/useAggregator';
 import type { OverlayCard as OverlayCardType } from '../../state/types';
 
@@ -8,7 +8,18 @@ interface OverlayCardProps {
 }
 
 export function OverlayCard({ channelId, card }: OverlayCardProps) {
-    const { state, updateChannelState, removeCard, swipeNextCard, swipePrevCard } = useAggregator();
+    const {
+        state,
+        updateChannelState,
+        removeCard,
+        swipeNextCard,
+        swipePrevCard,
+    } = useAggregator();
+
+    const touchStartX = useRef<number | null>(null);
+    const touchDeltaX = useRef(0);
+    const swipeTriggered = useRef(false);
+    const [direction, setDirection] = useState<'next' | 'prev' | null>(null);
 
     const channel = state.channels[channelId];
     if (!channel) return null;
@@ -17,13 +28,57 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
 
     // 🔹 Toggle expand/collapse on click
     const handleToggle = useCallback(() => {
+        if (swipeTriggered.current) {
+            swipeTriggered.current = false;
+            return;
+        }
         updateChannelState(channelId, isExpanded ? 'collapsed' : 'expanded');
     }, [channelId, isExpanded, updateChannelState]);
 
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+        touchDeltaX.current = 0;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (touchStartX.current !== null) {
+            touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
+        }
+    };
+
+    const handleTouchEnd = () => {
+        if (touchStartX.current === null) return;
+        const deltaX = touchDeltaX.current;
+        const THRESHOLD = 50;
+        if (Math.abs(deltaX) >= THRESHOLD) {
+            swipeTriggered.current = true;
+            if (deltaX < 0) {
+                setDirection('next');
+                swipeNextCard(channelId);
+            } else {
+                setDirection('prev');
+                swipePrevCard(channelId);
+            }
+            setTimeout(() => setDirection(null), 200);
+        }
+        touchStartX.current = null;
+        touchDeltaX.current = 0;
+    };
+
+    const directionClass =
+        direction === 'next'
+            ? 'overlay-card--swipe-left'
+            : direction === 'prev'
+            ? 'overlay-card--swipe-right'
+            : '';
+
     return (
         <div
-            className={`overlay-card ${isExpanded ? 'overlay-card--expanded' : 'overlay-card--collapsed'}`}
-            onClick={handleToggle} // ✅ Toggle expand/collapse on tap
+            className={`overlay-card ${isExpanded ? 'overlay-card--expanded' : 'overlay-card--collapsed'} ${directionClass}`}
+            onClick={handleToggle}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
             role="button"
             tabIndex={0}
             aria-expanded={isExpanded}
