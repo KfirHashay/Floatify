@@ -43,15 +43,25 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
     const activeChannels = Object.values(state.channels).filter((ch) => ch.cards.length > 0);
     if (activeChannels.length === 0) return null;
 
+    const overlays = activeChannels
+        .map((channel) => {
+            const activeCard = getActiveCard(channel.channelId);
+            return activeCard ? (
+                <DefaultOverlay
+                    key={channel.channelId}
+                    channelId={channel.channelId}
+                    cardId={activeCard.id}
+                />
+            ) : null;
+        })
+        .filter(Boolean) as JSX.Element[];
+
+    if (overlays.length === 0) return null;
+
     return ReactDOM.createPortal(
         <div className={overlayClass}>
             <div role="status" aria-live="polite" className="overlay-multiple-container">
-                {activeChannels.map((channel) => {
-                    const activeCard = getActiveCard(channel.channelId);
-                    return activeCard ? (
-                        <DefaultOverlay key={channel.channelId} channelId={channel.channelId} cardId={activeCard.id} />
-                    ) : null;
-                })}
+                {overlays}
             </div>
         </div>,
         root
