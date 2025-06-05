@@ -18,7 +18,7 @@
     cursor: pointer;
     font-size: 18px;
     padding: var(--overlay-padding-sm);
-    color: var(--overlay-text-color);
+    color: var(--di-text);
     transition: var(--overlay-transition);
 }
 
@@ -30,10 +30,10 @@
 .overlay-styled .overlay-card-swipe-prev,
 .overlay-styled .overlay-card-swipe-next {
     background: var(--overlay-primary-color);
-    color: white;
+    color: var(--di-text);
     font-size: var(--overlay-font-size-md);
     padding: var(--overlay-padding-sm) var(--overlay-padding-md);
-    border-radius: var(--overlay-border-radius);
+    border-radius: var(--di-border-radius);
     cursor: pointer;
     transition: var(--overlay-transition);
 }

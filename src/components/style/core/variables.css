@@ -36,6 +36,9 @@
     --overlay-gap-md: 8px;
     --overlay-gap-lg: 12px;
     --overlay-border-radius: 12px;
+    /* Dynamic Island Defaults */
+    --di-border-radius: var(--overlay-border-radius);
+    --di-glass-opacity: 0.75;
 
     /* Shadows */
     --overlay-shadow-sm: 0px 2px 5px rgba(0, 0, 0, 0.1);
