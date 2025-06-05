@@ -54,6 +54,20 @@ function App() {
 }
 ```
 
+## Debug Mode
+
+Enable debug logging by passing the `debug` prop to `Floatify` or
+`AggregatorProvider`:
+
+```tsx
+<Floatify debug>
+  {/* rest of your app */}
+</Floatify>
+```
+
+The console will group each dispatched action with the previous state,
+the action object and the next state, helping you trace overlay updates.
+
 ## Running the Example Project
 
 The `example` folder contains a small React app that demonstrates Floatify in action. After running the steps in the *Linking the local build* section above, visit `http://localhost:5173` to see overlays appear on timed intervals.
