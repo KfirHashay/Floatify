@@ -69,7 +69,7 @@ function DefaultOverlay({ channelId, cardId }: { channelId: string; cardId: stri
 
     return (
         <div className="overlay-container">
-            <div className="overlay-portal">
+            <div className="overlay-portal" data-state={channel.state}>
                 <DefaultCardUI
                     channelId={channelId}
                     card={card}

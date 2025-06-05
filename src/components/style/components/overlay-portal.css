@@ -28,6 +28,17 @@
         box-shadow 0.3s var(--di-transition-timing), border-radius 0.3s var(--di-transition-timing);
 }
 
+/* State-based sizing to mirror the overlay card */
+.overlay-styled .overlay-portal[data-state='expanded'] {
+    width: var(--overlay-expanded-width, 350px);
+    height: var(--overlay-expanded-height, 120px);
+}
+
+.overlay-styled .overlay-portal[data-state='collapsed'] {
+    width: var(--overlay-collapsed-width, 120px);
+    height: var(--overlay-collapsed-height, 36px);
+}
+
 /* Focus ring for accessibility */
 .overlay-styled .overlay-portal:focus-visible {
     outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));
