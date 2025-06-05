@@ -6,11 +6,18 @@
 
 /* 🔹 Expand Animation */
 @keyframes overlay-expand {
-    from {
+    0% {
         transform: translateX(-50%) scale(0.95);
         opacity: 0.8;
     }
-    to {
+    60% {
+        transform: translateX(-50%) scale(1.05);
+        opacity: 1;
+    }
+    80% {
+        transform: translateX(-50%) scale(0.98);
+    }
+    100% {
         transform: translateX(-50%) scale(1);
         opacity: 1;
     }
@@ -18,10 +25,13 @@
 
 /* 🔹 Collapse Animation */
 @keyframes overlay-collapse {
-    from {
+    0% {
         transform: translateX(-50%) scale(1);
     }
-    to {
+    30% {
+        transform: translateX(-50%) scale(1.02);
+    }
+    100% {
         transform: translateX(-50%) scale(0.95);
     }
 }

@@ -22,7 +22,9 @@
     user-select: none;
 
     transition: width var(--di-duration-normal) var(--di-spring-timing), height var(--di-duration-normal) var(--di-spring-timing),
-        transform var(--di-duration-fast) var(--di-transition-timing), opacity var(--di-duration-fast) var(--di-transition-timing);
+        transform var(--di-duration-fast) var(--di-transition-timing), opacity var(--di-duration-fast) var(--di-transition-timing),
+        box-shadow 0.3s var(--di-transition-timing), background-color 0.15s ease-in-out,
+        backdrop-filter 0.2s ease-in-out;
     will-change: width, height, transform, opacity;
 }
 
