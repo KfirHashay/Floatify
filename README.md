@@ -27,6 +27,7 @@ If you want to play with the source locally, build the package and use the examp
 
 ```bash
 # from the project root
+npm install
 npm run build
 cd example
 npm install       # installs and links "floatify": "file:.."
@@ -42,12 +43,18 @@ function App() {
   const { registerChannel, addCard } = useAggregator();
 
   useEffect(() => {
-    registerChannel('alerts');
+    registerChannel('alerts', 1);
+    registerChannel('updates', 1);
     addCard('alerts', { id: 'welcome', title: 'Hello', content: 'Welcome!' });
+    addCard('updates', {
+      id: 'news',
+      title: 'FYI',
+      content: 'Another channel',
+    });
   }, []);
 
   return (
-    <Floatify concurrencyMode="single">
+    <Floatify concurrencyMode="multiple">
       {/* rest of your app */}
     </Floatify>
   );

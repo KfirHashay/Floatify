@@ -75,3 +75,19 @@
 .overlay-styled .overlay-container[data-direction='prev'] {
     animation: slide-right 200ms ease-out forwards;
 }
+
+/* Layout container when multiple overlays are rendered */
+.overlay-styled .overlay-multiple-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--overlay-gap-lg, 12px);
+}
+
+@media (max-width: 480px) {
+    .overlay-styled .overlay-multiple-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}

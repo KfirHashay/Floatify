@@ -19,8 +19,9 @@ function AppContent() {
 
     // 2) On mount, set up a test channel and schedule timed actions
     useEffect(() => {
-        // Register a channel (priority=1)
+        // Register a couple of channels (priority=1)
         registerChannel('testChannel', 1);
+        registerChannel('infoChannel', 1);
 
         // After 5 seconds, add a first card
         const timer1 = setTimeout(() => {
@@ -43,6 +44,16 @@ function AppContent() {
             console.log('Added card-2 to testChannel');
         }, 8000);
 
+        // After 6 seconds, add a card to the secondary channel
+        const timerInfo = setTimeout(() => {
+            addCard('infoChannel', {
+                id: 'info-1',
+                title: 'Secondary Channel',
+                content: 'Card from another channel',
+            });
+            console.log('Added info-1 to infoChannel');
+        }, 6000);
+
         // After 13 seconds, remove the first card
         const timer3 = setTimeout(() => {
             removeCard('testChannel', 'card-1');
@@ -52,6 +63,7 @@ function AppContent() {
         return () => {
             clearTimeout(timer1);
             clearTimeout(timer2);
+            clearTimeout(timerInfo);
             clearTimeout(timer3);
         };
     }, [registerChannel, addCard, removeCard]);
@@ -130,10 +142,10 @@ function AppContent() {
 // Main App wraps everything in the aggregator provider
 function App() {
     return (
-        <Floatify concurrencyMode="single" debug>
+        <Floatify concurrencyMode="multiple" debug>
             <AppContent />
             {/* If you have a portal component, add it here:
-            <OverlayPortal concurrencyMode="single" />
+            <OverlayPortal concurrencyMode="multiple" />
         */}
         </Floatify>
     );
