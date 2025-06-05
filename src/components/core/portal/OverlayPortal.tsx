@@ -39,18 +39,28 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
 
     // 🔹 MULTIPLE CONCURRENCY MODE: Display multiple active overlays
     const activeChannels = Object.values(state.channels).filter((ch) => ch.cards.length > 0);
+    // Nothing to render if no channel currently holds cards
     if (activeChannels.length === 0) return null;
+
+    const overlays = activeChannels
+        .map((channel) => {
+            const activeCard = getActiveCard(channel.channelId);
+            return activeCard ? (
+                <DefaultOverlay
+                    key={channel.channelId}
+                    channelId={channel.channelId}
+                    cardId={activeCard.id}
+                />
+            ) : null;
+        })
+        .filter(Boolean);
+
+    // Guard against channels that have no active cards
+    if (overlays.length === 0) return null;
 
     return ReactDOM.createPortal(
         <div className={overlayClass}>
-            <div className="overlay-multiple-container">
-                {activeChannels.map((channel) => {
-                    const activeCard = getActiveCard(channel.channelId);
-                    return activeCard ? (
-                        <DefaultOverlay key={channel.channelId} channelId={channel.channelId} cardId={activeCard.id} />
-                    ) : null;
-                })}
-            </div>
+            <div className="overlay-multiple-container">{overlays}</div>
         </div>,
         root
     );
