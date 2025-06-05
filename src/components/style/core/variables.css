@@ -61,6 +61,12 @@
     --di-transition-timing: ease-in-out;
     --di-spring-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
 
+    /* Shared transition for overlay components */
+    --di-overlay-transition: width var(--di-duration-normal) var(--di-transition-timing),
+        height var(--di-duration-normal) var(--di-transition-timing),
+        transform var(--di-duration-fast) var(--di-transition-timing),
+        opacity var(--di-duration-fast) var(--di-transition-timing);
+
     /* Animations */
     --overlay-transition: 0.3s ease-in-out;
     --overlay-scale-hover: 1.02;

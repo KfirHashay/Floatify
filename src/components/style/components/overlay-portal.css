@@ -22,8 +22,7 @@
     backdrop-filter: blur(var(--di-glass-blur));
     -webkit-backdrop-filter: blur(var(--di-glass-blur));
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    transition: width 0.3s var(--di-transition-timing), height 0.3s var(--di-transition-timing), transform 0.3s var(--di-transition-timing),
-        opacity 0.2s ease-out, visibility 0s linear, background-color 0.15s ease-in-out, backdrop-filter 0.15s ease-in-out,
+    transition: var(--di-overlay-transition), visibility 0s linear, background-color 0.15s ease-in-out, backdrop-filter 0.15s ease-in-out,
         box-shadow 0.3s var(--di-transition-timing), border-radius 0.3s var(--di-transition-timing);
 }
 
@@ -40,10 +39,20 @@
     border-radius: calc(var(--overlay-collapsed-height) / 2);
 }
 
+/* Hover & Press Effects */
+.overlay-styled .overlay-portal:hover {
+    transform: scale(var(--di-hover-scale));
+}
+
+.overlay-styled .overlay-portal:active {
+    transform: scale(var(--di-active-scale));
+}
+
 /* Focus ring for accessibility */
 .overlay-styled .overlay-portal:focus-visible {
     outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));
     outline-offset: 2px;
+    transform: scale(var(--di-hover-scale));
 }
 
 /* Smooth content area inside the overlay */

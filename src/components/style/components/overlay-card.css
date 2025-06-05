@@ -24,8 +24,7 @@
     user-select: none;
 
     transform-origin: center;
-    transition: width var(--di-duration-normal) var(--di-transition-timing), height var(--di-duration-normal) var(--di-transition-timing),
-        transform var(--di-duration-fast) var(--di-transition-timing), opacity var(--di-duration-fast) var(--di-transition-timing),
+    transition: var(--di-overlay-transition),
         box-shadow 0.3s var(--di-transition-timing), background-color 0.15s ease-in-out,
         backdrop-filter 0.2s ease-in-out;
     will-change: width, height, transform, opacity;
@@ -82,6 +81,10 @@
 
 .overlay-styled .overlay-card:active {
     transform: scale(var(--di-active-scale));
+}
+
+.overlay-styled .overlay-card:focus-visible {
+    transform: scale(var(--di-hover-scale));
 }
 
 /* 🔹 Swipe Animations */
