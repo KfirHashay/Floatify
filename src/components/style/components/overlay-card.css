@@ -4,14 +4,17 @@
    - Ensures accessibility, responsiveness, and animations
 ========================================================== */
 
+
 .overlay-styled .overlay-card {
-    background-color: var(--di-background);
+    background-color: rgba(var(--di-background-rgb), var(--di-glass-opacity));
     color: var(--di-text);
     font-size: var(--overlay-font-size-md);
     padding: var(--overlay-padding-md);
-    border-radius: var(--overlay-border-radius);
+    border-radius: var(--di-border-radius);
     box-shadow: var(--di-shadow);
     border: var(--di-glass-border) solid 1px;
+    backdrop-filter: blur(var(--di-glass-blur));
+    -webkit-backdrop-filter: blur(var(--di-glass-blur));
     width: fit-content;
     max-width: 350px;
     display: flex;
@@ -39,6 +42,7 @@
     overflow: hidden;
     padding: var(--overlay-padding-sm);
     animation: overlay-collapse var(--di-duration-normal) var(--di-transition-timing);
+    border-radius: calc(var(--overlay-collapsed-height) / 2);
 }
 
 /* 🔹 Expanded Mode */
@@ -48,6 +52,7 @@
     padding: var(--overlay-padding-lg);
     justify-content: space-between;
     animation: overlay-expand var(--di-duration-normal) var(--di-transition-timing);
+    border-radius: var(--di-border-radius);
 }
 
 /* 🔹 Title Styling */

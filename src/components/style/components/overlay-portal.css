@@ -10,17 +10,17 @@
     transform: none;
     width: var(--overlay-collapsed-width);
     height: var(--overlay-collapsed-height);
-    color: var(--di-text, #fff);
+    color: var(--di-text);
 
-    border-radius: var(--overlay-border-radius);
+    border-radius: calc(var(--overlay-collapsed-height) / 2);
     overflow: hidden;
     user-select: none;
     cursor: pointer;
     z-index: var(--di-z-index, 9999);
     will-change: transform, width, height, opacity, visibility;
-    background-color: rgba(var(--di-background-rgb, 18, 18, 18), var(--di-glass-opacity, 0.75));
-    backdrop-filter: blur(var(--di-glass-blur, 16px));
-    -webkit-backdrop-filter: blur(var(--di-glass-blur, 16px));
+    background-color: rgba(var(--di-background-rgb), var(--di-glass-opacity));
+    backdrop-filter: blur(var(--di-glass-blur));
+    -webkit-backdrop-filter: blur(var(--di-glass-blur));
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     transition: width 0.3s var(--di-transition-timing), height 0.3s var(--di-transition-timing), transform 0.3s var(--di-transition-timing),
         opacity 0.2s ease-out, visibility 0s linear, background-color 0.15s ease-in-out, backdrop-filter 0.15s ease-in-out,
@@ -31,11 +31,13 @@
 .overlay-styled .overlay-portal[data-state='expanded'] {
     width: var(--overlay-expanded-width, 350px);
     height: var(--overlay-expanded-height, 120px);
+    border-radius: var(--di-border-radius);
 }
 
 .overlay-styled .overlay-portal[data-state='collapsed'] {
     width: var(--overlay-collapsed-width, 120px);
     height: var(--overlay-collapsed-height, 36px);
+    border-radius: calc(var(--overlay-collapsed-height) / 2);
 }
 
 /* Focus ring for accessibility */
