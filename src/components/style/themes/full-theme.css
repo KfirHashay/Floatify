@@ -70,6 +70,18 @@ html {
     -webkit-backdrop-filter: blur(var(--di-glass-blur));
 }
 
+/* 🌟 Portal Styling */
+.overlay-styled .overlay-portal {
+    background-color: var(--di-background);
+    color: var(--di-text);
+    box-shadow: 0 8px 24px var(--di-shadow);
+    border: 1px solid var(--di-glass-border);
+    backdrop-filter: blur(var(--di-glass-blur));
+    -webkit-backdrop-filter: blur(var(--di-glass-blur));
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+        border-color 0.2s ease-in-out;
+}
+
 /* 🔆 Light Theme Overrides */
 [data-theme='light'] .overlay-styled .overlay-card {
     background-color: var(--di-background);
