@@ -33,7 +33,9 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
 
         return ReactDOM.createPortal(
             <div className={overlayClass}>
-                <DefaultOverlay channelId={activeChannel.channelId} cardId={activeCard.id} />
+                <div role="status" aria-live="polite">
+                    <DefaultOverlay channelId={activeChannel.channelId} cardId={activeCard.id} />
+                </div>
             </div>,
             root
         );
@@ -55,14 +57,18 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
                 />
             ) : null;
         })
-        .filter(Boolean);
+        .filter(Boolean) as JSX.Element[];
+
 
     // Guard against channels that have no active cards
     if (overlays.length === 0) return null;
 
     return ReactDOM.createPortal(
         <div className={overlayClass}>
-            <div className="overlay-multiple-container">{overlays}</div>
+            <div role="status" aria-live="polite" className="overlay-multiple-container">
+                {overlays}
+            </div>
+
         </div>,
         root
     );

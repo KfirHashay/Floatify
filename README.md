@@ -14,6 +14,7 @@ For a full guide with code snippets and live demos, open the React docs app unde
 - **Overlay portal** that renders active cards via React Portal.
 - **Touch gestures** to swipe cards forward or backward and dismiss them.
 - **Built‑in theming** with dark and light styles that can be extended.
+- **Accessible overlays** announced via a polite live region and operable with the keyboard.
 
 ## Installation
 
@@ -92,6 +93,10 @@ the action object and the next state, helping you trace overlay updates.
 ## Running the Example Project
 
 The `example` folder doubles as the documentation site. After running the steps in the *Linking the local build* section above, run `npm run dev` inside `example` and visit `http://localhost:5173` to explore the docs and interactive demos.
+
+## Accessibility
+
+Overlay updates are announced to assistive technologies using a polite live region. Overlay cards are focusable and respond to **Enter** or **Space** so keyboard users can toggle or dismiss them.
 
 ## Roadmap
 
