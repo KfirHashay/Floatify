@@ -1,6 +1,13 @@
-import React, { useReducer, useEffect, useMemo, PropsWithChildren } from 'react';
+import React, {
+    useReducer,
+    useEffect,
+    useMemo,
+    useRef,
+    useCallback,
+    PropsWithChildren,
+} from 'react';
 import { aggregatorReducer } from '../reducers/aggregatorReducer';
-import { OverlayAggregatorState, Channel, OverlayAggregatorAction } from '../types';
+import { OverlayAggregatorState, OverlayAggregatorAction } from '../types';
 import { AggregatorContext } from './aggregatorContext';
 import { OverlayPortal } from '../../core/portal';
 import '../../style/index.css';
@@ -10,7 +17,11 @@ type ConcurrencyMode = 'single' | 'multiple';
 
 // Configuration options for developer convenience
 export interface AggregatorProviderConfig {
-    // If true, logs state changes/actions for debugging
+    /**
+     * Enable debug logging to see actions and state changes in the console.
+     * Pass `<AggregatorProvider debug>` or `<Floatify debug>` when rendering
+     * the provider.
+     */
     debug?: boolean;
 
     // Concurrency mode: single = only one channel active at a time
@@ -42,9 +53,11 @@ const initialAggregatorState: OverlayAggregatorState = {
  * AggregatorProvider
  *
  * The main context provider for your overlay aggregator.
- * Supports concurrency modes, auto-dismiss, debug logs, and optional portal root.
- * Typically, your app will wrap around <AggregatorProvider> so that child components
- * can dispatch overlay actions or read aggregator state.
+ * Supports concurrency modes, auto-dismiss, and an optional debug mode.
+ * When the `debug` prop is enabled, every dispatched action will be logged
+ * along with the state before and after the update.
+ * Typically, your app will wrap around `<AggregatorProvider>` or `<Floatify>`
+ * so that child components can dispatch overlay actions or read aggregator state.
  */
 export default function AggregatorProvider({
     children,
@@ -55,16 +68,34 @@ export default function AggregatorProvider({
     portalRoot,
     unstyled = false,
 }: AggregatorProviderProps) {
-    const [state, dispatch] = useReducer(aggregatorReducer, initialAggregatorState);
+    const [state, baseDispatch] = useReducer(aggregatorReducer, initialAggregatorState);
 
-    // Optional debug logging: logs actions + next state
+    // Keep a ref to the latest state so the debug logger can read
+    // the state before dispatch updates it
+    const stateRef = useRef(state);
     useEffect(() => {
-        if (!debug) return;
-        const originalDispatch = dispatch;
-        // There's no direct "middleware" for useReducer, but you could do something like:
-        // 1) override dispatch with a custom function, or
-        // 2) console.log after each relevant action. For simplicity, let's just console.log after state changes.
-    }, [debug]);
+        stateRef.current = state;
+    }, [state]);
+
+    // Dispatch wrapper that logs action and state transitions when debug is enabled
+    const debugDispatch = useCallback(
+        (action: OverlayAggregatorAction) => {
+            if (debug) {
+                const prevState = stateRef.current;
+                const nextState = aggregatorReducer(prevState, action);
+                console.groupCollapsed(`[Floatify] ${action.type}`);
+                console.log('prev state', prevState);
+                console.log('action', action);
+                console.log('next state', nextState);
+                console.groupEnd();
+            }
+            baseDispatch(action);
+        },
+        [debug, baseDispatch]
+    );
+
+    // Use the debug wrapper only when the flag is true
+    const dispatch = debug ? debugDispatch : baseDispatch;
 
     // If concurrencyMode = 'priority', you might do additional logic in the aggregator reducer
     // or here in a side effect (e.g., watch new channels or new cards and auto-select highest priority).
