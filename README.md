@@ -6,6 +6,8 @@ A flexible overlay and notification library for React.
 
 Floatify helps you display transient UI elements like toasts, alerts or walkthrough cards without cluttering your component tree. It manages multiple overlay channels through a central **AggregatorProvider** so that cards can be queued, swiped or dismissed from anywhere in your app.
 
+For a full guide with code snippets and live demos, open the React docs app under [`example/`](example/index.html). It showcases all mods and links to the roadmap.
+
 ## Key Features
 
 - **Aggregator provider** for global overlay state management and concurrency modes.
@@ -77,7 +79,17 @@ the action object and the next state, helping you trace overlay updates.
 
 ## Running the Example Project
 
-The `example` folder contains a small React app that demonstrates Floatify in action. After running the steps in the *Linking the local build* section above, visit `http://localhost:5173` to see overlays appear on timed intervals.
+The `example` folder doubles as the documentation site. After running the steps in the *Linking the local build* section above, run `npm run dev` inside `example` and visit `http://localhost:5173` to explore the docs and interactive demos.
+
+## Roadmap
+
+Upcoming development plans are tracked in [ROADMAP.md](ROADMAP.md). Highlights include:
+
+- Bringing the package to a stable 1.0 release
+- Adding a notification history panel
+- Improved default styles and themes
+- Different ways to open the history panel via icons or links
+- More dynamic-island style interactions
 
 ## Contributing
 
