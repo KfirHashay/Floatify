@@ -63,6 +63,18 @@ function App() {
 }
 ```
 
+### Custom Portal Root
+
+Use the `portalRoot` prop on `AggregatorProvider` or `Floatify` when you want the overlay portal to render into a specific DOM node. When omitted, overlays are mounted to `document.body`.
+
+```tsx
+const overlayRoot = document.getElementById('overlay-root') as HTMLElement;
+
+<Floatify portalRoot={overlayRoot}>
+  {/* rest of your app */}
+</Floatify>
+```
+
 ## Debug Mode
 
 Enable debug logging by passing the `debug` prop to `Floatify` or

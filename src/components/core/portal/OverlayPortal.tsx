@@ -19,6 +19,7 @@ interface OverlayPortalProps {
 export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled }: OverlayPortalProps) {
     const overlayClass = `overlay-library ${unstyled ? '' : 'overlay-styled'}`;
     const { state, getActiveChannel, getActiveCard } = useAggregator();
+    const root = portalRoot ?? document.body;
 
     // 🔹 SINGLE CONCURRENCY MODE: Only show the active channel's card
     if (concurrencyMode === 'single') {
@@ -34,7 +35,7 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
             <div className={overlayClass}>
                 <DefaultOverlay channelId={activeChannel.channelId} cardId={activeCard.id} />
             </div>,
-            portalRoot || document.body
+            root
         );
     }
 
@@ -63,7 +64,7 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
         <div className={overlayClass}>
             <div className="overlay-multiple-container">{overlays}</div>
         </div>,
-        portalRoot || document.body
+        root
     );
 }
 
