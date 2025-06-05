@@ -11,7 +11,7 @@ export default function ThemeToggle({ theme, onToggle }: Props) {
     <button
       onClick={onToggle}
       aria-label="Toggle theme"
-      style={{ background: 'none', border: 'none' }}
+      className="theme-toggle"
     >
       {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
     </button>
