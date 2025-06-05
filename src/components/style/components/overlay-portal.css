@@ -5,7 +5,6 @@
 ========================================================== */
 
 .overlay-styled .overlay-portal {
-    position: fixed;
     top: var(--di-top-offset, 12px);
     left: 0;
     transform: none;
