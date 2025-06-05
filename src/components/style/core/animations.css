@@ -49,6 +49,25 @@
     }
 }
 
+/* 🔹 Slide Animations for portal content */
+@keyframes slide-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slide-right {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
 /* 🔹 Hover & Press Effects */
 .overlay-styled .overlay-card:hover {
     transform: scale(var(--di-hover-scale));
