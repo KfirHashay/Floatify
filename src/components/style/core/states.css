@@ -8,7 +8,6 @@
     width: var(--overlay-expanded-width, 350px);
     height: var(--overlay-expanded-height, 120px);
     border-radius: var(--di-expanded-radius, 32px);
-    transform: translateY(var(--di-expanded-offset, 16px));
     backdrop-filter: blur(calc(var(--di-glass-blur, 12px) * 1.2));
     -webkit-backdrop-filter: blur(calc(var(--di-glass-blur, 12px) * 1.2));
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
