@@ -7,8 +7,8 @@
 .overlay-styled .overlay-portal {
     position: fixed;
     top: var(--di-top-offset, 12px);
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    transform: none;
     width: var(--compact-width);
     height: var(--compact-height);
     color: var(--di-text, #fff);
