@@ -13,7 +13,6 @@
     box-shadow: var(--di-shadow);
     border: var(--di-glass-border) solid 1px;
     width: fit-content;
-    min-width: 200px;
     max-width: 350px;
     display: flex;
     flex-direction: column;
@@ -31,6 +30,7 @@
 /* 🔹 Compact Mode (Default) */
 .overlay-styled .overlay-card--collapsed {
     width: var(--overlay-collapsed-width, 120px);
+    min-width: var(--overlay-collapsed-width, 120px);
     height: var(--overlay-collapsed-height, 36px);
     align-items: center;
     justify-content: center;
