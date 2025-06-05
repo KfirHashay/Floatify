@@ -8,7 +8,7 @@
     width: var(--overlay-expanded-width, 350px);
     height: var(--overlay-expanded-height, 120px);
     border-radius: var(--di-expanded-radius, 32px);
-    transform: translateX(-50%) translateY(var(--di-expanded-offset, 16px));
+    transform: translateY(var(--di-expanded-offset, 16px));
     backdrop-filter: blur(calc(var(--di-glass-blur, 12px) * 1.2));
     -webkit-backdrop-filter: blur(calc(var(--di-glass-blur, 12px) * 1.2));
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
@@ -23,7 +23,7 @@
     width: var(--overlay-collapsed-width, 120px);
     height: var(--overlay-collapsed-height, 36px);
     border-radius: calc(var(--overlay-collapsed-height, 36px) / 2);
-    transform: translateX(-50%);
+    transform: none;
     visibility: visible;
     opacity: 1;
     transition: width var(--di-duration-normal) var(--di-spring-timing), height var(--di-duration-normal) var(--di-spring-timing),
@@ -35,7 +35,7 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateX(-50%) translateY(-100%);
+    transform: translateY(-100%);
     width: var(--overlay-collapsed-width, 120px);
     height: var(--overlay-collapsed-height, 36px);
     transition: opacity var(--di-duration-fast) ease-out, transform var(--di-duration-normal) ease-out, visibility 0s linear var(--di-duration-normal);
@@ -47,7 +47,7 @@
     height: var(--overlay-collapsed-height, 36px);
     border-radius: calc(var(--overlay-collapsed-height, 36px) / 2);
     background-color: var(--di-alert-bg, rgba(255, 69, 58, 0.95));
-    transform: translateX(-50%);
+    transform: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     animation: alert-pulse 2s infinite ease-in-out;
