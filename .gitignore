@@ -1,1 +1,33 @@
+# Dependencies
 /node_modules/
+
+# Production builds
+/dist/
+
+# Example build output
+/example/dist/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+
+# IDE / editor directories
+.vscode/
+.idea/
+
+# MacOS files
+.DS_Store
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Test coverage
+/coverage/
