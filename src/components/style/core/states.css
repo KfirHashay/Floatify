@@ -14,7 +14,7 @@
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
     visibility: visible;
     opacity: 1;
-    transition: width var(--di-duration-normal) var(--di-spring-timing), height var(--di-duration-normal) var(--di-spring-timing),
+    transition: width var(--di-duration-normal) var(--di-transition-timing), height var(--di-duration-normal) var(--di-transition-timing),
         transform var(--di-duration-normal) var(--di-transition-timing), opacity var(--di-duration-fast) ease-out, visibility 0s linear;
 }
 
@@ -26,7 +26,7 @@
     transform: none;
     visibility: visible;
     opacity: 1;
-    transition: width var(--di-duration-normal) var(--di-spring-timing), height var(--di-duration-normal) var(--di-spring-timing),
+    transition: width var(--di-duration-normal) var(--di-transition-timing), height var(--di-duration-normal) var(--di-transition-timing),
         transform var(--di-duration-normal) var(--di-transition-timing), opacity var(--di-duration-fast) ease-out, visibility 0s linear;
 }
 
