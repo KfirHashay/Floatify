@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Floatify } from 'floatify';
 import { Routes, Route } from 'react-router-dom';
-import NavBar from './components/NavBar';
+import Layout from './components/Layout';
 import Home from './pages/Home';
 import Examples from './pages/Examples';
 import Roadmap from './pages/Roadmap';
@@ -22,15 +22,13 @@ export default function App() {
 
   return (
     <Floatify concurrencyMode="multiple" debug>
-      <NavBar theme={theme} onToggleTheme={toggleTheme} />
-      <main>
+      <Layout theme={theme} onToggleTheme={toggleTheme}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/examples" element={<Examples />} />
           <Route path="/roadmap" element={<Roadmap />} />
         </Routes>
-      </main>
-      {/* Add <OverlayPortal /> here if you have one */}
+      </Layout>
     </Floatify>
   );
 }

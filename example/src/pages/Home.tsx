@@ -12,6 +12,10 @@ export default function Home() {
       <pre>
         <code>npm install floatify</code>
       </pre>
+      <p>Run the docs locally with:</p>
+      <pre>
+        <code>cd example &amp;&amp; npm run dev</code>
+      </pre>
     </section>
   );
 }
