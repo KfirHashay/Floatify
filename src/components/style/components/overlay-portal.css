@@ -8,8 +8,8 @@
     top: var(--di-top-offset, 12px);
     left: 0;
     transform: none;
-    width: var(--compact-width);
-    height: var(--compact-height);
+    width: var(--overlay-collapsed-width);
+    height: var(--overlay-collapsed-height);
     color: var(--di-text, #fff);
 
     border-radius: var(--overlay-border-radius);
