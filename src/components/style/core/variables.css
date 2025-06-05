@@ -47,10 +47,10 @@
     --overlay-border-width: 1px;
 
     /* Dynamic Island Dimensions */
-    --compact-width: 120px;
-    --compact-height: 36px;
-    --expanded-width: 350px;
-    --expanded-height: 120px;
+    --overlay-collapsed-width: 120px;
+    --overlay-collapsed-height: 36px;
+    --overlay-expanded-width: 350px;
+    --overlay-expanded-height: 120px;
 
     /* Animation Durations */
     --di-duration-fast: 150ms;

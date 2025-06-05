@@ -23,6 +23,7 @@ export default function Examples() {
       </pre>
       <h2>Demo</h2>
       <Demo />
+      <p>Click the button above to push a card.</p>
     </section>
   );
 }

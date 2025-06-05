@@ -5,10 +5,7 @@
 
 /* 🔹 Expanded State */
 .overlay-styled .overlay-card--expanded {
-    width: var(--overlay-expanded-width, 350px);
-    height: var(--overlay-expanded-height, 120px);
     border-radius: var(--di-expanded-radius, 32px);
-    transform: translateY(var(--di-expanded-offset, 16px));
     backdrop-filter: blur(calc(var(--di-glass-blur, 12px) * 1.2));
     -webkit-backdrop-filter: blur(calc(var(--di-glass-blur, 12px) * 1.2));
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
@@ -20,8 +17,6 @@
 
 /* 🔹 Compact State (Default) */
 .overlay-styled .overlay-card--collapsed {
-    width: var(--overlay-collapsed-width, 120px);
-    height: var(--overlay-collapsed-height, 36px);
     border-radius: calc(var(--overlay-collapsed-height, 36px) / 2);
     transform: none;
     visibility: visible;
