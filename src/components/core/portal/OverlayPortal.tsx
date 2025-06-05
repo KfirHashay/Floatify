@@ -30,7 +30,9 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
 
         return ReactDOM.createPortal(
             <div className={overlayClass}>
-                <DefaultOverlay channelId={activeChannel.channelId} cardId={activeCard.id} />
+                <div role="status" aria-live="polite">
+                    <DefaultOverlay channelId={activeChannel.channelId} cardId={activeCard.id} />
+                </div>
             </div>,
             portalRoot || document.body
         );
@@ -42,10 +44,12 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
 
     return ReactDOM.createPortal(
         <div className={overlayClass}>
-            <div className="overlay-multiple-container">
+            <div role="status" aria-live="polite" className="overlay-multiple-container">
                 {activeChannels.map((channel) => {
                     const activeCard = getActiveCard(channel.channelId);
-                    return activeCard ? <DefaultOverlay key={channel.channelId} channelId={channel.channelId} cardId={activeCard.id} /> : null;
+                    return activeCard ? (
+                        <DefaultOverlay key={channel.channelId} channelId={channel.channelId} cardId={activeCard.id} />
+                    ) : null;
                 })}
             </div>
         </div>,
