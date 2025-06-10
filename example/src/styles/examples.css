@@ -1,0 +1,415 @@
+/* =======================================================
+   🧪 Examples Page Styles
+   - Interactive demo components
+   - Code display and syntax highlighting
+   - Use cases and best practices sections
+========================================================== */
+
+.examples {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+/* =======================================================
+   📋 Examples Header
+========================================================== */
+
+.examples-header {
+  text-align: center;
+  padding: var(--space-8) 0;
+}
+
+.examples-header h1 {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--space-4);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.examples-header p {
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+/* =======================================================
+   🎮 Interactive Demo Section
+========================================================== */
+
+.demo-section {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-12);
+  border: 1px solid var(--border-primary);
+}
+
+.demo-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.demo-header h2 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-3);
+}
+
+.demo-header p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.demo-container {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+/* Enhanced Demo Component Styles */
+.demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  width: 100%;
+  max-width: 24rem;
+}
+
+.demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-primary);
+}
+
+.demo-controls label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.demo-controls input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--accent-primary);
+}
+
+.demo-controls select {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.demo button {
+  min-width: 8rem;
+}
+
+/* =======================================================
+   💻 Code Examples Section
+========================================================== */
+
+.code-examples {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.examples-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-8));
+}
+
+.example-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-elevated);
+  color: var(--text-secondary);
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  width: 100%;
+}
+
+.example-tab:hover {
+  border-color: var(--border-secondary);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.example-tab-active {
+  border-color: var(--accent-primary);
+  background-color: var(--accent-light);
+  color: var(--accent-primary);
+}
+
+.example-tab-content {
+  flex: 1;
+}
+
+.example-tab-title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-1);
+}
+
+.example-tab-description {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  line-height: 1.4;
+}
+
+.example-tab-active .example-tab-description {
+  color: var(--accent-primary);
+  opacity: 0.8;
+}
+
+.code-display {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.code-header h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+.code-content {
+  overflow-x: auto;
+}
+
+.code-content pre {
+  margin: 0;
+  padding: var(--space-6);
+  background: none;
+  border: none;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.code-content code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* =======================================================
+   🎯 Use Cases Section
+========================================================== */
+
+.use-cases {
+  padding: var(--space-8) 0;
+}
+
+.use-cases h2 {
+  text-align: center;
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-12);
+}
+
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+.use-case-card {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.use-case-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-secondary);
+}
+
+.use-case-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--accent-light);
+  color: var(--accent-primary);
+  border-radius: var(--radius-lg);
+  margin: 0 auto var(--space-4);
+}
+
+.use-case-card h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-3);
+  color: var(--text-primary);
+}
+
+.use-case-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =======================================================
+   ✅ Best Practices Section
+========================================================== */
+
+.best-practices {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-12);
+  border: 1px solid var(--border-primary);
+}
+
+.best-practices h2 {
+  text-align: center;
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-8);
+}
+
+.practices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-6);
+}
+
+.practice {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.practice h4 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-3);
+  color: var(--text-primary);
+}
+
+.practice p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+/* =======================================================
+   📱 Responsive Design
+========================================================== */
+
+@media (max-width: 1024px) {
+  .code-examples {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  
+  .examples-nav {
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: var(--space-2);
+  }
+  
+  .example-tab {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .demo-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .demo-controls label,
+  .demo-controls select {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .examples-nav {
+    flex-direction: column;
+  }
+  
+  .example-tab {
+    min-width: auto;
+  }
+  
+  .use-cases-grid,
+  .practices-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =======================================================
+   🎭 Animations
+========================================================== */
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.code-display {
+  animation: slideInFromRight 0.4s ease-out;
+}
+
+.use-case-card,
+.practice {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.use-case-card:nth-child(1) { animation-delay: 0.1s; }
+.use-case-card:nth-child(2) { animation-delay: 0.2s; }
+.use-case-card:nth-child(3) { animation-delay: 0.3s; }
+.use-case-card:nth-child(4) { animation-delay: 0.4s; }

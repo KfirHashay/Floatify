@@ -4,11 +4,15 @@ import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Examples from './pages/Examples'
+import APIReference from './pages/APIReference'
 import Roadmap from './pages/Roadmap'
 import { Position } from './types'
 
-import './index.css'
-
+import './styles/globals.css'
+import './styles/layout.css'
+import './styles/pages.css'
+import './styles/examples.css'
+import './styles/api.css'
 
 export default function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -25,14 +29,6 @@ export default function App() {
   useEffect(() => {
     const html = document.documentElement
     html.dataset.theme = theme
-
-    let meta = document.querySelector('meta[name="color-scheme"]')
-    if (!meta) {
-      meta = document.createElement('meta')
-      meta.setAttribute('name', 'color-scheme')
-      document.head.appendChild(meta)
-    }
-    meta.setAttribute('content', theme)
     localStorage.setItem('theme', theme)
   }, [theme])
 
@@ -56,6 +52,7 @@ export default function App() {
               />
             }
           />
+          <Route path="/api" element={<APIReference />} />
           <Route path="/roadmap" element={<Roadmap />} />
         </Routes>
       </Layout>

@@ -1,0 +1,392 @@
+/* =======================================================
+   📚 API Reference Page Styles
+   - Documentation layout and typography
+   - Collapsible sections and code examples
+   - Clean, readable design for technical content
+========================================================== */
+
+.api-reference {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+/* =======================================================
+   📋 API Header
+========================================================== */
+
+.api-header {
+  text-align: center;
+  padding: var(--space-8) 0;
+}
+
+.api-header h1 {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--space-4);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.api-header p {
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+/* =======================================================
+   🧭 Quick Navigation
+========================================================== */
+
+.api-nav {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  border: 1px solid var(--border-primary);
+}
+
+.api-nav h2 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-6);
+  text-align: center;
+}
+
+.api-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+.api-nav-item {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.api-nav-item:hover {
+  background-color: var(--accent-light);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+/* =======================================================
+   📖 API Sections
+========================================================== */
+
+.api-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.api-section {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.api-section:hover {
+  border-color: var(--border-secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.api-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6);
+  background-color: var(--bg-secondary);
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.api-section-header:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.api-section-title h3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-2);
+  color: var(--text-primary);
+}
+
+.api-section-title p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.api-section-content {
+  padding: var(--space-6);
+  border-top: 1px solid var(--border-primary);
+  animation: slideDown 0.3s ease-out;
+}
+
+.api-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+/* =======================================================
+   🔧 API Items
+========================================================== */
+
+.api-item {
+  padding: var(--space-6);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-primary);
+}
+
+.api-item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  gap: var(--space-4);
+}
+
+.api-item-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.api-item-name code {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  background-color: var(--accent-light);
+  color: var(--accent-primary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--accent-primary);
+}
+
+.api-required {
+  background-color: var(--error);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.api-item-type {
+  flex-shrink: 0;
+}
+
+.api-item-type code {
+  font-size: var(--font-size-sm);
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-primary);
+  white-space: nowrap;
+}
+
+.api-item-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.api-item-default {
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.api-item-default strong {
+  color: var(--text-primary);
+}
+
+.api-item-default code {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* =======================================================
+   💻 Code Examples
+========================================================== */
+
+.api-item-example {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.api-example-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+.api-item-example pre {
+  margin: 0;
+  padding: var(--space-4);
+  background: none;
+  border: none;
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+.api-item-example code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-primary);
+}
+
+.btn-sm {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  gap: var(--space-1);
+}
+
+/* =======================================================
+   📝 TypeScript Section
+========================================================== */
+
+.typescript-section {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-12);
+  border: 1px solid var(--border-primary);
+}
+
+.typescript-section h2 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-4);
+  text-align: center;
+}
+
+.typescript-section > p {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-8);
+  font-size: var(--font-size-lg);
+}
+
+.typescript-example {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.code-header h3 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+.typescript-example pre {
+  margin: 0;
+  padding: var(--space-6);
+  background: none;
+  border: none;
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.typescript-example code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* =======================================================
+   📱 Responsive Design
+========================================================== */
+
+@media (max-width: 768px) {
+  .api-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  
+  .api-item-type {
+    align-self: stretch;
+  }
+  
+  .api-item-type code {
+    white-space: normal;
+    word-break: break-all;
+  }
+  
+  .api-nav-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .api-example-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
+/* =======================================================
+   🎭 Animations
+========================================================== */
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.api-item {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.api-item:nth-child(1) { animation-delay: 0.1s; }
+.api-item:nth-child(2) { animation-delay: 0.2s; }
+.api-item:nth-child(3) { animation-delay: 0.3s; }
+.api-item:nth-child(4) { animation-delay: 0.4s; }
+.api-item:nth-child(5) { animation-delay: 0.5s; }
