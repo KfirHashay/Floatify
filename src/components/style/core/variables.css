@@ -36,6 +36,7 @@
     --overlay-gap-md: 8px;
     --overlay-gap-lg: 12px;
     --overlay-border-radius: 12px;
+    
     /* Dynamic Island Defaults */
     --di-border-radius: var(--overlay-border-radius);
     --di-glass-opacity: 0.75;
@@ -55,24 +56,32 @@
     --overlay-expanded-width: 350px;
     --overlay-expanded-height: 120px;
 
-    /* Animation Durations */
-    --di-duration-fast: 150ms;
-    --di-duration-normal: 300ms;
-    --di-transition-timing: ease-in-out;
-    --di-spring-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Animation Durations - Optimized for Dynamic Island feel */
+    --di-duration-fast: 200ms;
+    --di-duration-normal: 400ms;
+    --di-duration-slow: 600ms;
+    
+    /* Spring-like timing functions for Dynamic Island feel */
+    --di-transition-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --di-spring-timing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --di-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    /* Shared transition for overlay components */
-    --di-overlay-transition: width var(--di-duration-normal) var(--di-transition-timing),
-        height var(--di-duration-normal) var(--di-transition-timing),
-        transform var(--di-duration-fast) var(--di-transition-timing),
-        opacity var(--di-duration-fast) var(--di-transition-timing);
+    /* Optimized transition for overlay components - uses transform instead of width/height */
+    --di-overlay-transition: 
+        transform var(--di-duration-normal) var(--di-spring-timing),
+        opacity var(--di-duration-fast) var(--di-ease-out),
+        border-radius var(--di-duration-normal) var(--di-transition-timing),
+        box-shadow var(--di-duration-normal) var(--di-ease-out);
 
-    /* Animations */
-    --overlay-transition: 0.3s ease-in-out;
+    /* Legacy animation properties - kept for backward compatibility */
+    --overlay-transition: var(--di-overlay-transition);
     --overlay-scale-hover: 1.02;
 
     /* Z-index */
     --overlay-z-index: 1000;
+
+    /* Performance optimizations */
+    --di-will-change: transform, opacity, border-radius;
 }
 
 /* 🌙 Dark Mode */

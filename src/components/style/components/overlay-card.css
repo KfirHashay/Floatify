@@ -1,9 +1,9 @@
 /* =======================================================
    🃏 Overlay Card (Styled Version)
-   - Merges previous styles with new structure
-   - Ensures accessibility, responsiveness, and animations
+   - Optimized for Dynamic Island-like animations
+   - Uses transform-based scaling for better performance
+   - Consistent with portal animations
 ========================================================== */
-
 
 .overlay-styled .overlay-card {
     background-color: rgba(var(--di-background-rgb), var(--di-glass-opacity));
@@ -15,56 +15,93 @@
     border: var(--di-glass-border) solid 1px;
     backdrop-filter: blur(var(--di-glass-blur));
     -webkit-backdrop-filter: blur(var(--di-glass-blur));
-    width: fit-content;
-    max-width: 350px;
+    
+    /* Fixed dimensions with transform scaling */
+    width: var(--overlay-collapsed-width);
+    height: var(--overlay-collapsed-height);
+    min-width: var(--overlay-collapsed-width);
+    min-height: var(--overlay-collapsed-height);
+    
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: var(--overlay-gap-sm);
     cursor: pointer;
     user-select: none;
 
+    /* Transform-based scaling for performance */
     transform-origin: center;
-    transition: var(--di-overlay-transition),
-        box-shadow 0.3s var(--di-transition-timing), background-color 0.15s ease-in-out,
-        backdrop-filter 0.2s ease-in-out;
-    will-change: width, height, transform, opacity;
+    transform: scale(1);
+    
+    /* Performance optimizations */
+    will-change: var(--di-will-change);
+    
+    /* Optimized transitions */
+    transition: var(--di-overlay-transition);
 }
 
-/* 🔹 Compact Mode (Default) */
+/* 🔹 Collapsed Mode (Default) - uses scale instead of width/height */
 .overlay-styled .overlay-card--collapsed {
-    width: var(--overlay-collapsed-width, 120px);
-    min-width: var(--overlay-collapsed-width, 120px);
-    height: var(--overlay-collapsed-height, 36px);
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-    padding: var(--overlay-padding-sm);
-    animation: overlay-collapse var(--di-duration-normal) var(--di-transition-timing);
+    transform: scale(1);
     border-radius: calc(var(--overlay-collapsed-height) / 2);
+    overflow: hidden;
+    text-align: center;
+    padding: var(--overlay-padding-sm);
+}
+
+/* 🔹 Expanded Mode - scale up instead of changing dimensions */
+.overlay-styled .overlay-card--expanded {
+    transform: scale(calc(var(--overlay-expanded-width) / var(--overlay-collapsed-width)));
+    border-radius: var(--di-border-radius);
+    padding: var(--overlay-padding-lg);
+    justify-content: space-between;
+    align-items: stretch;
 }
 
 /* 🔹 Loading / Icon Only Modes */
 .overlay-styled .overlay-card--loading,
 .overlay-styled .overlay-card--icon {
-    width: var(--overlay-collapsed-height, 36px);
-    height: var(--overlay-collapsed-height, 36px);
-    min-width: var(--overlay-collapsed-height, 36px);
+    width: var(--overlay-collapsed-height);
+    height: var(--overlay-collapsed-height);
+    min-width: var(--overlay-collapsed-height);
+    min-height: var(--overlay-collapsed-height);
     padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: calc(var(--overlay-collapsed-height, 36px) / 2);
+    border-radius: 50%;
+    transform: scale(1);
 }
 
-/* 🔹 Expanded Mode */
-.overlay-styled .overlay-card--expanded {
-    width: var(--overlay-expanded-width, 350px);
-    height: var(--overlay-expanded-height, 120px);
-    padding: var(--overlay-padding-lg);
-    justify-content: space-between;
-    animation: overlay-expand var(--di-duration-normal) var(--di-transition-timing);
-    border-radius: var(--di-border-radius);
+/* 🔹 Hidden state with smooth scale transition */
+.overlay-styled .overlay-card--hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: 
+        opacity var(--di-duration-fast) var(--di-ease-out),
+        transform var(--di-duration-fast) var(--di-ease-out),
+        visibility 0s linear var(--di-duration-fast);
+}
+
+/* 🔹 Alert state with pulsing animation */
+.overlay-styled .overlay-card--alert {
+    background-color: var(--di-alert-bg, rgba(255, 69, 58, 0.95));
+    transform: scale(1);
+    border-radius: calc(var(--overlay-collapsed-height) / 2);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    animation: alert-pulse 2s infinite var(--di-spring-timing);
+}
+
+/* 🔹 Content styling */
+.overlay-styled .overlay-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+    text-align: center;
 }
 
 /* 🔹 Title Styling */
@@ -72,39 +109,75 @@
     font-size: var(--overlay-font-size-lg);
     font-weight: var(--overlay-font-weight-bold);
     text-align: center;
+    margin: 0;
+    line-height: 1.2;
 }
 
 /* 🔹 Body (Hidden in Compact Mode) */
 .overlay-styled .overlay-card-body {
     font-size: var(--overlay-font-size-md);
     text-align: center;
+    margin: 0;
+    line-height: 1.4;
     opacity: 0;
-    transition: opacity var(--di-duration-normal) var(--di-transition-timing);
+    max-height: 0;
+    overflow: hidden;
+    transition: 
+        opacity var(--di-duration-normal) var(--di-spring-timing),
+        max-height var(--di-duration-normal) var(--di-spring-timing);
 }
 
 .overlay-styled .overlay-card--expanded .overlay-card-body {
     opacity: 1;
+    max-height: 100px; /* Reasonable max height */
 }
 
-/* 🔹 Hover & Press Effects */
+/* 🔹 Icon styling */
+.overlay-styled .overlay-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* 🔹 Hover & Press Effects with spring timing */
 .overlay-styled .overlay-card:hover {
-    transform: scale(var(--di-hover-scale));
+    transform: scale(var(--di-hover-scale, 1.03));
     box-shadow: var(--di-shadow);
+    transition: var(--di-overlay-transition);
 }
 
 .overlay-styled .overlay-card:active {
-    transform: scale(var(--di-active-scale));
+    transform: scale(var(--di-active-scale, 0.97));
+    transition: transform var(--di-duration-fast) var(--di-ease-out);
 }
 
 .overlay-styled .overlay-card:focus-visible {
-    transform: scale(var(--di-hover-scale));
+    outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));
+    outline-offset: 2px;
+    transform: scale(var(--di-hover-scale, 1.03));
 }
 
-/* 🔹 Swipe Animations */
+/* 🔹 Swipe Animations - optimized for performance */
 .overlay-styled .overlay-card--swipe-left {
-    animation: overlay-swipe-left 200ms ease-out forwards;
+    animation: overlay-swipe-left var(--di-duration-fast) var(--di-ease-out) forwards;
 }
 
 .overlay-styled .overlay-card--swipe-right {
-    animation: overlay-swipe-right 200ms ease-out forwards;
+    animation: overlay-swipe-right var(--di-duration-fast) var(--di-ease-out) forwards;
+}
+
+/* Actions container - only visible in expanded state */
+.overlay-styled .overlay-card-actions {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--overlay-gap-md);
+    opacity: 0;
+    transition: opacity var(--di-duration-normal) var(--di-spring-timing);
+}
+
+.overlay-styled .overlay-card--expanded .overlay-card-actions {
+    display: flex;
+    opacity: 1;
 }

@@ -41,9 +41,9 @@ export interface AggregatorProviderConfig {
     unstyled?: boolean;
 
     /**
-     * Keep the overlay fixed to the viewport when scrolling.
+     * Keep the overlay fixed to the viewport (renamed from 'sticky' for clarity).
      */
-    sticky?: boolean;
+    fixedToViewport?: boolean;
 
     /**
      * Preferred placement for the overlay portal. Use only `top` or `bottom`
@@ -85,7 +85,7 @@ export default function AggregatorProvider({
     debug = false,
     portalRoot,
     unstyled = false,
-    sticky = false,
+    fixedToViewport = false,
     position = 'top',
 }: AggregatorProviderProps) {
     const [state, baseDispatch] = useReducer(aggregatorReducer, initialAggregatorState);
@@ -141,7 +141,7 @@ export default function AggregatorProvider({
                 concurrencyMode={concurrencyMode}
                 unstyled={unstyled}
                 autoDismiss={autoDismiss}
-                sticky={sticky}
+                fixedToViewport={fixedToViewport}
                 position={position}
                 // autoDismissTimeout={autoDismissTimeout}
             />
