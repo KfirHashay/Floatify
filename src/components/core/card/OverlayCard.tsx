@@ -28,6 +28,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
     const isExpanded = channel.state === 'expanded';
     const isLoading = channel.state === 'loading';
     const isIconOnly = channel.state === 'icon';
+    const isHidden = channel.state === 'hidden';
 
     // 🔹 Toggle expand/collapse on click
     const handleToggle = useCallback(() => {
@@ -35,28 +36,30 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             swipeTriggered.current = false;
             return;
         }
-        if (isLoading || isIconOnly) return;
+        if (isLoading || isIconOnly || isHidden) return;
         updateChannelState(channelId, isExpanded ? 'collapsed' : 'expanded');
-    }, [channelId, isExpanded, updateChannelState, isLoading, isIconOnly]);
+    }, [channelId, isExpanded, updateChannelState, isLoading, isIconOnly, isHidden]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
-        if (isLoading || isIconOnly) return;
+        if (isLoading || isIconOnly || isHidden) return;
         touchStartX.current = e.touches[0].clientX;
         touchDeltaX.current = 0;
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
-        if (isLoading || isIconOnly) return;
+        if (isLoading || isIconOnly || isHidden) return;
         if (touchStartX.current !== null) {
             touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
         }
     };
 
     const handleTouchEnd = () => {
-        if (isLoading || isIconOnly) return;
+        if (isLoading || isIconOnly || isHidden) return;
         if (touchStartX.current === null) return;
+        
         const deltaX = touchDeltaX.current;
         const THRESHOLD = 50;
+        
         if (Math.abs(deltaX) >= THRESHOLD) {
             swipeTriggered.current = true;
             if (deltaX < 0) {
@@ -66,8 +69,14 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                 setDirection('prev');
                 swipePrevCard(channelId);
             }
-            setTimeout(() => setDirection(null), 200);
+            
+            // Reset direction after animation completes
+            setTimeout(() => {
+                setDirection(null);
+                swipeTriggered.current = false;
+            }, 200); // Match animation duration
         }
+        
         touchStartX.current = null;
         touchDeltaX.current = 0;
     };
@@ -79,7 +88,9 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             ? 'overlay-card--swipe-right'
             : '';
 
-    const stateClass = isLoading
+    const stateClass = isHidden
+        ? 'overlay-card--hidden'
+        : isLoading
         ? 'overlay-card--loading'
         : isIconOnly
         ? 'overlay-card--icon'
@@ -97,7 +108,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             role="button"
             tabIndex={0}
             aria-expanded={isExpanded}
-            aria-label={`Overlay Card - ${card?.title ?? ''}`}
+            aria-label={`Overlay Card - ${card?.title ?? 'Loading'}`}
             onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -123,22 +134,18 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             )}
 
             {/* 🔹 Normal Content */}
-            {!isLoading && !isIconOnly && card && (
+            {!isLoading && !isIconOnly && !isHidden && card && (
                 <>
                     {card.icon && (
-                        <div className="overlay-card-icon" aria-hidden="true">
+                        <div className="overlay-card-icon\" aria-hidden="true">
                             {card.icon}
                         </div>
                     )}
                     <div className="overlay-card-content">
-                        <h3 className="overlay-card-title">{card.title}</h3>
-                        <p
-                            className="overlay-card-body"
-                            style={{
-                                opacity: isExpanded ? 1 : 0,
-                                height: isExpanded ? 'auto' : 0,
-                            }}
-                        >
+                        {card.title && (
+                            <h3 className="overlay-card-title">{card.title}</h3>
+                        )}
+                        <p className="overlay-card-body">
                             {card.content}
                         </p>
                     </div>

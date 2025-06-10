@@ -4,9 +4,9 @@ import Demo from '../components/Demo';
 import { Position } from '../types';
 
 interface Props {
-  sticky: boolean;
+  fixedToViewport: boolean;
   position: Position;
-  onStickyChange: (value: boolean) => void;
+  onFixedToViewportChange: (value: boolean) => void;
   onPositionChange: (value: Position) => void;
 }
 
@@ -74,18 +74,18 @@ const handleAsyncAction = async () => {
 };`,
 
   positioning: `<Floatify 
-  position="top"           // top, bottom, center, top-left, etc.
-  sticky={true}            // Stick to viewport when scrolling
-  concurrencyMode="single" // single or multiple overlays
+  position="top"              // top, bottom, center, top-left, etc.
+  fixedToViewport={true}      // Stick to viewport when scrolling
+  concurrencyMode="single"    // single or multiple overlays
 >
   {/* Your app */}
 </Floatify>`
 };
 
 export default function Examples({
-  sticky,
+  fixedToViewport,
   position,
-  onStickyChange,
+  onFixedToViewportChange,
   onPositionChange
 }: Props) {
   const [activeExample, setActiveExample] = useState('basic');
@@ -138,9 +138,9 @@ export default function Examples({
         
         <div className="demo-container">
           <Demo
-            sticky={sticky}
+            fixedToViewport={fixedToViewport}
             position={position}
-            onStickyChange={onStickyChange}
+            onFixedToViewportChange={onFixedToViewportChange}
             onPositionChange={onPositionChange}
           />
         </div>

@@ -4,16 +4,16 @@ import { CheckCircle, Loader2 } from 'lucide-react'
 import { Position, POSITIONS } from '../types'
 
 interface Props {
-  sticky: boolean
+  fixedToViewport: boolean
   position: Position
-  onStickyChange: (value: boolean) => void
+  onFixedToViewportChange: (value: boolean) => void
   onPositionChange: (value: Position) => void
 }
 
 export default function Demo({
-  sticky,
+  fixedToViewport,
   position,
-  onStickyChange,
+  onFixedToViewportChange,
   onPositionChange
 }: Props) {
   const { registerChannel, addCard, removeCard } = useAggregator()
@@ -62,10 +62,10 @@ export default function Demo({
         <label>
           <input
             type="checkbox"
-            checked={sticky}
-            onChange={(e) => onStickyChange(e.target.checked)}
+            checked={fixedToViewport}
+            onChange={(e) => onFixedToViewportChange(e.target.checked)}
           />
-          Sticky positioning
+          Fixed to viewport
         </label>
         <select value={position} onChange={(e) => handlePositionChange(e.target.value)}>
           {POSITIONS.map((pos) => (

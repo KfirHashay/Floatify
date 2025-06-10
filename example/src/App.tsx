@@ -24,7 +24,7 @@ export default function App() {
     )
   })
 
-  const [sticky, setSticky] = useState(false)
+  const [fixedToViewport, setFixedToViewport] = useState(false)
   const [position, setPosition] = useState<Position>('top')
 
   useEffect(() => {
@@ -34,11 +34,11 @@ export default function App() {
   }, [theme])
 
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark')
-  const handleStickyChange = (value: boolean) => setSticky(value)
+  const handleFixedToViewportChange = (value: boolean) => setFixedToViewport(value)
   const handlePositionChange = (value: Position) => setPosition(value)
 
   return (
-    <Floatify concurrencyMode="multiple" debug sticky={sticky} position={position}>
+    <Floatify concurrencyMode="multiple" debug fixedToViewport={fixedToViewport} position={position}>
       <Layout theme={theme} onToggleTheme={toggleTheme}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -46,9 +46,9 @@ export default function App() {
             path="/examples"
             element={
               <Examples
-                sticky={sticky}
+                fixedToViewport={fixedToViewport}
                 position={position}
-                onStickyChange={handleStickyChange}
+                onFixedToViewportChange={handleFixedToViewportChange}
                 onPositionChange={handlePositionChange}
               />
             }
