@@ -44,6 +44,19 @@
     border-radius: calc(var(--overlay-collapsed-height) / 2);
 }
 
+/* 🔹 Loading / Icon Only Modes */
+.overlay-styled .overlay-card--loading,
+.overlay-styled .overlay-card--icon {
+    width: var(--overlay-collapsed-height, 36px);
+    height: var(--overlay-collapsed-height, 36px);
+    min-width: var(--overlay-collapsed-height, 36px);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: calc(var(--overlay-collapsed-height, 36px) / 2);
+}
+
 /* 🔹 Expanded Mode */
 .overlay-styled .overlay-card--expanded {
     width: var(--overlay-expanded-width, 350px);

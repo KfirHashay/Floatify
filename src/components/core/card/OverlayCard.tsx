@@ -1,10 +1,11 @@
 import React, { useCallback, useRef, useState } from 'react';
 import useAggregator from '../../state/hooks/useAggregator';
 import type { OverlayCard as OverlayCardType } from '../../state/types';
+import LoadingIndicator from '../LoadingIndicator';
 
 interface OverlayCardProps {
     channelId: string;
-    card: OverlayCardType;
+    card?: OverlayCardType;
 }
 
 export function OverlayCard({ channelId, card }: OverlayCardProps) {
@@ -25,6 +26,8 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
     if (!channel) return null;
 
     const isExpanded = channel.state === 'expanded';
+    const isLoading = channel.state === 'loading';
+    const isIconOnly = channel.state === 'icon';
 
     // 🔹 Toggle expand/collapse on click
     const handleToggle = useCallback(() => {
@@ -32,21 +35,25 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             swipeTriggered.current = false;
             return;
         }
+        if (isLoading || isIconOnly) return;
         updateChannelState(channelId, isExpanded ? 'collapsed' : 'expanded');
-    }, [channelId, isExpanded, updateChannelState]);
+    }, [channelId, isExpanded, updateChannelState, isLoading, isIconOnly]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
+        if (isLoading || isIconOnly) return;
         touchStartX.current = e.touches[0].clientX;
         touchDeltaX.current = 0;
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
+        if (isLoading || isIconOnly) return;
         if (touchStartX.current !== null) {
             touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
         }
     };
 
     const handleTouchEnd = () => {
+        if (isLoading || isIconOnly) return;
         if (touchStartX.current === null) return;
         const deltaX = touchDeltaX.current;
         const THRESHOLD = 50;
@@ -72,9 +79,17 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             ? 'overlay-card--swipe-right'
             : '';
 
+    const stateClass = isLoading
+        ? 'overlay-card--loading'
+        : isIconOnly
+        ? 'overlay-card--icon'
+        : isExpanded
+        ? 'overlay-card--expanded'
+        : 'overlay-card--collapsed';
+
     return (
         <div
-            className={`overlay-card ${isExpanded ? 'overlay-card--expanded' : 'overlay-card--collapsed'} ${directionClass}`}
+            className={`overlay-card ${stateClass} ${directionClass}`}
             onClick={handleToggle}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -82,7 +97,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             role="button"
             tabIndex={0}
             aria-expanded={isExpanded}
-            aria-label={`Overlay Card - ${card.title}`}
+            aria-label={`Overlay Card - ${card?.title ?? ''}`}
             onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -90,26 +105,45 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                 }
             }}
         >
-            {/* 🔹 Icon */}
-            {card.icon && (
+            {/* 🔹 Loading State */}
+            {isLoading && (
+                <>
+                    <LoadingIndicator />
+                    {card?.title && (
+                        <span className="overlay-card-title">{card.title}</span>
+                    )}
+                </>
+            )}
+
+            {/* 🔹 Icon Only State */}
+            {isIconOnly && card?.icon && (
                 <div className="overlay-card-icon" aria-hidden="true">
                     {card.icon}
                 </div>
             )}
 
-            {/* 🔹 Content */}
-            <div className="overlay-card-content">
-                <h3 className="overlay-card-title">{card.title}</h3>
-                <p
-                    className="overlay-card-body"
-                    style={{
-                        opacity: isExpanded ? 1 : 0,
-                        height: isExpanded ? 'auto' : 0,
-                    }}
-                >
-                    {card.content}
-                </p>
-            </div>
+            {/* 🔹 Normal Content */}
+            {!isLoading && !isIconOnly && card && (
+                <>
+                    {card.icon && (
+                        <div className="overlay-card-icon" aria-hidden="true">
+                            {card.icon}
+                        </div>
+                    )}
+                    <div className="overlay-card-content">
+                        <h3 className="overlay-card-title">{card.title}</h3>
+                        <p
+                            className="overlay-card-body"
+                            style={{
+                                opacity: isExpanded ? 1 : 0,
+                                height: isExpanded ? 'auto' : 0,
+                            }}
+                        >
+                            {card.content}
+                        </p>
+                    </div>
+                </>
+            )}
 
             {/* 🔹 Actions (only in expanded mode) */}
             {isExpanded && (
@@ -129,7 +163,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                         aria-label="Close overlay"
                         onClick={(e) => {
                             e.stopPropagation();
-                            removeCard(channelId, card.id);
+                            if (card) removeCard(channelId, card.id);
                         }}
                     >
                         ✖

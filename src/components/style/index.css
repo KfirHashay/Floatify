@@ -10,5 +10,6 @@
 @import './components/overlay-portal.css';
 @import './components/overlay-card.css';
 @import './components/overlay-actions.css';
+@import './components/loading-indicator.css';
 
 @import './themes/full-theme.css';
