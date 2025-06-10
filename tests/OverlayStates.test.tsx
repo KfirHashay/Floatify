@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
-import { render, screen } from '@testing-library/react/pure';
-import { describe, it, expect } from 'vitest';
+import { render, screen, waitFor, cleanup } from '@testing-library/react/pure';
+import { describe, it, expect, afterEach } from 'vitest';
 import AggregatorProvider from '../src/components/state/context/aggregatorProvider';
 import useAggregator from '../src/components/state/hooks/useAggregator';
+
+afterEach(() => {
+    cleanup();
+});
 
 function LoadingSetup() {
     const { registerChannel, updateChannelState } = useAggregator();
@@ -40,5 +44,33 @@ describe('overlay additional states', () => {
         );
         const portal = document.querySelector('.overlay-portal');
         expect(portal?.classList.contains('overlay-portal--top')).toBe(true);
+    });
+
+    it('applies sticky class on top', async () => {
+        render(
+            <AggregatorProvider sticky position="top">
+                <PositionSetup />
+            </AggregatorProvider>
+        );
+        await waitFor(() => {
+            const el = document.querySelector('.overlay-portal.overlay-portal--sticky');
+            expect(el).toBeTruthy();
+        });
+        const portal = document.querySelector('.overlay-portal.overlay-portal--sticky');
+        expect(portal?.classList.contains('overlay-portal--top')).toBe(true);
+    });
+
+    it('applies sticky class on bottom', async () => {
+        render(
+            <AggregatorProvider sticky position="bottom">
+                <PositionSetup />
+            </AggregatorProvider>
+        );
+        await waitFor(() => {
+            const el = document.querySelector('.overlay-portal.overlay-portal--sticky');
+            expect(el).toBeTruthy();
+        });
+        const portal = document.querySelector('.overlay-portal.overlay-portal--sticky');
+        expect(portal?.classList.contains('overlay-portal--bottom')).toBe(true);
     });
 });
