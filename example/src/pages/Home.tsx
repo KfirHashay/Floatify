@@ -1,167 +1,179 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, Shield, Smartphone, Code, Palette, Globe } from 'lucide-react';
+import { FC, useCallback } from 'react'
+import { Link } from 'react-router-dom'
+import {
+  ArrowRight,
+  Zap,
+  Shield,
+  Smartphone,
+  Code,
+  Palette,
+  Globe,
+  ClipboardCopy
+} from 'lucide-react'
 
-export default function Home() {
+const Home: FC = () => {
+  const handleCopy = useCallback(() => {
+    /* Best-effort clipboard write; swallow errors silently */
+    navigator.clipboard.writeText('npm install floatify').catch(() => {})
+  }, [])
+
   return (
-    <div className="home">
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-content">
-          <div className="hero-badge">
-            <Zap size={16} />
-            <span>Modern React Overlay Library</span>
-          </div>
-          
-          <h1 className="hero-title">
+    <main className='home'>
+      {/* ───────────────────────── Hero ───────────────────────── */}
+      <section className='hero'>
+        <div className='hero-content'>
+          <span className='hero-badge flex items-center gap-1'>
+            <Zap size={16} aria-hidden />
+            Modern React Overlay Library
+          </span>
+
+          <h1 className='hero-title'>
             Beautiful overlays for
-            <span className="hero-gradient"> modern React apps</span>
+            <span className='hero-gradient'> modern React apps</span>
           </h1>
-          
-          <p className="hero-description">
-            Floatify provides a flexible, accessible overlay system for toasts, notifications, 
-            and dynamic content. Built with TypeScript, designed for developers.
+
+          <p className='hero-description'>
+            Floatify delivers a flexible, accessible overlay stack for toasts,
+            in-app alerts, and dynamic content. Built with TypeScript, engineered
+            for velocity.
           </p>
-          
-          <div className="hero-actions">
-            <Link to="/examples" className="btn btn-primary">
-              View Examples
-              <ArrowRight size={16} />
+
+          <div className='hero-actions'>
+            <Link to='/examples' className='btn btn-primary'>
+              View examples
+              <ArrowRight size={16} aria-hidden className='ml-1' />
             </Link>
-            <button 
-              className="btn btn-secondary"
-              onClick={() => navigator.clipboard.writeText('npm install floatify')}
+
+            <button
+              type='button'
+              className='btn btn-secondary'
+              aria-label='Copy install command'
+              onClick={handleCopy}
             >
-              <Code size={16} />
-              Copy Install Command
+              <ClipboardCopy size={16} aria-hidden className='mr-1' />
+              Copy install command
             </button>
           </div>
-          
-          <div className="hero-code">
-            <pre><code>{`npm install floatify`}</code></pre>
-          </div>
+
+          <pre className='hero-code'>
+            <code className='language-bash'>npm install floatify</code>
+          </pre>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="features">
-        <div className="features-header">
-          <h2>Why choose Floatify?</h2>
-          <p>Built with modern React patterns and developer experience in mind</p>
-        </div>
-        
-        <div className="features-grid">
-          <div className="feature-card">
-            <div className="feature-icon">
-              <Smartphone size={24} />
-            </div>
-            <h3>Mobile-First Design</h3>
-            <p>Optimized for touch interactions with smooth gestures and responsive layouts that work perfectly on all devices.</p>
-          </div>
-          
-          <div className="feature-card">
-            <div className="feature-icon">
-              <Shield size={24} />
-            </div>
-            <h3>Accessibility Built-in</h3>
-            <p>WCAG compliant with proper ARIA labels, keyboard navigation, and screen reader support out of the box.</p>
-          </div>
-          
-          <div className="feature-card">
-            <div className="feature-icon">
-              <Code size={24} />
-            </div>
-            <h3>TypeScript Native</h3>
-            <p>Fully typed API with excellent IntelliSense support and compile-time safety for better developer experience.</p>
-          </div>
-          
-          <div className="feature-card">
-            <div className="feature-icon">
-              <Palette size={24} />
-            </div>
-            <h3>Themeable & Customizable</h3>
-            <p>Dark/light mode support with CSS custom properties. Easy to customize and integrate with your design system.</p>
-          </div>
-          
-          <div className="feature-card">
-            <div className="feature-icon">
-              <Zap size={24} />
-            </div>
-            <h3>Performant & Lightweight</h3>
-            <p>Minimal bundle size with tree-shaking support. Optimized animations using CSS transforms and GPU acceleration.</p>
-          </div>
-          
-          <div className="feature-card">
-            <div className="feature-icon">
-              <Globe size={24} />
-            </div>
-            <h3>Framework Agnostic</h3>
-            <p>While built for React, the core concepts can be adapted to other frameworks. Clean separation of concerns.</p>
-          </div>
+      {/* ──────────────────────── Features ─────────────────────── */}
+      <section className='features'>
+        <header className='features-header'>
+          <h2>Why Floatify?</h2>
+          <p>Modern patterns, stellar DX, zero runtime cruft.</p>
+        </header>
+
+        <div className='features-grid'>
+          {[
+            {
+              icon: <Smartphone size={24} aria-hidden />,
+              title: 'Mobile-First',
+              copy:
+                'Gesture-friendly and fully responsive—fits every viewport.'
+            },
+            {
+              icon: <Shield size={24} aria-hidden />,
+              title: 'Accessibility Built-In',
+              copy:
+                'WCAG-aligned ARIA roles, full keyboard support, screen-reader ready.'
+            },
+            {
+              icon: <Code size={24} aria-hidden />,
+              title: 'TypeScript Native',
+              copy:
+                '100 % typed API—IntelliSense out of the box, compile-time safety.'
+            },
+            {
+              icon: <Palette size={24} aria-hidden />,
+              title: 'Themeable',
+              copy:
+                'Dark/light via CSS variables; drop-in theming for any design system.'
+            },
+            {
+              icon: <Zap size={24} aria-hidden />,
+              title: 'Lean & Mean',
+              copy:
+                '≈ 5 kB gzipped, tree-shakeable. GPU-accelerated animations.'
+            },
+            {
+              icon: <Globe size={24} aria-hidden />,
+              title: 'Framework Agnostic',
+              copy:
+                'Core patterns portable beyond React—clean separation of concerns.'
+            }
+          ].map(({ icon, title, copy }) => (
+            <article key={title} className='feature-card'>
+              <div className='feature-icon'>{icon}</div>
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* Quick Start Section */}
-      <section className="quick-start">
-        <div className="quick-start-content">
-          <div className="quick-start-text">
-            <h2>Get started in seconds</h2>
+      {/* ────────────────────── Quick Start ────────────────────── */}
+      <section className='quick-start'>
+        <div className='quick-start-content'>
+          <div className='quick-start-text'>
+            <h2>Onboard in seconds</h2>
             <p>
-              Add Floatify to your React app with just a few lines of code. 
-              No complex configuration required.
+              Install, register a channel, and push a card—done. No boilerplate.
             </p>
-            <Link to="/examples" className="btn btn-primary">
-              View Full Examples
-              <ArrowRight size={16} />
+
+            <Link to='/examples' className='btn btn-primary'>
+              Full examples
+              <ArrowRight size={16} aria-hidden className='ml-1' />
             </Link>
           </div>
-          
-          <div className="quick-start-code">
-            <pre><code>{`import { Floatify, useAggregator } from 'floatify';
+
+          <pre className='quick-start-code'>
+            <code className='language-tsx'>{`import { Floatify, useAggregator } from 'floatify'
 
 function App() {
-  const { registerChannel, addCard } = useAggregator();
+  const { registerChannel, addCard } = useAggregator()
 
   useEffect(() => {
-    registerChannel('notifications', 1);
+    registerChannel('notifications', 1)
     addCard('notifications', {
       id: 'welcome',
       title: 'Welcome!',
       content: 'Thanks for trying Floatify'
-    });
-  }, []);
+    })
+  }, [])
 
   return (
     <Floatify>
-      {/* Your app content */}
+      {/* app content */}
     </Floatify>
-  );
-}`}</code></pre>
-          </div>
+  )
+}`}</code>
+          </pre>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="stats">
-        <div className="stats-grid">
-          <div className="stat">
-            <div className="stat-number"> 5kb</div>
-            <div className="stat-label">Gzipped Bundle Size</div>
-          </div>
-          <div className="stat">
-            <div className="stat-number">100%</div>
-            <div className="stat-label">TypeScript Coverage</div>
-          </div>
-          <div className="stat">
-            <div className="stat-number">0</div>
-            <div className="stat-label">Runtime Dependencies</div>
-          </div>
-          <div className="stat">
-            <div className="stat-number">A11Y</div>
-            <div className="stat-label">WCAG Compliant</div>
-          </div>
+      {/* ──────────────────────── Stats ───────────────────────── */}
+      <section className='stats'>
+        <div className='stats-grid'>
+          {[
+            { value: '≈ 5 kB', label: 'Gzipped size' },
+            { value: '100 %', label: 'TypeScript coverage' },
+            { value: '0', label: 'Runtime deps' },
+            { value: 'A11Y', label: 'WCAG compliant' }
+          ].map(({ value, label }) => (
+            <div key={label} className='stat'>
+              <div className='stat-number'>{value}</div>
+              <div className='stat-label'>{label}</div>
+            </div>
+          ))}
         </div>
       </section>
-    </div>
+    </main>
   )
-  );
+}
+
+export default Home
