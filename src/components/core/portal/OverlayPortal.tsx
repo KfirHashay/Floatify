@@ -35,21 +35,36 @@ export function OverlayPortal({
     const { state, getActiveChannel, getActiveCard } = useAggregator();
     const root = portalRoot ?? document.body;
 
+    // DEBUG: Log state to see what's happening
+    console.log('[OverlayPortal] State:', state);
+    console.log('[OverlayPortal] Channels:', Object.keys(state.channels));
+
     // 🔹 SINGLE CONCURRENCY MODE: Only show the active channel's card
     if (concurrencyMode === 'single') {
         const activeChannel = getActiveChannel();
         
+        console.log('[OverlayPortal] Active channel:', activeChannel);
+        
         // Nothing to render when there is no active channel
-        if (!activeChannel) return null;
+        if (!activeChannel) {
+            console.log('[OverlayPortal] No active channel');
+            return null;
+        }
 
         const activeCard = getActiveCard(activeChannel.channelId);
+        console.log('[OverlayPortal] Active card:', activeCard);
         
         // Show overlay if there's a card OR if channel is in loading/icon state
         const shouldShow = activeCard || 
                           activeChannel.state === 'loading' || 
                           activeChannel.state === 'icon';
         
-        if (!shouldShow) return null;
+        console.log('[OverlayPortal] Should show:', shouldShow, 'Channel state:', activeChannel.state);
+        
+        if (!shouldShow) {
+            console.log('[OverlayPortal] Should not show overlay');
+            return null;
+        }
 
         const overlayClass = `overlay-library ${unstyled ? '' : 'overlay-styled'}`;
 
@@ -74,6 +89,8 @@ export function OverlayPortal({
             ch.cards.length > 0 || ch.state === 'loading' || ch.state === 'icon'
     );
     
+    console.log('[OverlayPortal] Active channels (multiple mode):', activeChannels);
+    
     // Nothing to render if no channel currently holds cards
     if (activeChannels.length === 0) return null;
 
@@ -91,6 +108,7 @@ export function OverlayPortal({
     const overlays = activeChannels
         .map((channel) => {
             const activeCard = getActiveCard(channel.channelId);
+            console.log(`[OverlayPortal] Channel ${channel.channelId} active card:`, activeCard);
             return (
                 <DefaultOverlay
                     key={channel.channelId}
@@ -131,14 +149,25 @@ function DefaultOverlay({
     const { state } = useAggregator();
 
     const channel = state.channels[channelId];
-    if (!channel) return null;
+    console.log(`[DefaultOverlay] Channel ${channelId}:`, channel);
+    console.log(`[DefaultOverlay] Card:`, card);
+    
+    if (!channel) {
+        console.log(`[DefaultOverlay] No channel found for ${channelId}`);
+        return null;
+    }
 
     // Show overlay if there's a card OR if channel is in loading/icon state
     const shouldShow = card || 
                       channel.state === 'loading' || 
                       channel.state === 'icon';
     
-    if (!shouldShow) return null;
+    console.log(`[DefaultOverlay] Should show:`, shouldShow, 'Channel state:', channel.state);
+    
+    if (!shouldShow) {
+        console.log(`[DefaultOverlay] Should not show for channel ${channelId}`);
+        return null;
+    }
 
     // Build portal classes with proper positioning
     const portalClasses = [

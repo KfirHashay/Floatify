@@ -23,12 +23,23 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
     const [direction, setDirection] = useState<'next' | 'prev' | null>(null);
 
     const channel = state.channels[channelId];
-    if (!channel) return null;
+    
+    // DEBUG: Log what we're receiving
+    console.log(`[OverlayCard] Channel ID: ${channelId}`);
+    console.log(`[OverlayCard] Channel:`, channel);
+    console.log(`[OverlayCard] Card:`, card);
+    
+    if (!channel) {
+        console.log(`[OverlayCard] No channel found for ${channelId}`);
+        return null;
+    }
 
     const isExpanded = channel.state === 'expanded';
     const isLoading = channel.state === 'loading';
     const isIconOnly = channel.state === 'icon';
     const isHidden = channel.state === 'hidden';
+
+    console.log(`[OverlayCard] States - expanded: ${isExpanded}, loading: ${isLoading}, icon: ${isIconOnly}, hidden: ${isHidden}`);
 
     // 🔹 Toggle expand/collapse on click
     const handleToggle = useCallback(() => {
@@ -97,6 +108,10 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
         : isExpanded
         ? 'overlay-card--expanded'
         : 'overlay-card--collapsed';
+
+    console.log(`[OverlayCard] Rendering with state class: ${stateClass}`);
+    console.log(`[OverlayCard] Card content: "${card?.content}"`);
+    console.log(`[OverlayCard] Card title: "${card?.title}"`);
 
     return (
         <div
