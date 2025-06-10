@@ -39,6 +39,24 @@ export interface AggregatorProviderConfig {
     portalRoot?: HTMLElement;
 
     unstyled?: boolean;
+
+    /**
+     * Keep the overlay fixed to the viewport when scrolling.
+     */
+    sticky?: boolean;
+
+    /**
+     * Preferred placement for the overlay portal. Use only `top` or `bottom`
+     * on mobile for best results.
+     */
+    position?:
+        | 'top'
+        | 'bottom'
+        | 'center'
+        | 'top-left'
+        | 'top-right'
+        | 'bottom-left'
+        | 'bottom-right';
 }
 
 export interface AggregatorProviderProps extends PropsWithChildren<AggregatorProviderConfig> {}
@@ -67,6 +85,8 @@ export default function AggregatorProvider({
     debug = false,
     portalRoot,
     unstyled = false,
+    sticky = false,
+    position = 'top',
 }: AggregatorProviderProps) {
     const [state, baseDispatch] = useReducer(aggregatorReducer, initialAggregatorState);
 
@@ -121,6 +141,8 @@ export default function AggregatorProvider({
                 concurrencyMode={concurrencyMode}
                 unstyled={unstyled}
                 autoDismiss={autoDismiss}
+                sticky={sticky}
+                position={position}
                 // autoDismissTimeout={autoDismissTimeout}
             />
         </AggregatorContext.Provider>

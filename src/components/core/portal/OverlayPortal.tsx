@@ -14,9 +14,24 @@ interface OverlayPortalProps {
     portalRoot?: HTMLElement;
     unstyled?: boolean;
     autoDismiss?: boolean;
+    sticky?: boolean;
+    position?:
+        | 'top'
+        | 'bottom'
+        | 'center'
+        | 'top-left'
+        | 'top-right'
+        | 'bottom-left'
+        | 'bottom-right';
 }
 
-export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled }: OverlayPortalProps) {
+export function OverlayPortal({
+    concurrencyMode = 'single',
+    portalRoot,
+    unstyled,
+    sticky = false,
+    position = 'top',
+}: OverlayPortalProps) {
     const overlayClass = `overlay-library ${unstyled ? '' : 'overlay-styled'}`;
     const { state, getActiveChannel, getActiveCard } = useAggregator();
     const root = portalRoot ?? document.body;
@@ -34,7 +49,12 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
         return ReactDOM.createPortal(
             <div className={overlayClass}>
                 <div role="status" aria-live="polite">
-                    <DefaultOverlay channelId={activeChannel.channelId} cardId={activeCard.id} />
+                    <DefaultOverlay
+                        channelId={activeChannel.channelId}
+                        cardId={activeCard.id}
+                        sticky={sticky}
+                        position={position}
+                    />
                 </div>
             </div>,
             root
@@ -54,6 +74,8 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
                     key={channel.channelId}
                     channelId={channel.channelId}
                     cardId={activeCard.id}
+                    sticky={sticky}
+                    position={position}
                 />
             ) : null;
         })
@@ -79,7 +101,17 @@ export function OverlayPortal({ concurrencyMode = 'single', portalRoot, unstyled
  *
  * Fetches the correct card from the aggregator and renders it.
  */
-function DefaultOverlay({ channelId, cardId }: { channelId: string; cardId: string }) {
+function DefaultOverlay({
+    channelId,
+    cardId,
+    sticky,
+    position,
+}: {
+    channelId: string;
+    cardId: string;
+    sticky: boolean;
+    position: string;
+}) {
     const { removeCard, swipeNextCard, swipePrevCard, state } = useAggregator();
 
     const channel = state.channels[channelId];
@@ -88,9 +120,17 @@ function DefaultOverlay({ channelId, cardId }: { channelId: string; cardId: stri
     const card = channel.cards.find((c) => c.id === cardId);
     if (!card) return null;
 
+    const portalClasses = [
+        'overlay-portal',
+        sticky ? 'overlay-portal--sticky' : '',
+        `overlay-portal--${position}`,
+    ]
+        .filter(Boolean)
+        .join(' ');
+
     return (
         <div className="overlay-container">
-            <div className="overlay-portal" data-state={channel.state}>
+            <div className={portalClasses} data-state={channel.state}>
                 <DefaultCardUI
                     channelId={channelId}
                     card={card}
