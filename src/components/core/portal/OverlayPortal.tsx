@@ -1,7 +1,7 @@
 /**
  * OverlayPortal.tsx
  *
- * Fixed portal rendering with proper positioning and interactions
+ * Fixed portal rendering with minimal DOM impact and proper positioning
  */
 import React, { JSX } from 'react';
 import ReactDOM from 'react-dom';
@@ -115,7 +115,7 @@ export function OverlayPortal({
 /**
  * DefaultOverlay
  *
- * Fixed overlay component with proper positioning and interactions
+ * Minimal overlay component with proper positioning and no app interference
  */
 function DefaultOverlay({
     channelId,

@@ -1,15 +1,15 @@
 /* =======================================================
    🌟 Overlay Portal (Styled Version)
-   - Fixed container interactions and positioning
-   - Proper text visibility and mobile positioning
-   - Working fixedToViewport functionality
+   - Fixed container to not interfere with app
+   - Proper positioning without full-screen containers
+   - Performance-focused with minimal DOM impact
 ========================================================== */
 
 .overlay-styled .overlay-portal {
-    /* Base positioning - relative by default */
+    /* Base positioning - NO container interference */
     position: relative;
     
-    /* Dynamic Island dimensions */
+    /* Dynamic Island dimensions - FIXED SIZES */
     width: var(--overlay-collapsed-width);
     height: var(--overlay-collapsed-height);
     
@@ -39,6 +39,10 @@
     
     /* Ensure interactions work */
     pointer-events: auto;
+    
+    /* CRITICAL: Prevent container expansion */
+    flex-shrink: 0;
+    flex-grow: 0;
 }
 
 /* State-based scaling instead of width/height changes */
@@ -78,19 +82,23 @@
     transform: scale(var(--di-hover-scale, 1.03));
 }
 
-/* Content container - NO PADDING to prevent interaction issues */
+/* FIXED: Minimal container - NO interference with app */
 .overlay-styled .overlay-container {
+    /* REMOVED: width: 100%; height: 100%; */
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
-    padding: 0; /* REMOVED PADDING */
+    /* MINIMAL sizing - just wraps content */
+    width: fit-content;
+    height: fit-content;
     opacity: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: opacity var(--di-duration-fast) var(--di-ease-out);
-    pointer-events: auto; /* Ensure interactions work */
+    pointer-events: auto;
+    /* CRITICAL: No padding that could interfere */
+    padding: 0;
+    margin: 0;
 }
 
 /* Hide empty portals */
@@ -122,17 +130,30 @@
    POSITIONING SYSTEM - Fixed to viewport positioning
    ------------------------------------------------------------------ */
 
-/* Fixed positioning for single overlays and multiple overlay containers */
+/* LIBRARY ROOT - NO interference with app */
+.overlay-library {
+    /* CRITICAL: Don't interfere with app layout */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: var(--di-z-index, 9999);
+    overflow: visible;
+}
+
+/* Fixed positioning for single overlays */
 .overlay-styled .overlay-portal--fixed {
     position: fixed;
-    pointer-events: auto; /* Ensure interactions work */
+    pointer-events: auto;
 }
 
 /* Multiple overlay container positioning */
 .overlay-styled .overlay-multiple-container--fixed {
     position: fixed;
     z-index: var(--di-z-index, 9999);
-    pointer-events: none; /* Container doesn't block interactions */
+    pointer-events: none;
 }
 
 /* Layout container for multiple overlays */
@@ -142,24 +163,27 @@
     justify-content: center;
     align-items: flex-start;
     gap: var(--overlay-gap-lg, 12px);
-    pointer-events: none; /* Container doesn't block interactions */
+    pointer-events: none;
+    /* FIXED: Minimal sizing */
+    width: fit-content;
+    height: fit-content;
 }
 
 .overlay-styled .overlay-multiple-container > * {
-    pointer-events: auto; /* Re-enable clicks on individual overlays */
+    pointer-events: auto;
 }
 
 /* Position classes for fixed overlays */
 .overlay-styled .overlay-portal--top,
 .overlay-styled .overlay-multiple-container--top {
-    top: var(--di-top-offset, 12px);
+    top: var(--di-top-offset, 16px);
     left: 50%;
     transform: translateX(-50%);
 }
 
 .overlay-styled .overlay-portal--bottom,
 .overlay-styled .overlay-multiple-container--bottom {
-    bottom: var(--di-top-offset, 12px);
+    bottom: var(--di-top-offset, 16px);
     left: 50%;
     transform: translateX(-50%);
 }
@@ -173,29 +197,29 @@
 
 .overlay-styled .overlay-portal--top-left,
 .overlay-styled .overlay-multiple-container--top-left {
-    top: var(--di-top-offset, 12px);
-    left: var(--di-top-offset, 12px);
+    top: var(--di-top-offset, 16px);
+    left: var(--di-top-offset, 16px);
     transform: none;
 }
 
 .overlay-styled .overlay-portal--top-right,
 .overlay-styled .overlay-multiple-container--top-right {
-    top: var(--di-top-offset, 12px);
-    right: var(--di-top-offset, 12px);
+    top: var(--di-top-offset, 16px);
+    right: var(--di-top-offset, 16px);
     transform: none;
 }
 
 .overlay-styled .overlay-portal--bottom-left,
 .overlay-styled .overlay-multiple-container--bottom-left {
-    bottom: var(--di-top-offset, 12px);
-    left: var(--di-top-offset, 12px);
+    bottom: var(--di-top-offset, 16px);
+    left: var(--di-top-offset, 16px);
     transform: none;
 }
 
 .overlay-styled .overlay-portal--bottom-right,
 .overlay-styled .overlay-multiple-container--bottom-right {
-    bottom: var(--di-top-offset, 12px);
-    right: var(--di-top-offset, 12px);
+    bottom: var(--di-top-offset, 16px);
+    right: var(--di-top-offset, 16px);
     transform: none;
 }
 
@@ -217,7 +241,7 @@
     .overlay-styled .overlay-multiple-container--top-right,
     .overlay-styled .overlay-multiple-container--bottom-left,
     .overlay-styled .overlay-multiple-container--bottom-right {
-        top: var(--di-top-offset, 12px);
+        top: var(--di-top-offset, 16px);
         left: 50%;
         right: auto;
         bottom: auto;
@@ -228,7 +252,7 @@
     .overlay-styled .overlay-portal--bottom,
     .overlay-styled .overlay-multiple-container--bottom {
         top: auto;
-        bottom: var(--di-top-offset, 12px);
+        bottom: var(--di-top-offset, 16px);
         left: 50%;
         right: auto;
         transform: translateX(-50%);
