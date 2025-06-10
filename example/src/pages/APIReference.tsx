@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, Copy, CheckCircle, Book, Code, Zap, Settings, Database, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Book, Code, Zap, Settings, Database, Copy, CheckCircle } from 'lucide-react';
+import APINavigation from '../components/APINavigation';
+import APISection from '../components/APISection';
 
 interface APISection {
   id: string;
@@ -228,33 +230,21 @@ registerChannel('notifications', 1);`,
   }
 ];
 
-const categoryConfig = {
-  components: {
-    label: 'Components',
-    color: 'var(--accent-primary)',
-    bgColor: 'var(--accent-light)'
-  },
-  hooks: {
-    label: 'Hooks',
-    color: 'var(--success)',
-    bgColor: 'rgba(16, 185, 129, 0.1)'
-  },
-  types: {
-    label: 'Types',
-    color: 'var(--warning)',
-    bgColor: 'rgba(245, 158, 11, 0.1)'
-  },
-  utilities: {
-    label: 'Utilities',
-    color: 'var(--error)',
-    bgColor: 'rgba(239, 68, 68, 0.1)'
-  }
-};
-
 export default function APIReference() {
   const [activeSection, setActiveSection] = useState<string>('floatify-component');
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set(['floatify-component']));
   const [copiedExample, setCopiedExample] = useState<string | null>(null);
+
+  // Auto-expand sections when navigating
+  const scrollToSection = (sectionId: string) => {
+    setActiveSection(sectionId);
+    setExpandedItems(prev => new Set([...prev, sectionId]));
+    
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
 
   const toggleSection = (sectionId: string) => {
     const newExpanded = new Set(expandedItems);
@@ -266,29 +256,38 @@ export default function APIReference() {
     setExpandedItems(newExpanded);
   };
 
-  const copyExample = (example: string, itemName: string) => {
+  const copyExample = (example: string, key: string) => {
     navigator.clipboard.writeText(example);
-    setCopiedExample(itemName);
+    setCopiedExample(key);
     setTimeout(() => setCopiedExample(null), 2000);
   };
 
-  const scrollToSection = (sectionId: string) => {
-    setActiveSection(sectionId);
-    const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
+  // Track scroll position for active section highlighting
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = apiSections.map(section => ({
+        id: section.id,
+        element: document.getElementById(section.id)
+      }));
 
-  const groupedSections = apiSections.reduce((acc, section) => {
-    if (!acc[section.category]) {
-      acc[section.category] = [];
-    }
-    acc[section.category].push(section);
-    return acc;
-  }, {} as Record<string, APISection[]>);
+      const currentSection = sections.find(section => {
+        if (!section.element) return false;
+        const rect = section.element.getBoundingClientRect();
+        return rect.top <= 100 && rect.bottom > 100;
+      });
+
+      if (currentSection) {
+        setActiveSection(currentSection.id);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="api-reference">
-      {/* Hero Section */}
+      {/* Compact Hero */}
       <section className="api-hero">
         <div className="api-hero-content">
           <div className="api-hero-badge">
@@ -298,166 +297,33 @@ export default function APIReference() {
           <h1>API Reference</h1>
           <p>
             Complete reference for all Floatify components, hooks, and TypeScript interfaces.
-            Everything you need to build amazing overlay experiences.
           </p>
         </div>
       </section>
 
       <div className="api-layout">
-        {/* Sidebar Navigation */}
-        <aside className="api-sidebar">
-          <div className="api-sidebar-content">
-            <div className="api-sidebar-header">
-              <h3>Quick Navigation</h3>
-            </div>
-            
-            {Object.entries(groupedSections).map(([category, sections]) => (
-              <div key={category} className="api-nav-group">
-                <div className="api-nav-group-header">
-                  <span 
-                    className="api-nav-category"
-                    style={{
-                      color: categoryConfig[category as keyof typeof categoryConfig].color,
-                      backgroundColor: categoryConfig[category as keyof typeof categoryConfig].bgColor
-                    }}
-                  >
-                    {categoryConfig[category as keyof typeof categoryConfig].label}
-                  </span>
-                </div>
-                <div className="api-nav-items">
-                  {sections.map((section) => (
-                    <button
-                      key={section.id}
-                      className={`api-nav-item ${activeSection === section.id ? 'api-nav-item--active' : ''}`}
-                      onClick={() => scrollToSection(section.id)}
-                    >
-                      {section.icon}
-                      <span>{section.title}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            {/* Quick Start Link */}
-            <div className="api-sidebar-footer">
-              <a href="#" className="api-quick-start-link">
-                <ArrowRight size={16} />
-                View Examples
-              </a>
-            </div>
-          </div>
-        </aside>
+        {/* Navigation Sidebar */}
+        <APINavigation 
+          sections={apiSections}
+          activeSection={activeSection}
+          onSectionClick={scrollToSection}
+        />
 
         {/* Main Content */}
         <main className="api-main">
-          {/* API Sections */}
           <div className="api-sections">
             {apiSections.map((section) => (
-              <section
+              <APISection
                 key={section.id}
                 id={section.id}
-                className="api-section"
-              >
-                <div className="api-section-header">
-                  <div className="api-section-meta">
-                    <div className="api-section-icon">
-                      {section.icon}
-                    </div>
-                    <div className="api-section-info">
-                      <div className="api-section-title-row">
-                        <h2>{section.title}</h2>
-                        <span 
-                          className="api-section-category"
-                          style={{
-                            color: categoryConfig[section.category].color,
-                            backgroundColor: categoryConfig[section.category].bgColor
-                          }}
-                        >
-                          {categoryConfig[section.category].label}
-                        </span>
-                      </div>
-                      <p className="api-section-description">{section.description}</p>
-                    </div>
-                  </div>
-                  
-                  <button
-                    className="api-section-toggle"
-                    onClick={() => toggleSection(section.id)}
-                    aria-expanded={expandedItems.has(section.id)}
-                  >
-                    {expandedItems.has(section.id) ? (
-                      <ChevronDown size={20} />
-                    ) : (
-                      <ChevronRight size={20} />
-                    )}
-                  </button>
-                </div>
-
-                {expandedItems.has(section.id) && (
-                  <div className="api-section-content">
-                    <div className="api-items">
-                      {section.items.map((item) => (
-                        <div key={item.name} className="api-item">
-                          <div className="api-item-header">
-                            <div className="api-item-signature">
-                              <code className="api-item-name">{item.name}</code>
-                              <div className="api-item-meta">
-                                {item.required && (
-                                  <span className="api-item-required">required</span>
-                                )}
-                                {item.since && (
-                                  <span className="api-item-since">since {item.since}</span>
-                                )}
-                              </div>
-                            </div>
-                            <code className="api-item-type">{item.type}</code>
-                          </div>
-                          
-                          <div className="api-item-body">
-                            <p className="api-item-description">{item.description}</p>
-                            
-                            {item.defaultValue && (
-                              <div className="api-item-default">
-                                <span className="api-item-label">Default:</span>
-                                <code>{item.defaultValue}</code>
-                              </div>
-                            )}
-                            
-                            {item.example && (
-                              <div className="api-item-example">
-                                <div className="api-example-header">
-                                  <span className="api-item-label">Example:</span>
-                                  <button
-                                    className="api-copy-button"
-                                    onClick={() => copyExample(item.example!, item.name)}
-                                    title="Copy example"
-                                  >
-                                    {copiedExample === item.name ? (
-                                      <>
-                                        <CheckCircle size={14} />
-                                        Copied!
-                                      </>
-                                    ) : (
-                                      <>
-                                        <Copy size={14} />
-                                        Copy
-                                      </>
-                                    )}
-                                  </button>
-                                </div>
-                                <div className="api-code-block">
-                                  <pre><code>{item.example}</code></pre>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </section>
+                title={section.title}
+                description={section.description}
+                icon={section.icon}
+                category={section.category}
+                items={section.items}
+                isExpanded={expandedItems.has(section.id)}
+                onToggle={() => toggleSection(section.id)}
+              />
             ))}
           </div>
 
