@@ -14,7 +14,7 @@ interface OverlayPortalProps {
     portalRoot?: HTMLElement;
     unstyled?: boolean;
     autoDismiss?: boolean;
-    fixedToViewport?: boolean; // Renamed from 'sticky' for clarity
+    fixedToViewport?: boolean;
     position?:
         | 'top'
         | 'bottom'
@@ -28,33 +28,37 @@ interface OverlayPortalProps {
 export function OverlayPortal({
     concurrencyMode = 'single',
     portalRoot,
-    unstyled,
+    unstyled = false,
     fixedToViewport = false,
     position = 'top',
 }: OverlayPortalProps) {
-    const overlayClass = `overlay-library ${unstyled ? '' : 'overlay-styled'}`;
     const { state, getActiveChannel, getActiveCard } = useAggregator();
     const root = portalRoot ?? document.body;
 
     // 🔹 SINGLE CONCURRENCY MODE: Only show the active channel's card
     if (concurrencyMode === 'single') {
         const activeChannel = getActiveChannel();
+        
         // Nothing to render when there is no active channel
         if (!activeChannel) return null;
 
         const activeCard = getActiveCard(activeChannel.channelId);
-        if (!activeCard &&
-            activeChannel.state !== 'loading' &&
-            activeChannel.state !== 'icon') {
-            return null;
-        }
+        
+        // Show overlay if there's a card OR if channel is in loading/icon state
+        const shouldShow = activeCard || 
+                          activeChannel.state === 'loading' || 
+                          activeChannel.state === 'icon';
+        
+        if (!shouldShow) return null;
+
+        const overlayClass = `overlay-library ${unstyled ? '' : 'overlay-styled'}`;
 
         return ReactDOM.createPortal(
             <div className={overlayClass}>
                 <div role="status" aria-live="polite">
                     <DefaultOverlay
                         channelId={activeChannel.channelId}
-                        cardId={activeCard?.id}
+                        card={activeCard}
                         fixedToViewport={fixedToViewport}
                         position={position}
                     />
@@ -69,8 +73,11 @@ export function OverlayPortal({
         (ch) =>
             ch.cards.length > 0 || ch.state === 'loading' || ch.state === 'icon'
     );
+    
     // Nothing to render if no channel currently holds cards
     if (activeChannels.length === 0) return null;
+
+    const overlayClass = `overlay-library ${unstyled ? '' : 'overlay-styled'}`;
 
     // Create container with fixed positioning for multiple overlays
     const multipleContainerClasses = [
@@ -88,15 +95,12 @@ export function OverlayPortal({
                 <DefaultOverlay
                     key={channel.channelId}
                     channelId={channel.channelId}
-                    cardId={activeCard?.id}
+                    card={activeCard}
                     fixedToViewport={false} // Individual overlays don't need fixed positioning in multiple mode
                     position="relative" // Use relative positioning within the container
                 />
             );
         }) as JSX.Element[];
-
-    // Guard against channels that have no active cards
-    if (overlays.length === 0) return null;
 
     return ReactDOM.createPortal(
         <div className={overlayClass}>
@@ -115,12 +119,12 @@ export function OverlayPortal({
  */
 function DefaultOverlay({
     channelId,
-    cardId,
+    card,
     fixedToViewport,
     position,
 }: {
     channelId: string;
-    cardId?: string;
+    card?: any;
     fixedToViewport: boolean;
     position: string;
 }) {
@@ -129,8 +133,12 @@ function DefaultOverlay({
     const channel = state.channels[channelId];
     if (!channel) return null;
 
-    const card = cardId ? channel.cards.find((c) => c.id === cardId) : undefined;
-    if (!card && channel.state !== 'loading' && channel.state !== 'icon') return null;
+    // Show overlay if there's a card OR if channel is in loading/icon state
+    const shouldShow = card || 
+                      channel.state === 'loading' || 
+                      channel.state === 'icon';
+    
+    if (!shouldShow) return null;
 
     const portalClasses = [
         'overlay-portal',

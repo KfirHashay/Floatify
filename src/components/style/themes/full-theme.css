@@ -5,17 +5,17 @@
 
 :root {
     /* 🌙 Dark Mode (Default) */
-    --di-background: rgba(18, 18, 18, 0.75);
+    --di-background: rgba(18, 18, 18, 0.85);
     --di-background-solid: rgb(18, 18, 18);
     --di-background-rgb: 18, 18, 18;
     --di-text: rgba(255, 255, 255, 0.97);
-    --di-shadow: rgba(0, 0, 0, 0.35);
+    --di-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     --di-focus-ring: rgba(255, 255, 255, 0.7);
 
     /* 🪟 Glass Effect */
-    --di-glass-opacity: 0.75;
+    --di-glass-opacity: 0.85;
     --di-glass-blur: 16px;
-    --di-glass-border: rgba(255, 255, 255, 0.1);
+    --di-glass-border: rgba(255, 255, 255, 0.15);
     --di-glass-shadow-primary: rgba(0, 0, 0, 0.35);
     --di-glass-shadow-secondary: rgba(0, 0, 0, 0.25);
 
@@ -42,11 +42,11 @@
 
 /* 🔆 Light Theme Adjustments */
 [data-theme='light'] {
-    --di-background: rgba(250, 250, 250, 0.75);
+    --di-background: rgba(250, 250, 250, 0.85);
     --di-background-solid: rgb(250, 250, 250);
     --di-background-rgb: 250, 250, 250;
     --di-text: rgba(10, 10, 10, 0.97);
-    --di-shadow: rgba(0, 0, 0, 0.2);
+    --di-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     --di-focus-ring: rgba(0, 0, 0, 0.3);
 
     /* 🪟 Glass effect adjustments */
@@ -64,7 +64,7 @@ html {
 .overlay-styled .overlay-card {
     background-color: var(--di-background);
     color: var(--di-text);
-    box-shadow: 0 6px 16px var(--di-shadow);
+    box-shadow: var(--di-shadow);
     border: 1px solid var(--di-glass-border);
     backdrop-filter: blur(var(--di-glass-blur));
     -webkit-backdrop-filter: blur(var(--di-glass-blur));
@@ -72,12 +72,12 @@ html {
 
 /* 🌟 Portal Styling */
 .overlay-styled .overlay-portal {
-    background-color: transparent;
-    box-shadow: none;
-    border: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    color: inherit;
+    background-color: var(--di-background);
+    box-shadow: var(--di-shadow);
+    border: 1px solid var(--di-glass-border);
+    backdrop-filter: blur(var(--di-glass-blur));
+    -webkit-backdrop-filter: blur(var(--di-glass-blur));
+    color: var(--di-text);
     transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
         border-color 0.2s ease-in-out;
 }
@@ -86,7 +86,14 @@ html {
 [data-theme='light'] .overlay-styled .overlay-card {
     background-color: var(--di-background);
     color: var(--di-text);
-    box-shadow: 0 4px 12px var(--di-shadow);
+    box-shadow: var(--di-shadow);
+    border: 1px solid var(--di-glass-border);
+}
+
+[data-theme='light'] .overlay-styled .overlay-portal {
+    background-color: var(--di-background);
+    color: var(--di-text);
+    box-shadow: var(--di-shadow);
     border: 1px solid var(--di-glass-border);
 }
 

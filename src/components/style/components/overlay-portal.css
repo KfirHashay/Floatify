@@ -19,7 +19,7 @@
     
     color: var(--di-text);
     border-radius: calc(var(--overlay-collapsed-height) / 2);
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to visible */
     user-select: none;
     cursor: pointer;
     z-index: var(--di-z-index, 9999);
@@ -31,7 +31,7 @@
     background-color: rgba(var(--di-background-rgb), var(--di-glass-opacity));
     backdrop-filter: blur(var(--di-glass-blur));
     -webkit-backdrop-filter: blur(var(--di-glass-blur));
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--di-shadow);
     border: 1px solid var(--di-glass-border);
     
     /* Optimized transitions using transform */
@@ -82,7 +82,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    padding: var(--overlay-padding, 8px);
+    padding: 0; /* Removed padding to prevent layout issues */
     opacity: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

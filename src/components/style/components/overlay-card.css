@@ -17,8 +17,8 @@
     -webkit-backdrop-filter: blur(var(--di-glass-blur));
     
     /* Fixed dimensions with transform scaling */
-    width: var(--overlay-collapsed-width);
-    height: var(--overlay-collapsed-height);
+    width: 100%;
+    height: 100%;
     min-width: var(--overlay-collapsed-width);
     min-height: var(--overlay-collapsed-height);
     
@@ -52,7 +52,7 @@
 
 /* 🔹 Expanded Mode - scale up instead of changing dimensions */
 .overlay-styled .overlay-card--expanded {
-    transform: scale(calc(var(--overlay-expanded-width) / var(--overlay-collapsed-width)));
+    transform: scale(1);
     border-radius: var(--di-border-radius);
     padding: var(--overlay-padding-lg);
     justify-content: space-between;
@@ -62,10 +62,6 @@
 /* 🔹 Loading / Icon Only Modes */
 .overlay-styled .overlay-card--loading,
 .overlay-styled .overlay-card--icon {
-    width: var(--overlay-collapsed-height);
-    height: var(--overlay-collapsed-height);
-    min-width: var(--overlay-collapsed-height);
-    min-height: var(--overlay-collapsed-height);
     padding: 0;
     border-radius: 50%;
     transform: scale(1);
