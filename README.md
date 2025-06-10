@@ -82,9 +82,29 @@ The overlay portal can stick to the viewport and be positioned around the screen
 On mobile devices only `top` or `bottom` positions are recommended.
 
 ```tsx
-<Floatify sticky position="bottom-right">
+<Floatify sticky position="bottom">
   {/* rest of your app */}
 </Floatify>
+```
+
+### Loading & Icon States
+
+Set a channel to `'loading'` to show a spinner or `'icon'` to display just the icon.
+A typical pattern is to drive this from a loading boolean:
+
+```tsx
+const { registerChannel, updateChannelState } = useAggregator();
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  registerChannel('playback', 1);
+}, [registerChannel]);
+
+useEffect(() => {
+  updateChannelState('playback', loading ? 'loading' : 'collapsed');
+}, [loading, updateChannelState]);
+
+// later: setLoading(false); updateChannelState('playback', 'icon');
 ```
 
 ## Debug Mode

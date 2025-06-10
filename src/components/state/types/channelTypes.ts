@@ -10,7 +10,14 @@ import { OverlayCard } from './overlayCardTypes';
 /**
  * OverlayState indicates the current display/interaction mode for a channel.
  */
-export type OverlayState = 'hidden' | 'collapsed' | 'expanded' | 'alert' | 'swiping';
+export type OverlayState =
+    | 'hidden'
+    | 'collapsed'
+    | 'expanded'
+    | 'alert'
+    | 'swiping'
+    | 'loading'
+    | 'icon';
 
 /**
  * Channel represents a distinct data stream in the overlay system

@@ -116,41 +116,51 @@
 /* ------------------------------------------------------------------
    Position helpers for the overlay portal
    ------------------------------------------------------------------ */
-.overlay-portal--sticky {
+
+.overlay-styled .overlay-portal--sticky {
     position: sticky;
     top: 0;
 }
 
-@media (min-width: 481px) {
-    .overlay-portal--top {
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-    }
+/* Mobile friendly placement */
+.overlay-styled .overlay-portal--top {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
-    .overlay-portal--bottom {
+.overlay-styled .overlay-portal--bottom {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@media (min-width: 481px) {
+
+    .overlay-styled .overlay-portal--bottom {
         position: fixed;
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
     }
 
-    .overlay-portal--center {
+    .overlay-styled .overlay-portal--center {
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
 
-    .overlay-portal--top-left {
+    .overlay-styled .overlay-portal--top-left {
         position: fixed;
         top: 0;
         left: 0;
         transform: none;
     }
 
-    .overlay-portal--top-right {
+    .overlay-styled .overlay-portal--top-right {
         position: fixed;
         top: 0;
         right: 0;
@@ -158,14 +168,14 @@
         transform: none;
     }
 
-    .overlay-portal--bottom-left {
+    .overlay-styled .overlay-portal--bottom-left {
         position: fixed;
         bottom: 0;
         left: 0;
         transform: none;
     }
 
-    .overlay-portal--bottom-right {
+    .overlay-styled .overlay-portal--bottom-right {
         position: fixed;
         bottom: 0;
         right: 0;

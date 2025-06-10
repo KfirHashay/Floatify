@@ -95,7 +95,7 @@ export function aggregatorReducer(state: OverlayAggregatorState, action: Overlay
             };
 
             // Optional concurrency example:
-            // If a card is added to a higher-priority channel, switch active?
+            // If a card is added to a higher-priority channel, switch active
             if (action.type === 'ADD_CARD') {
                 const newChannelPriority = updatedChannel.priority;
                 const currentActive = nextState.activeChannelId ? nextState.channels[nextState.activeChannelId] : null;
@@ -107,6 +107,20 @@ export function aggregatorReducer(state: OverlayAggregatorState, action: Overlay
                         ...nextState,
                         activeChannelId: channelId,
                     };
+                }
+            }
+
+            if (action.type === 'UPDATE_CHANNEL_STATE') {
+                const { newState } = action.payload;
+                if (newState !== 'hidden') {
+                    const currentActive = nextState.activeChannelId ? nextState.channels[nextState.activeChannelId] : null;
+                    const isHigherPriority =
+                        !currentActive || updatedChannel.priority > currentActive.priority;
+                    if (isHigherPriority) {
+                        nextState = { ...nextState, activeChannelId: channelId };
+                    }
+                } else if (nextState.activeChannelId === channelId) {
+                    nextState = { ...nextState, activeChannelId: null };
                 }
             }
 

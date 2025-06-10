@@ -43,15 +43,18 @@ export function OverlayPortal({
         if (!activeChannel) return null;
 
         const activeCard = getActiveCard(activeChannel.channelId);
-        // Guard against an active channel with no cards
-        if (!activeCard) return null;
+        if (!activeCard &&
+            activeChannel.state !== 'loading' &&
+            activeChannel.state !== 'icon') {
+            return null;
+        }
 
         return ReactDOM.createPortal(
             <div className={overlayClass}>
                 <div role="status" aria-live="polite">
                     <DefaultOverlay
                         channelId={activeChannel.channelId}
-                        cardId={activeCard.id}
+                        cardId={activeCard?.id}
                         sticky={sticky}
                         position={position}
                     />
@@ -62,24 +65,26 @@ export function OverlayPortal({
     }
 
     // 🔹 MULTIPLE CONCURRENCY MODE: Display multiple active overlays
-    const activeChannels = Object.values(state.channels).filter((ch) => ch.cards.length > 0);
+    const activeChannels = Object.values(state.channels).filter(
+        (ch) =>
+            ch.cards.length > 0 || ch.state === 'loading' || ch.state === 'icon'
+    );
     // Nothing to render if no channel currently holds cards
     if (activeChannels.length === 0) return null;
 
     const overlays = activeChannels
         .map((channel) => {
             const activeCard = getActiveCard(channel.channelId);
-            return activeCard ? (
+            return (
                 <DefaultOverlay
                     key={channel.channelId}
                     channelId={channel.channelId}
-                    cardId={activeCard.id}
+                    cardId={activeCard?.id}
                     sticky={sticky}
                     position={position}
                 />
-            ) : null;
-        })
-        .filter(Boolean) as JSX.Element[];
+            );
+        }) as JSX.Element[];
 
 
     // Guard against channels that have no active cards
@@ -108,7 +113,7 @@ function DefaultOverlay({
     position,
 }: {
     channelId: string;
-    cardId: string;
+    cardId?: string;
     sticky: boolean;
     position: string;
 }) {
@@ -117,8 +122,8 @@ function DefaultOverlay({
     const channel = state.channels[channelId];
     if (!channel) return null;
 
-    const card = channel.cards.find((c) => c.id === cardId);
-    if (!card) return null;
+    const card = cardId ? channel.cards.find((c) => c.id === cardId) : undefined;
+    if (!card && channel.state !== 'loading' && channel.state !== 'icon') return null;
 
     const portalClasses = [
         'overlay-portal',

@@ -54,7 +54,10 @@ export function channelReducer(channel: Channel, action: OverlayAggregatorAction
 
         case 'UPDATE_CHANNEL_STATE': {
             if (action.payload.channelId !== channel.channelId) return channel;
+
+            // All valid overlay states are passed directly.
             const { newState } = action.payload;
+
             return {
                 ...channel,
                 state: newState,
