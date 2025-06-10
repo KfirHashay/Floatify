@@ -98,6 +98,9 @@ export default function AggregatorProvider({
         stateRef.current = state;
     }, [state]);
 
+    // Ref to track active auto-dismiss timeouts
+    const timeoutsRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
+
     // Dispatch wrapper that logs action and state transitions when debug is enabled
     const debugDispatch = useCallback(
         (action: OverlayAggregatorAction) => {
@@ -118,15 +121,56 @@ export default function AggregatorProvider({
     // Use the debug wrapper only when the flag is true
     const dispatch = debug ? debugDispatch : baseDispatch;
 
-    // If concurrencyMode = 'priority', you might do additional logic in the aggregator reducer
-    // or here in a side effect (e.g., watch new channels or new cards and auto-select highest priority).
-    // Currently, we rely on aggregatorReducer logic for concurrency.
-
-    // Auto-dismiss example: watch for newly added cards and set a timer
+    // Auto-dismiss logic: watch for newly added cards and set timers
     useEffect(() => {
-        if (!autoDismiss) return;
-        // Minimal example: you could track newly added cards. In practice, you'd store times or track item changes.
-    }, [autoDismiss, autoDismissTimeout, state.channels]);
+        if (!autoDismiss) {
+            // Clear all timeouts if auto-dismiss is disabled
+            timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
+            timeoutsRef.current.clear();
+            return;
+        }
+
+        // Clear existing timeouts
+        timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
+        timeoutsRef.current.clear();
+
+        // Set up auto-dismiss for all active cards
+        Object.values(state.channels).forEach((channel) => {
+            channel.cards.forEach((card) => {
+                // Check if this card should auto-dismiss
+                const shouldAutoDismiss = card.autoDismiss !== undefined ? card.autoDismiss : autoDismiss;
+                
+                if (shouldAutoDismiss) {
+                    // Use card-specific duration or global timeout
+                    const duration = card.autoDismissDuration || autoDismissTimeout;
+                    
+                    const timeoutId = setTimeout(() => {
+                        if (debug) {
+                            console.log(`[Floatify] Auto-dismissing card ${card.id} after ${duration}ms`);
+                        }
+                        dispatch({
+                            type: 'REMOVE_CARD',
+                            payload: {
+                                channelId: channel.channelId,
+                                cardId: card.id,
+                            },
+                        });
+                        // Clean up the timeout reference
+                        timeoutsRef.current.delete(card.id);
+                    }, duration);
+
+                    // Store the timeout reference
+                    timeoutsRef.current.set(card.id, timeoutId);
+                }
+            });
+        });
+
+        // Cleanup function
+        return () => {
+            timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
+            timeoutsRef.current.clear();
+        };
+    }, [state.channels, autoDismiss, autoDismissTimeout, dispatch, debug]);
 
     // Memoize the context value so we don't cause re-renders beyond the aggregator state changes
     const contextValue = useMemo(() => {

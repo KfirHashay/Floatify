@@ -1,8 +1,8 @@
 /* =======================================================
    🎨 Overlay Library Design Tokens
-   - Enhanced variables for better visibility and positioning
-   - Improved Dynamic Island feel with proper dimensions
-   - Fixed mobile positioning and interactions
+   - Enhanced variables for Dynamic Island appearance
+   - Improved positioning and interactions
+   - Mobile-optimized dimensions and spacing
 ========================================================== */
 
 /* Root: Default (Light Mode) */
@@ -32,10 +32,10 @@
     --overlay-padding-sm: 8px;
     --overlay-padding-md: 12px;
     --overlay-padding-lg: 16px;
-    --overlay-gap-sm: 4px;
-    --overlay-gap-md: 8px;
-    --overlay-gap-lg: 12px;
-    --overlay-border-radius: 12px;
+    --overlay-gap-sm: 6px;
+    --overlay-gap-md: 10px;
+    --overlay-gap-lg: 14px;
+    --overlay-border-radius: 16px;
     
     /* Dynamic Island Defaults - PROPER DIMENSIONS */
     --di-border-radius: var(--overlay-border-radius);
@@ -55,10 +55,10 @@
     --overlay-border-width: 1px;
 
     /* Dynamic Island Dimensions - OPTIMIZED SIZES */
-    --overlay-collapsed-width: 140px; /* Slightly wider for better text visibility */
-    --overlay-collapsed-height: 40px; /* Slightly taller for better touch targets */
-    --overlay-expanded-width: 380px; /* Wider for more content */
-    --overlay-expanded-height: 140px; /* Taller for better content layout */
+    --overlay-collapsed-width: 160px; /* Wider for better text visibility */
+    --overlay-collapsed-height: 44px; /* Taller for better touch targets */
+    --overlay-expanded-width: 400px; /* Wider for more content */
+    --overlay-expanded-height: 160px; /* Taller for better content layout */
 
     /* Animation Durations - Optimized for Dynamic Island feel */
     --di-duration-fast: 200ms;
@@ -75,7 +75,9 @@
         transform var(--di-duration-normal) var(--di-spring-timing),
         opacity var(--di-duration-fast) var(--di-ease-out),
         border-radius var(--di-duration-normal) var(--di-transition-timing),
-        box-shadow var(--di-duration-normal) var(--di-ease-out);
+        box-shadow var(--di-duration-normal) var(--di-ease-out),
+        width var(--di-duration-normal) var(--di-spring-timing),
+        height var(--di-duration-normal) var(--di-spring-timing);
 
     /* Legacy animation properties - kept for backward compatibility */
     --overlay-transition: var(--di-overlay-transition);
@@ -86,7 +88,7 @@
     --di-z-index: 9999;
 
     /* Performance optimizations */
-    --di-will-change: transform, opacity, border-radius;
+    --di-will-change: transform, opacity, border-radius, width, height;
     
     /* Interaction states - ENHANCED FEEDBACK */
     --di-hover-scale: 1.03;
@@ -112,10 +114,10 @@
 @media (max-width: 480px) {
     :root {
         /* Adjust dimensions for mobile */
-        --overlay-collapsed-width: 120px;
-        --overlay-collapsed-height: 36px;
-        --overlay-expanded-width: 320px;
-        --overlay-expanded-height: 120px;
+        --overlay-collapsed-width: 140px;
+        --overlay-collapsed-height: 40px;
+        --overlay-expanded-width: 340px;
+        --overlay-expanded-height: 140px;
         
         /* Adjust spacing for mobile */
         --di-top-offset: 16px;
@@ -129,5 +131,10 @@
         --overlay-font-size-sm: 13px;
         --overlay-font-size-md: 15px;
         --overlay-font-size-lg: 17px;
+        
+        /* Adjust gaps for mobile */
+        --overlay-gap-sm: 4px;
+        --overlay-gap-md: 8px;
+        --overlay-gap-lg: 12px;
     }
 }

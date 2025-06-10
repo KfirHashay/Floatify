@@ -26,7 +26,9 @@ export default function Demo({
     addCard('demo', {
       id: Date.now().toString(),
       title: 'Hello from Floatify',
-      content: 'This card was triggered by a button click.'
+      content: 'This card was triggered by a button click.',
+      autoDismiss: true,
+      autoDismissDuration: 3000
     })
   }
 
@@ -36,7 +38,8 @@ export default function Demo({
       id,
       title: 'Loading…',
       content: 'Please wait',
-      icon: <Loader2 className="spin" />
+      icon: <Loader2 className="spin" />,
+      autoDismiss: false // Don't auto-dismiss loading states
     })
 
     setTimeout(() => {
@@ -45,9 +48,20 @@ export default function Demo({
         id: `${id}-done`,
         title: 'Complete',
         content: 'Operation successful',
-        icon: <CheckCircle />
+        icon: <CheckCircle />,
+        autoDismiss: true,
+        autoDismissDuration: 2000 // Shorter duration for success messages
       })
     }, 1500)
+  }
+
+  const handlePersistent = () => {
+    addCard('demo', {
+      id: Date.now().toString(),
+      title: 'Persistent Message',
+      content: 'This message will not auto-dismiss. Click to expand and dismiss manually.',
+      autoDismiss: false // This card won't auto-dismiss
+    })
   }
 
   const handlePositionChange = (value: string) => {
@@ -78,10 +92,13 @@ export default function Demo({
       
       <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', justifyContent: 'center' }}>
         <button className="btn btn-primary" onClick={handleShow}>
-          Show Notification
+          Auto-Dismiss (3s)
         </button>
         <button className="btn btn-secondary" onClick={handleLoading}>
           Loading Example
+        </button>
+        <button className="btn btn-ghost" onClick={handlePersistent}>
+          Persistent Message
         </button>
       </div>
     </div>
