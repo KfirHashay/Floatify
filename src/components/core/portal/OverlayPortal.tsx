@@ -1,7 +1,7 @@
 /**
  * OverlayPortal.tsx
  *
- * Manages overlay rendering through React Portal.
+ * Fixed portal rendering with proper positioning and interactions
  */
 import React, { JSX } from 'react';
 import ReactDOM from 'react-dom';
@@ -115,7 +115,7 @@ export function OverlayPortal({
 /**
  * DefaultOverlay
  *
- * Fetches the correct card from the aggregator and renders it.
+ * Fixed overlay component with proper positioning and interactions
  */
 function DefaultOverlay({
     channelId,
@@ -140,6 +140,7 @@ function DefaultOverlay({
     
     if (!shouldShow) return null;
 
+    // Build portal classes with proper positioning
     const portalClasses = [
         'overlay-portal',
         fixedToViewport ? 'overlay-portal--fixed' : '',

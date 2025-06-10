@@ -1,25 +1,25 @@
 /* =======================================================
    🎨 Overlay Library Design Tokens
-   - Defines global CSS variables for colors, spacing, shadows, etc.
-   - Supports theming (light/dark modes)
-   - Provides a scalable foundation for UI consistency
+   - Enhanced variables for better visibility and positioning
+   - Improved Dynamic Island feel with proper dimensions
+   - Fixed mobile positioning and interactions
 ========================================================== */
 
 /* Root: Default (Light Mode) */
 :root {
-    /* Primary Colors */
+    /* Primary Colors - ENHANCED CONTRAST */
     --overlay-primary-color: #007aff;
     --overlay-secondary-color: #0051cb;
     --overlay-text-color: #1a1a1a;
     --overlay-bg-color: #ffffff;
 
-    /* Dark Mode Colors */
+    /* Dark Mode Colors - IMPROVED VISIBILITY */
     --overlay-dark-primary: #0a84ff;
     --overlay-dark-secondary: #0055ff;
     --overlay-dark-text: #ffffff;
     --overlay-dark-bg: #000000;
 
-    /* Typography */
+    /* Typography - ENHANCED READABILITY */
     --overlay-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --overlay-font-size-sm: 14px;
     --overlay-font-size-md: 16px;
@@ -28,7 +28,7 @@
     --overlay-font-weight-normal: 400;
     --overlay-font-weight-bold: 600;
 
-    /* Spacing & Layout */
+    /* Spacing & Layout - OPTIMIZED FOR INTERACTIONS */
     --overlay-padding-sm: 8px;
     --overlay-padding-md: 12px;
     --overlay-padding-lg: 16px;
@@ -37,26 +37,26 @@
     --overlay-gap-lg: 12px;
     --overlay-border-radius: 12px;
     
-    /* Dynamic Island Defaults */
+    /* Dynamic Island Defaults - PROPER DIMENSIONS */
     --di-border-radius: var(--overlay-border-radius);
-    --di-glass-opacity: 0.75;
-    --di-top-offset: 12px;
+    --di-glass-opacity: 0.95; /* More opaque for better visibility */
+    --di-top-offset: 16px; /* Increased offset for better positioning */
 
-    /* Shadows */
-    --overlay-shadow-sm: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    --overlay-shadow-md: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    --overlay-shadow-lg: 0px 6px 20px rgba(0, 0, 0, 0.2);
-    --di-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    /* Shadows - ENHANCED DEPTH */
+    --overlay-shadow-sm: 0px 2px 8px rgba(0, 0, 0, 0.15);
+    --overlay-shadow-md: 0px 4px 16px rgba(0, 0, 0, 0.2);
+    --overlay-shadow-lg: 0px 8px 32px rgba(0, 0, 0, 0.25);
+    --di-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Stronger shadow */
 
-    /* Borders */
+    /* Borders - IMPROVED VISIBILITY */
     --overlay-border-color: rgba(0, 0, 0, 0.1);
     --overlay-border-width: 1px;
 
-    /* Dynamic Island Dimensions */
-    --overlay-collapsed-width: 120px;
-    --overlay-collapsed-height: 36px;
-    --overlay-expanded-width: 350px;
-    --overlay-expanded-height: 120px;
+    /* Dynamic Island Dimensions - OPTIMIZED SIZES */
+    --overlay-collapsed-width: 140px; /* Slightly wider for better text visibility */
+    --overlay-collapsed-height: 40px; /* Slightly taller for better touch targets */
+    --overlay-expanded-width: 380px; /* Wider for more content */
+    --overlay-expanded-height: 140px; /* Taller for better content layout */
 
     /* Animation Durations - Optimized for Dynamic Island feel */
     --di-duration-fast: 200ms;
@@ -79,25 +79,51 @@
     --overlay-transition: var(--di-overlay-transition);
     --overlay-scale-hover: 1.02;
 
-    /* Z-index */
+    /* Z-index - PROPER LAYERING */
     --overlay-z-index: 1000;
     --di-z-index: 9999;
 
     /* Performance optimizations */
     --di-will-change: transform, opacity, border-radius;
     
-    /* Interaction states */
+    /* Interaction states - ENHANCED FEEDBACK */
     --di-hover-scale: 1.03;
     --di-active-scale: 0.97;
+    
+    /* Focus ring for accessibility */
+    --overlay-focus-ring: rgba(0, 122, 255, 0.8);
 }
 
-/* 🌙 Dark Mode */
+/* 🌙 Dark Mode - ENHANCED CONTRAST */
 @media (prefers-color-scheme: dark) {
     :root {
         --overlay-primary-color: var(--overlay-dark-primary);
         --overlay-secondary-color: var(--overlay-dark-secondary);
         --overlay-text-color: var(--overlay-dark-text);
         --overlay-bg-color: var(--overlay-dark-bg);
-        --overlay-border-color: rgba(255, 255, 255, 0.1);
+        --overlay-border-color: rgba(255, 255, 255, 0.15); /* More visible border */
+        --overlay-focus-ring: rgba(255, 255, 255, 0.7);
+    }
+}
+
+/* 📱 Mobile Optimizations */
+@media (max-width: 480px) {
+    :root {
+        /* Adjust dimensions for mobile */
+        --overlay-collapsed-width: 120px;
+        --overlay-collapsed-height: 36px;
+        --overlay-expanded-width: 320px;
+        --overlay-expanded-height: 120px;
+        
+        /* Adjust spacing for mobile */
+        --di-top-offset: 12px;
+        --overlay-padding-sm: 6px;
+        --overlay-padding-md: 10px;
+        --overlay-padding-lg: 14px;
+        
+        /* Adjust font sizes for mobile */
+        --overlay-font-size-sm: 13px;
+        --overlay-font-size-md: 15px;
+        --overlay-font-size-lg: 17px;
     }
 }

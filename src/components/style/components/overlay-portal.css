@@ -1,15 +1,15 @@
 /* =======================================================
    🌟 Overlay Portal (Styled Version)
-   - Optimized for Dynamic Island-like animations
-   - Uses transform-based scaling instead of width/height changes
-   - Proper positioning for single and multiple overlay modes
+   - Fixed container interactions and positioning
+   - Proper text visibility and mobile positioning
+   - Working fixedToViewport functionality
 ========================================================== */
 
 .overlay-styled .overlay-portal {
-    /* Base positioning - will be overridden by specific position classes */
+    /* Base positioning - relative by default */
     position: relative;
     
-    /* Dynamic Island dimensions using transform scale */
+    /* Dynamic Island dimensions */
     width: var(--overlay-collapsed-width);
     height: var(--overlay-collapsed-height);
     
@@ -19,7 +19,7 @@
     
     color: var(--di-text);
     border-radius: calc(var(--overlay-collapsed-height) / 2);
-    overflow: visible; /* Changed from hidden to visible */
+    overflow: visible;
     user-select: none;
     cursor: pointer;
     z-index: var(--di-z-index, 9999);
@@ -28,7 +28,7 @@
     will-change: var(--di-will-change);
     
     /* Glassmorphism effect */
-    background-color: rgba(var(--di-background-rgb), var(--di-glass-opacity));
+    background-color: var(--di-background);
     backdrop-filter: blur(var(--di-glass-blur));
     -webkit-backdrop-filter: blur(var(--di-glass-blur));
     box-shadow: var(--di-shadow);
@@ -36,6 +36,9 @@
     
     /* Optimized transitions using transform */
     transition: var(--di-overlay-transition);
+    
+    /* Ensure interactions work */
+    pointer-events: auto;
 }
 
 /* State-based scaling instead of width/height changes */
@@ -75,18 +78,19 @@
     transform: scale(var(--di-hover-scale, 1.03));
 }
 
-/* Content container */
+/* Content container - NO PADDING to prevent interaction issues */
 .overlay-styled .overlay-container {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
-    padding: 0; /* Removed padding to prevent layout issues */
+    padding: 0; /* REMOVED PADDING */
     opacity: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: opacity var(--di-duration-fast) var(--di-ease-out);
+    pointer-events: auto; /* Ensure interactions work */
 }
 
 /* Hide empty portals */
@@ -121,12 +125,14 @@
 /* Fixed positioning for single overlays and multiple overlay containers */
 .overlay-styled .overlay-portal--fixed {
     position: fixed;
+    pointer-events: auto; /* Ensure interactions work */
 }
 
 /* Multiple overlay container positioning */
 .overlay-styled .overlay-multiple-container--fixed {
     position: fixed;
     z-index: var(--di-z-index, 9999);
+    pointer-events: none; /* Container doesn't block interactions */
 }
 
 /* Layout container for multiple overlays */
@@ -136,7 +142,7 @@
     justify-content: center;
     align-items: flex-start;
     gap: var(--overlay-gap-lg, 12px);
-    pointer-events: none; /* Allow clicks to pass through container */
+    pointer-events: none; /* Container doesn't block interactions */
 }
 
 .overlay-styled .overlay-multiple-container > * {
@@ -193,14 +199,14 @@
     transform: none;
 }
 
-/* Mobile-specific adjustments */
+/* Mobile-specific adjustments - ONLY top/bottom on mobile */
 @media (max-width: 480px) {
     .overlay-styled .overlay-multiple-container {
         flex-direction: column;
         align-items: center;
     }
     
-    /* On mobile, only use top/bottom positioning for better UX */
+    /* Force all positions to top/bottom on mobile */
     .overlay-styled .overlay-portal--center,
     .overlay-styled .overlay-portal--top-left,
     .overlay-styled .overlay-portal--top-right,
@@ -215,6 +221,16 @@
         left: 50%;
         right: auto;
         bottom: auto;
+        transform: translateX(-50%);
+    }
+    
+    /* Keep bottom positioning on mobile */
+    .overlay-styled .overlay-portal--bottom,
+    .overlay-styled .overlay-multiple-container--bottom {
+        top: auto;
+        bottom: var(--di-top-offset, 12px);
+        left: 50%;
+        right: auto;
         transform: translateX(-50%);
     }
 }

@@ -1,18 +1,18 @@
 /* =======================================================
    🃏 Overlay Card (Styled Version)
-   - Optimized for Dynamic Island-like animations
-   - Uses transform-based scaling for better performance
-   - Consistent with portal animations
+   - Fixed text visibility and interactions
+   - Proper content layout and spacing
+   - Enhanced readability and contrast
 ========================================================== */
 
 .overlay-styled .overlay-card {
-    background-color: rgba(var(--di-background-rgb), var(--di-glass-opacity));
+    background-color: var(--di-background);
     color: var(--di-text);
     font-size: var(--overlay-font-size-md);
     padding: var(--overlay-padding-md);
     border-radius: var(--di-border-radius);
     box-shadow: var(--di-shadow);
-    border: var(--di-glass-border) solid 1px;
+    border: 1px solid var(--di-glass-border);
     backdrop-filter: blur(var(--di-glass-blur));
     -webkit-backdrop-filter: blur(var(--di-glass-blur));
     
@@ -39,6 +39,9 @@
     
     /* Optimized transitions */
     transition: var(--di-overlay-transition);
+    
+    /* Ensure interactions work */
+    pointer-events: auto;
 }
 
 /* 🔹 Collapsed Mode (Default) - uses scale instead of width/height */
@@ -62,7 +65,7 @@
 /* 🔹 Loading / Icon Only Modes */
 .overlay-styled .overlay-card--loading,
 .overlay-styled .overlay-card--icon {
-    padding: 0;
+    padding: var(--overlay-padding-sm);
     border-radius: 50%;
     transform: scale(1);
 }
@@ -81,7 +84,8 @@
 
 /* 🔹 Alert state with pulsing animation */
 .overlay-styled .overlay-card--alert {
-    background-color: var(--di-alert-bg, rgba(255, 69, 58, 0.95));
+    background-color: var(--di-alert-bg);
+    color: white; /* Ensure text is visible on alert background */
     transform: scale(1);
     border-radius: calc(var(--overlay-collapsed-height) / 2);
     backdrop-filter: none;
@@ -89,7 +93,7 @@
     animation: alert-pulse 2s infinite var(--di-spring-timing);
 }
 
-/* 🔹 Content styling */
+/* 🔹 Content styling - IMPROVED TEXT VISIBILITY */
 .overlay-styled .overlay-card-content {
     display: flex;
     flex-direction: column;
@@ -98,23 +102,27 @@
     flex: 1;
     min-width: 0;
     text-align: center;
+    color: var(--di-text); /* Ensure text color is applied */
 }
 
-/* 🔹 Title Styling */
+/* 🔹 Title Styling - ENHANCED VISIBILITY */
 .overlay-styled .overlay-card-title {
     font-size: var(--overlay-font-size-lg);
     font-weight: var(--overlay-font-weight-bold);
     text-align: center;
     margin: 0;
     line-height: 1.2;
+    color: var(--di-text); /* Explicit text color */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for better readability */
 }
 
-/* 🔹 Body (Hidden in Compact Mode) */
+/* 🔹 Body Text - IMPROVED READABILITY */
 .overlay-styled .overlay-card-body {
     font-size: var(--overlay-font-size-md);
     text-align: center;
     margin: 0;
     line-height: 1.4;
+    color: var(--di-text); /* Explicit text color */
     opacity: 0;
     max-height: 0;
     overflow: hidden;
@@ -134,6 +142,7 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    color: var(--di-text); /* Ensure icon color */
 }
 
 /* 🔹 Hover & Press Effects with spring timing */
@@ -176,4 +185,10 @@
 .overlay-styled .overlay-card--expanded .overlay-card-actions {
     display: flex;
     opacity: 1;
+}
+
+/* 🔹 Loading indicator text - ENSURE VISIBILITY */
+.overlay-styled .overlay-card--loading .overlay-card-title {
+    color: var(--di-text);
+    margin-left: var(--overlay-gap-sm);
 }

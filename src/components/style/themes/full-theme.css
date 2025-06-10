@@ -1,23 +1,25 @@
 /* =======================================================
    🎨 Overlay Theming (Dark & Light Mode)
-   - Ensures proper contrast & styling for both themes
+   - Enhanced contrast and text visibility
+   - Proper glassmorphism effects
+   - Fixed background colors and opacity
 ========================================================== */
 
 :root {
-    /* 🌙 Dark Mode (Default) */
-    --di-background: rgba(18, 18, 18, 0.85);
-    --di-background-solid: rgb(18, 18, 18);
-    --di-background-rgb: 18, 18, 18;
-    --di-text: rgba(255, 255, 255, 0.97);
-    --di-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    /* 🌙 Dark Mode (Default) - ENHANCED CONTRAST */
+    --di-background: rgba(28, 28, 30, 0.95); /* More opaque for better text visibility */
+    --di-background-solid: rgb(28, 28, 30);
+    --di-background-rgb: 28, 28, 30;
+    --di-text: rgba(255, 255, 255, 0.98); /* Higher opacity for better readability */
+    --di-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); /* Stronger shadow */
     --di-focus-ring: rgba(255, 255, 255, 0.7);
 
-    /* 🪟 Glass Effect */
-    --di-glass-opacity: 0.85;
-    --di-glass-blur: 16px;
-    --di-glass-border: rgba(255, 255, 255, 0.15);
-    --di-glass-shadow-primary: rgba(0, 0, 0, 0.35);
-    --di-glass-shadow-secondary: rgba(0, 0, 0, 0.25);
+    /* 🪟 Glass Effect - IMPROVED VISIBILITY */
+    --di-glass-opacity: 0.95; /* More opaque */
+    --di-glass-blur: 20px; /* Stronger blur */
+    --di-glass-border: rgba(255, 255, 255, 0.2); /* More visible border */
+    --di-glass-shadow-primary: rgba(0, 0, 0, 0.4);
+    --di-glass-shadow-secondary: rgba(0, 0, 0, 0.3);
 
     /* 🎯 Interactions */
     --di-hover-scale: 1.03;
@@ -29,30 +31,30 @@
     --di-accent: #0a84ff;
     --di-accent-gradient: linear-gradient(120deg, #0a84ff, #0066cc);
 
-    /* 🔥 State Colors */
-    --di-alert-bg: rgba(255, 69, 58, 0.97);
+    /* 🔥 State Colors - ENHANCED VISIBILITY */
+    --di-alert-bg: rgba(255, 69, 58, 0.98);
     --di-alert-rgb: 255, 69, 58;
-    --di-success-bg: rgba(48, 209, 88, 0.97);
+    --di-success-bg: rgba(48, 209, 88, 0.98);
     --di-success-rgb: 48, 209, 88;
-    --di-warning-bg: rgba(255, 214, 10, 0.97);
+    --di-warning-bg: rgba(255, 214, 10, 0.98);
     --di-warning-rgb: 255, 214, 10;
-    --di-error-bg: rgba(255, 69, 58, 0.97);
+    --di-error-bg: rgba(255, 69, 58, 0.98);
     --di-error-rgb: 255, 69, 58;
 }
 
-/* 🔆 Light Theme Adjustments */
+/* 🔆 Light Theme Adjustments - ENHANCED CONTRAST */
 [data-theme='light'] {
-    --di-background: rgba(250, 250, 250, 0.85);
-    --di-background-solid: rgb(250, 250, 250);
-    --di-background-rgb: 250, 250, 250;
-    --di-text: rgba(10, 10, 10, 0.97);
-    --di-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    --di-background: rgba(248, 248, 248, 0.95); /* More opaque */
+    --di-background-solid: rgb(248, 248, 248);
+    --di-background-rgb: 248, 248, 248;
+    --di-text: rgba(28, 28, 30, 0.98); /* Higher contrast */
+    --di-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); /* Stronger shadow */
     --di-focus-ring: rgba(0, 0, 0, 0.3);
 
     /* 🪟 Glass effect adjustments */
-    --di-glass-border: rgba(0, 0, 0, 0.1);
-    --di-glass-shadow-primary: rgba(0, 0, 0, 0.2);
-    --di-glass-shadow-secondary: rgba(0, 0, 0, 0.15);
+    --di-glass-border: rgba(0, 0, 0, 0.15); /* More visible border */
+    --di-glass-shadow-primary: rgba(0, 0, 0, 0.25);
+    --di-glass-shadow-secondary: rgba(0, 0, 0, 0.2);
 }
 
 /* 🌗 Theme Transition */
@@ -60,7 +62,7 @@ html {
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-/* 🌙 Dark Theme Overrides */
+/* 🌙 Dark Theme Overrides - IMPROVED VISIBILITY */
 .overlay-styled .overlay-card {
     background-color: var(--di-background);
     color: var(--di-text);
@@ -70,7 +72,7 @@ html {
     -webkit-backdrop-filter: blur(var(--di-glass-blur));
 }
 
-/* 🌟 Portal Styling */
+/* 🌟 Portal Styling - ENHANCED CONTRAST */
 .overlay-styled .overlay-portal {
     background-color: var(--di-background);
     box-shadow: var(--di-shadow);
@@ -82,7 +84,7 @@ html {
         border-color 0.2s ease-in-out;
 }
 
-/* 🔆 Light Theme Overrides */
+/* 🔆 Light Theme Overrides - ENHANCED CONTRAST */
 [data-theme='light'] .overlay-styled .overlay-card {
     background-color: var(--di-background);
     color: var(--di-text);
@@ -106,4 +108,19 @@ html {
 /* ✅ Dark & Light Mode Transitions */
 .overlay-styled .overlay-card {
     transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* 🎯 Text Contrast Enhancements */
+.overlay-styled .overlay-card-title,
+.overlay-styled .overlay-card-body,
+.overlay-styled .overlay-card-content {
+    color: var(--di-text) !important; /* Force text visibility */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for readability */
+}
+
+/* 🔆 Light theme text adjustments */
+[data-theme='light'] .overlay-styled .overlay-card-title,
+[data-theme='light'] .overlay-styled .overlay-card-body,
+[data-theme='light'] .overlay-styled .overlay-card-content {
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
 }
