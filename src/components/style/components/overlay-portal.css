@@ -122,6 +122,14 @@
     top: 0;
 }
 
+/* Sticky placement helpers */
+.overlay-styled .overlay-portal--sticky.overlay-portal--bottom,
+.overlay-styled .overlay-portal--sticky.overlay-portal--bottom-left,
+.overlay-styled .overlay-portal--sticky.overlay-portal--bottom-right {
+    top: auto;
+    bottom: 0;
+}
+
 /* Mobile friendly placement */
 .overlay-styled .overlay-portal--top {
     position: fixed;
