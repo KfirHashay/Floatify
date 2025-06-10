@@ -145,7 +145,7 @@ function App() {
       <section className="stats">
         <div className="stats-grid">
           <div className="stat">
-            <div className="stat-number">< 5kb</div>
+            <div className="stat-number"> 5kb</div>
             <div className="stat-label">Gzipped Bundle Size</div>
           </div>
           <div className="stat">
