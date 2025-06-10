@@ -64,19 +64,37 @@ export default function Demo({
             type="checkbox"
             checked={sticky}
             onChange={(e) => onStickyChange(e.target.checked)}
-          />{' '}
-          Sticky
+          />
+          <span>Sticky</span>
         </label>
-        <select value={position} onChange={(e) => handlePositionChange(e.target.value)}>
+        <select 
+          value={position} 
+          onChange={(e) => handlePositionChange(e.target.value)}
+          aria-label="Select overlay position"
+        >
           {POSITIONS.map((pos) => (
             <option key={pos} value={pos}>
-              {pos}
+              {pos.charAt(0).toUpperCase() + pos.slice(1).replace('-', ' ')}
             </option>
           ))}
         </select>
       </div>
-      <button onClick={handleShow}>Show Card</button>
-      <button onClick={handleLoading}>Loading Example</button>
+      <div className="demo-buttons">
+        <button 
+          onClick={handleShow}
+          className="btn btn-primary"
+          aria-label="Show notification card"
+        >
+          Show Card
+        </button>
+        <button 
+          onClick={handleLoading}
+          className="btn btn-secondary"
+          aria-label="Show loading example"
+        >
+          Loading Example
+        </button>
+      </div>
     </div>
   )
 }
