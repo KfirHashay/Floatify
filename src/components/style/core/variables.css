@@ -40,7 +40,9 @@
     /* Dynamic Island Defaults - PROPER DIMENSIONS */
     --di-border-radius: var(--overlay-border-radius);
     --di-glass-opacity: 0.95; /* More opaque for better visibility */
-    --di-top-offset: 16px; /* Increased offset for better positioning */
+    --di-top-offset: 20px; /* Top positioning offset */
+    --di-bottom-offset: 60px; /* INCREASED: Bottom positioning offset for better spacing */
+    --di-side-offset: 20px; /* Side positioning offset for corners */
 
     /* Shadows - ENHANCED DEPTH */
     --overlay-shadow-sm: 0px 2px 8px rgba(0, 0, 0, 0.15);
@@ -116,7 +118,9 @@
         --overlay-expanded-height: 120px;
         
         /* Adjust spacing for mobile */
-        --di-top-offset: 12px;
+        --di-top-offset: 16px;
+        --di-bottom-offset: 40px; /* Adjusted for mobile */
+        --di-side-offset: 16px;
         --overlay-padding-sm: 6px;
         --overlay-padding-md: 10px;
         --overlay-padding-lg: 14px;

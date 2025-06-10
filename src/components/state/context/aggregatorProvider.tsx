@@ -42,6 +42,7 @@ export interface AggregatorProviderConfig {
 
     /**
      * Keep the overlay fixed to the viewport (renamed from 'sticky' for clarity).
+     * Default is true.
      */
     fixedToViewport?: boolean;
 
@@ -85,7 +86,7 @@ export default function AggregatorProvider({
     debug = false,
     portalRoot,
     unstyled = false,
-    fixedToViewport = false,
+    fixedToViewport = true,
     position = 'top',
 }: AggregatorProviderProps) {
     const [state, baseDispatch] = useReducer(aggregatorReducer, initialAggregatorState);

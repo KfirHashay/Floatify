@@ -16,8 +16,8 @@ export interface FloatifyProps extends Omit<AggregatorProviderProps, 'sticky'> {
 export { default as AggregatorProvider } from '../state/context/aggregatorProvider';
 
 export default function Floatify({ sticky, fixedToViewport, ...props }: FloatifyProps) {
-    // Handle backward compatibility
-    const actualFixedToViewport = fixedToViewport ?? sticky ?? false;
+    // Handle backward compatibility - default to true
+    const actualFixedToViewport = fixedToViewport ?? sticky ?? true;
     
     if (sticky !== undefined && process.env.NODE_ENV === 'development') {
         console.warn('[Floatify] The `sticky` prop is deprecated. Use `fixedToViewport` instead.');

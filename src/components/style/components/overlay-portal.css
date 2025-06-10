@@ -1,7 +1,7 @@
 /* =======================================================
    🌟 Overlay Portal (Styled Version)
-   - Fixed container to not interfere with app
-   - Proper positioning without full-screen containers
+   - Transparent container that doesn't interfere with app
+   - Proper positioning with fixed viewport support
    - Performance-focused with minimal DOM impact
 ========================================================== */
 
@@ -84,21 +84,13 @@
 
 /* FIXED: Minimal container - NO interference with app */
 .overlay-styled .overlay-container {
-    /* REMOVED: width: 100%; height: 100%; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* MINIMAL sizing - just wraps content */
-    width: fit-content;
-    height: fit-content;
-    opacity: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    transition: opacity var(--di-duration-fast) var(--di-ease-out);
+    /* CRITICAL: Transparent and minimal - only wraps content */
+    display: contents; /* This makes the container completely transparent */
+    pointer-events: none;
+}
+
+.overlay-styled .overlay-container > * {
     pointer-events: auto;
-    /* CRITICAL: No padding that could interfere */
-    padding: 0;
-    margin: 0;
 }
 
 /* Hide empty portals */
@@ -132,7 +124,7 @@
 
 /* LIBRARY ROOT - NO interference with app */
 .overlay-library {
-    /* CRITICAL: Don't interfere with app layout */
+    /* CRITICAL: Completely transparent - no visual impact */
     position: absolute;
     top: 0;
     left: 0;
@@ -141,6 +133,7 @@
     pointer-events: none;
     z-index: var(--di-z-index, 9999);
     overflow: visible;
+    /* REMOVED: Any background, border, or visual styling */
 }
 
 /* Fixed positioning for single overlays */
@@ -154,36 +147,37 @@
     position: fixed;
     z-index: var(--di-z-index, 9999);
     pointer-events: none;
+    /* REMOVED: Any background or visual styling */
 }
 
 /* Layout container for multiple overlays */
 .overlay-styled .overlay-multiple-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     gap: var(--overlay-gap-lg, 12px);
     pointer-events: none;
-    /* FIXED: Minimal sizing */
+    /* CRITICAL: Minimal sizing - no visual container */
     width: fit-content;
     height: fit-content;
+    /* REMOVED: Any background, padding, or visual styling */
 }
 
 .overlay-styled .overlay-multiple-container > * {
     pointer-events: auto;
 }
 
-/* Position classes for fixed overlays */
+/* Position classes for fixed overlays - CORRECTED POSITIONING */
 .overlay-styled .overlay-portal--top,
 .overlay-styled .overlay-multiple-container--top {
-    top: var(--di-top-offset, 16px);
+    top: var(--di-top-offset);
     left: 50%;
     transform: translateX(-50%);
 }
 
 .overlay-styled .overlay-portal--bottom,
 .overlay-styled .overlay-multiple-container--bottom {
-    bottom: var(--di-top-offset, 16px);
+    bottom: var(--di-bottom-offset);
     left: 50%;
     transform: translateX(-50%);
 }
@@ -195,32 +189,41 @@
     transform: translate(-50%, -50%);
 }
 
+/* FIXED: Corner positioning with proper alignment */
 .overlay-styled .overlay-portal--top-left,
 .overlay-styled .overlay-multiple-container--top-left {
-    top: var(--di-top-offset, 16px);
-    left: var(--di-top-offset, 16px);
+    top: var(--di-top-offset);
+    left: var(--di-side-offset);
     transform: none;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .overlay-styled .overlay-portal--top-right,
 .overlay-styled .overlay-multiple-container--top-right {
-    top: var(--di-top-offset, 16px);
-    right: var(--di-top-offset, 16px);
+    top: var(--di-top-offset);
+    right: var(--di-side-offset);
     transform: none;
+    align-items: flex-start;
+    justify-content: flex-end;
 }
 
 .overlay-styled .overlay-portal--bottom-left,
 .overlay-styled .overlay-multiple-container--bottom-left {
-    bottom: var(--di-top-offset, 16px);
-    left: var(--di-top-offset, 16px);
+    bottom: var(--di-bottom-offset);
+    left: var(--di-side-offset);
     transform: none;
+    align-items: flex-end;
+    justify-content: flex-start;
 }
 
 .overlay-styled .overlay-portal--bottom-right,
 .overlay-styled .overlay-multiple-container--bottom-right {
-    bottom: var(--di-top-offset, 16px);
-    right: var(--di-top-offset, 16px);
+    bottom: var(--di-bottom-offset);
+    right: var(--di-side-offset);
     transform: none;
+    align-items: flex-end;
+    justify-content: flex-end;
 }
 
 /* Mobile-specific adjustments - ONLY top/bottom on mobile */
@@ -241,7 +244,7 @@
     .overlay-styled .overlay-multiple-container--top-right,
     .overlay-styled .overlay-multiple-container--bottom-left,
     .overlay-styled .overlay-multiple-container--bottom-right {
-        top: var(--di-top-offset, 16px);
+        top: var(--di-top-offset);
         left: 50%;
         right: auto;
         bottom: auto;
@@ -252,7 +255,7 @@
     .overlay-styled .overlay-portal--bottom,
     .overlay-styled .overlay-multiple-container--bottom {
         top: auto;
-        bottom: var(--di-top-offset, 16px);
+        bottom: var(--di-bottom-offset);
         left: 50%;
         right: auto;
         transform: translateX(-50%);
@@ -260,7 +263,6 @@
 }
 
 /* Performance hint for browsers */
-.overlay-styled .overlay-portal,
-.overlay-styled .overlay-container {
+.overlay-styled .overlay-portal {
     contain: layout style paint;
 }
