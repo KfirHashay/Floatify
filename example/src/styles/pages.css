@@ -1,7 +1,6 @@
 /* =======================================================
    📄 Page-Specific Styles
    - Home page hero, features, and sections
-   - Examples page interactive demos
    - Clean, modern design patterns
 ========================================================== */
 
@@ -188,6 +187,7 @@
   border-radius: var(--radius-xl);
   padding: var(--space-16);
   margin: var(--space-16) 0;
+  border: 1px solid var(--border-primary);
 }
 
 .quick-start-content {

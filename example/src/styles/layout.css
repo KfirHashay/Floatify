@@ -20,12 +20,16 @@
   left: 0;
   right: 0;
   height: var(--header-height);
-  background-color: var(--bg-elevated);
+  background-color: rgba(var(--bg-elevated-rgb, 255, 255, 255), 0.8);
   border-bottom: 1px solid var(--border-primary);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 50;
   transition: all var(--transition-normal);
+}
+
+[data-theme='dark'] .header {
+  background-color: rgba(30, 41, 59, 0.8);
 }
 
 .header-content {
@@ -100,6 +104,7 @@
   color: var(--accent-primary);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
+  border: 1px solid var(--accent-primary);
 }
 
 /* Desktop Navigation */

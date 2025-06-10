@@ -64,19 +64,26 @@ export default function Demo({
             type="checkbox"
             checked={sticky}
             onChange={(e) => onStickyChange(e.target.checked)}
-          />{' '}
-          Sticky
+          />
+          Sticky positioning
         </label>
         <select value={position} onChange={(e) => handlePositionChange(e.target.value)}>
           {POSITIONS.map((pos) => (
             <option key={pos} value={pos}>
-              {pos}
+              {pos.charAt(0).toUpperCase() + pos.slice(1)}
             </option>
           ))}
         </select>
       </div>
-      <button onClick={handleShow}>Show Card</button>
-      <button onClick={handleLoading}>Loading Example</button>
+      
+      <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <button className="btn btn-primary" onClick={handleShow}>
+          Show Notification
+        </button>
+        <button className="btn btn-secondary" onClick={handleLoading}>
+          Loading Example
+        </button>
+      </div>
     </div>
   )
 }
