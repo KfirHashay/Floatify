@@ -10,7 +10,9 @@ interface OverlayPortalProps {
     portalRoot?: HTMLElement;
     unstyled?: boolean;
     autoDismiss?: boolean;
+    sticky?: boolean;
+    position?: 'top' | 'bottom' | 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 }
-export declare function OverlayPortal({ concurrencyMode, portalRoot, unstyled }: OverlayPortalProps): React.ReactPortal | null;
+export declare function OverlayPortal({ concurrencyMode, portalRoot, unstyled, sticky, position, }: OverlayPortalProps): React.ReactPortal | null;
 export {};
 //# sourceMappingURL=OverlayPortal.d.ts.map

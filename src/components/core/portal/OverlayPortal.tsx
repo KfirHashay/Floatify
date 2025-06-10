@@ -3,7 +3,7 @@
  *
  * Manages overlay rendering through React Portal.
  */
-import React from 'react';
+import React, { JSX } from 'react';
 import ReactDOM from 'react-dom';
 import useAggregator from '../../state/hooks/useAggregator';
 import { OverlayCard as DefaultCardUI } from '../card/OverlayCard';

@@ -13,6 +13,15 @@ export interface AggregatorProviderConfig {
     autoDismissTimeout?: number;
     portalRoot?: HTMLElement;
     unstyled?: boolean;
+    /**
+     * Keep the overlay fixed to the viewport when scrolling.
+     */
+    sticky?: boolean;
+    /**
+     * Preferred placement for the overlay portal. Use only `top` or `bottom`
+     * on mobile for best results.
+     */
+    position?: 'top' | 'bottom' | 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 }
 export interface AggregatorProviderProps extends PropsWithChildren<AggregatorProviderConfig> {
 }
@@ -26,6 +35,6 @@ export interface AggregatorProviderProps extends PropsWithChildren<AggregatorPro
  * Typically, your app will wrap around `<AggregatorProvider>` or `<Floatify>`
  * so that child components can dispatch overlay actions or read aggregator state.
  */
-export default function AggregatorProvider({ children, concurrencyMode, autoDismiss, autoDismissTimeout, debug, portalRoot, unstyled, }: AggregatorProviderProps): import("react/jsx-runtime").JSX.Element;
+export default function AggregatorProvider({ children, concurrencyMode, autoDismiss, autoDismissTimeout, debug, portalRoot, unstyled, sticky, position, }: AggregatorProviderProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=aggregatorProvider.d.ts.map
