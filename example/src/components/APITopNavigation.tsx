@@ -1,5 +1,5 @@
 import React from 'react';
-import { Book, Code, Database, Settings, Zap, ArrowRight } from 'lucide-react';
+import { Book, Code, Database, Settings } from 'lucide-react';
 
 interface APISection {
   id: string;
@@ -8,7 +8,7 @@ interface APISection {
   category: 'components' | 'hooks' | 'types' | 'utilities';
 }
 
-interface APINavigationProps {
+interface APITopNavigationProps {
   sections: APISection[];
   activeSection: string;
   onSectionClick: (sectionId: string) => void;
@@ -18,26 +18,30 @@ const categoryConfig = {
   components: {
     label: 'Components',
     color: 'var(--accent-primary)',
-    bgColor: 'var(--accent-light)'
+    bgColor: 'var(--accent-light)',
+    icon: <Book size={16} />
   },
   hooks: {
-    label: 'Hooks',
+    label: 'Hooks', 
     color: 'var(--success)',
-    bgColor: 'rgba(16, 185, 129, 0.1)'
+    bgColor: 'rgba(16, 185, 129, 0.1)',
+    icon: <Code size={16} />
   },
   types: {
     label: 'Types',
-    color: 'var(--warning)',
-    bgColor: 'rgba(245, 158, 11, 0.1)'
+    color: 'var(--warning)', 
+    bgColor: 'rgba(245, 158, 11, 0.1)',
+    icon: <Database size={16} />
   },
   utilities: {
     label: 'Utilities',
     color: 'var(--error)',
-    bgColor: 'rgba(239, 68, 68, 0.1)'
+    bgColor: 'rgba(239, 68, 68, 0.1)',
+    icon: <Settings size={16} />
   }
 };
 
-export default function APINavigation({ sections, activeSection, onSectionClick }: APINavigationProps) {
+export default function APITopNavigation({ sections, activeSection, onSectionClick }: APITopNavigationProps) {
   const groupedSections = sections.reduce((acc, section) => {
     if (!acc[section.category]) {
       acc[section.category] = [];
@@ -47,22 +51,19 @@ export default function APINavigation({ sections, activeSection, onSectionClick 
   }, {} as Record<string, APISection[]>);
 
   return (
-    <aside className="api-sidebar">
-      <div className="api-sidebar-content">
-        <div className="api-sidebar-header">
-          <h3>Quick Navigation</h3>
-        </div>
-        
+    <nav className="api-top-nav">
+      <div className="api-nav-container">
         {Object.entries(groupedSections).map(([category, categorySections]) => (
-          <div key={category} className="api-nav-group">
-            <div className="api-nav-group-header">
+          <div key={category} className="api-nav-category-group">
+            <div className="api-nav-category-header">
               <span 
-                className="api-nav-category"
+                className="api-nav-category-badge"
                 style={{
                   color: categoryConfig[category as keyof typeof categoryConfig].color,
                   backgroundColor: categoryConfig[category as keyof typeof categoryConfig].bgColor
                 }}
               >
+                {categoryConfig[category as keyof typeof categoryConfig].icon}
                 {categoryConfig[category as keyof typeof categoryConfig].label}
               </span>
             </div>
@@ -80,14 +81,7 @@ export default function APINavigation({ sections, activeSection, onSectionClick 
             </div>
           </div>
         ))}
-
-        <div className="api-sidebar-footer">
-          <a href="/examples" className="api-quick-start-link">
-            <ArrowRight size={16} />
-            View Examples
-          </a>
-        </div>
       </div>
-    </aside>
+    </nav>
   );
 }

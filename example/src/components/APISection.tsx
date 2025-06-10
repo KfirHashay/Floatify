@@ -65,7 +65,7 @@ export default function APISection({
 
   return (
     <section id={id} className="api-section">
-      <div className="api-section-header" onClick={onToggle}>
+      <div className="api-section-header">
         <div className="api-section-meta">
           <div className="api-section-icon">
             {icon}

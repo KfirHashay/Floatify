@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Book, Code, Zap, Settings, Database, Copy, CheckCircle } from 'lucide-react';
-import APINavigation from '../components/APINavigation';
+import APITopNavigation from '../components/APITopNavigation';
 import APISection from '../components/APISection';
 
 interface APISection {
@@ -232,28 +232,15 @@ registerChannel('notifications', 1);`,
 
 export default function APIReference() {
   const [activeSection, setActiveSection] = useState<string>('floatify-component');
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set(['floatify-component']));
   const [copiedExample, setCopiedExample] = useState<string | null>(null);
 
-  // Auto-expand sections when navigating
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
-    setExpandedItems(prev => new Set([...prev, sectionId]));
     
     setTimeout(() => {
       const element = document.getElementById(sectionId);
       element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
-  };
-
-  const toggleSection = (sectionId: string) => {
-    const newExpanded = new Set(expandedItems);
-    if (newExpanded.has(sectionId)) {
-      newExpanded.delete(sectionId);
-    } else {
-      newExpanded.add(sectionId);
-    }
-    setExpandedItems(newExpanded);
   };
 
   const copyExample = (example: string, key: string) => {
@@ -273,7 +260,7 @@ export default function APIReference() {
       const currentSection = sections.find(section => {
         if (!section.element) return false;
         const rect = section.element.getBoundingClientRect();
-        return rect.top <= 100 && rect.bottom > 100;
+        return rect.top <= 150 && rect.bottom > 150;
       });
 
       if (currentSection) {
@@ -287,97 +274,92 @@ export default function APIReference() {
 
   return (
     <div className="api-reference">
-      {/* Compact Hero */}
-      <section className="api-hero">
-        <div className="api-hero-content">
-          <div className="api-hero-badge">
+      {/* Compact Header */}
+      <header className="api-header">
+        <div className="api-header-content">
+          <div className="api-header-badge">
             <Book size={16} />
             API Documentation
           </div>
           <h1>API Reference</h1>
-          <p>
-            Complete reference for all Floatify components, hooks, and TypeScript interfaces.
-          </p>
         </div>
-      </section>
+      </header>
 
-      <div className="api-layout">
-        {/* Navigation Sidebar */}
-        <APINavigation 
-          sections={apiSections}
-          activeSection={activeSection}
-          onSectionClick={scrollToSection}
-        />
+      {/* Top Navigation */}
+      <APITopNavigation 
+        sections={apiSections}
+        activeSection={activeSection}
+        onSectionClick={scrollToSection}
+      />
 
-        {/* Main Content */}
-        <main className="api-main">
-          <div className="api-sections">
-            {apiSections.map((section) => (
-              <APISection
-                key={section.id}
-                id={section.id}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                category={section.category}
-                items={section.items}
-                isExpanded={expandedItems.has(section.id)}
-                onToggle={() => toggleSection(section.id)}
-              />
-            ))}
+      {/* Main Content */}
+      <main className="api-main">
+        <div className="api-sections">
+          {apiSections.map((section) => (
+            <APISection
+              key={section.id}
+              id={section.id}
+              title={section.title}
+              description={section.description}
+              icon={section.icon}
+              category={section.category}
+              items={section.items}
+              isExpanded={true} // Always expanded for better readability
+              onToggle={() => {}} // No toggle needed
+            />
+          ))}
+        </div>
+
+        {/* TypeScript Usage Guide */}
+        <section className="api-typescript-guide">
+          <div className="api-guide-header">
+            <h2>TypeScript Usage</h2>
+            <p>Floatify is built with TypeScript and provides full type safety out of the box.</p>
           </div>
-
-          {/* TypeScript Usage Guide */}
-          <section className="api-typescript-guide">
-            <div className="api-guide-header">
-              <h2>TypeScript Usage</h2>
-              <p>Floatify is built with TypeScript and provides full type safety out of the box.</p>
-            </div>
-            
-            <div className="api-guide-content">
-              <div className="api-guide-example">
-                <div className="api-example-header">
-                  <span className="api-item-label">Import Types:</span>
-                  <button
-                    className="api-copy-button"
-                    onClick={() => copyExample(`import { Floatify, useAggregator, type OverlayCard, type OverlayState } from 'floatify';`, 'typescript-imports')}
-                  >
-                    {copiedExample === 'typescript-imports' ? (
-                      <>
-                        <CheckCircle size={16} />
-                        Copied!
-                      </>
-                    ) : (
-                      <>
-                        <Copy size={16} />
-                        Copy
-                      </>
-                    )}
-                  </button>
-                </div>
-                <div className="api-code-block">
-                  <pre><code>{`import { 
+          
+          <div className="api-guide-content">
+            <div className="api-guide-example">
+              <div className="api-example-header">
+                <span className="api-item-label">Import Types:</span>
+                <button
+                  className="api-copy-button"
+                  onClick={() => copyExample(`import { Floatify, useAggregator, type OverlayCard, type OverlayState } from 'floatify';`, 'typescript-imports')}
+                >
+                  {copiedExample === 'typescript-imports' ? (
+                    <>
+                      <CheckCircle size={16} />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={16} />
+                      Copy
+                    </>
+                  )}
+                </button>
+              </div>
+              <div className="api-code-block">
+                <pre><code>{`import { 
   Floatify, 
   useAggregator, 
   type OverlayCard, 
   type OverlayState 
 } from 'floatify';`}</code></pre>
-                </div>
-              </div>
-
-              <div className="api-guide-tips">
-                <h3>Pro Tips</h3>
-                <ul>
-                  <li>All interfaces are exported as types for better tree-shaking</li>
-                  <li>Use TypeScript's strict mode for the best development experience</li>
-                  <li>The library provides comprehensive JSDoc comments for IntelliSense</li>
-                  <li>Generic types are available for custom card data structures</li>
-                </ul>
               </div>
             </div>
-          </section>
-        </main>
-      </div>
+
+            <div className="api-guide-tips">
+              <h3>Pro Tips</h3>
+              <ul>
+                <li>All interfaces are exported as types for better tree-shaking</li>
+                <li>Use TypeScript's strict mode for the best development experience</li>
+                <li>The library provides comprehensive JSDoc comments for IntelliSense</li>
+                <li>Generic types are available for custom card data structures</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
