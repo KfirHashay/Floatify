@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useAggregator } from 'floatify'
 import { CheckCircle, Loader2 } from 'lucide-react'
-import { Position, POSITIONS } from '../types' // ✅ centralized and clean
+import { Position, POSITIONS } from '../types'
 
 interface Props {
   sticky: boolean

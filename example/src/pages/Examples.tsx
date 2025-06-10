@@ -1,7 +1,6 @@
 import React from 'react'
 import Demo from '../components/Demo'
-import { Position } from 'src/types'
-
+import { Position } from '../types'
 
 interface Props {
   sticky: boolean

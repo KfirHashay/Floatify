@@ -35,7 +35,9 @@ export type OverlayAggregatorAction =
     };
 }
 /**
- * Update the overlay state (collapsed, expanded, swiping, etc.) of a channel.
+ * Update the overlay state of a channel.
+ * Supported states: 'hidden', 'collapsed', 'expanded', 'alert',
+ * 'swiping', 'loading', and 'icon'.
  */
  | {
     type: 'UPDATE_CHANNEL_STATE';

@@ -5,10 +5,9 @@ export type Position =
   | 'top-left'
   | 'top-right'
   | 'bottom-left'
-  | 'bottom-right'
+  | 'bottom-right';
 
-
-  export const POSITIONS: Position[] = [
+export const POSITIONS: Position[] = [
   'top',
   'bottom',
   'center',
@@ -16,4 +15,4 @@ export type Position =
   'top-right',
   'bottom-left',
   'bottom-right'
-]
+];

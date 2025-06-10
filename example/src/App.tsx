@@ -5,7 +5,7 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 import Examples from './pages/Examples'
 import Roadmap from './pages/Roadmap'
-import { Position } from 'src/types'
+import { Position } from './types'
 
 import './index.css'
 
