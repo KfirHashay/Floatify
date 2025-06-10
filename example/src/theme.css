@@ -1,0 +1,19 @@
+:root {
+  --bg: hsl(0 0% 100%);
+  --text: hsl(222.2 47.4% 11.2%);
+  --card: hsl(0 0% 100%);
+  --card-text: hsl(222.2 47.4% 11.2%);
+  --accent: hsl(217.2 91.2% 59.8%);
+  --nav-bg: hsla(0 0% 100% / 0.8);
+  --border: hsl(220 13% 91%);
+}
+
+[data-theme='dark'] {
+  --bg: hsl(224 71% 4%);
+  --text: hsl(210 40% 98%);
+  --card: hsl(224 71% 10%);
+  --card-text: hsl(210 40% 98%);
+  --accent: hsl(217.2 91.2% 59.8%);
+  --nav-bg: hsla(224 71% 4% / 0.6);
+  --border: hsl(215 20% 17%);
+}

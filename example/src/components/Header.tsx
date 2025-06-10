@@ -1,18 +1,17 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import Header from './Header';
+import ThemeToggle from './ThemeToggle';
 
 interface Props {
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
-  children: React.ReactNode;
 }
 
-export default function Layout({ theme, onToggleTheme, children }: Props) {
+export default function Header({ theme, onToggleTheme }: Props) {
   return (
-    <div className="layout">
-      <Header theme={theme} onToggleTheme={onToggleTheme} />
-      <aside className="sidebar">
+    <header className="app-header">
+      <h1 className="logo">Floatify</h1>
+      <nav className="nav-links">
         <NavLink to="/" end>
           Overview
         </NavLink>
@@ -21,8 +20,8 @@ export default function Layout({ theme, onToggleTheme, children }: Props) {
         <a href="https://github.com/owner/repo" target="_blank" rel="noreferrer">
           GitHub
         </a>
-      </aside>
-      <main>{children}</main>
-    </div>
+      </nav>
+      <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+    </header>
   );
 }

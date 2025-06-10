@@ -13,6 +13,10 @@ export default function Roadmap() {
         <li>Progress indicators for long running tasks</li>
         <li>Integration with web notifications for push messages</li>
       </ul>
+      <p>
+        Upcoming examples will also showcase the new loading and success states
+        demonstrated above.
+      </p>
     </section>
   );
 }
