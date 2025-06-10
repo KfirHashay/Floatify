@@ -76,6 +76,17 @@ const overlayRoot = document.getElementById('overlay-root') as HTMLElement;
 </Floatify>
 ```
 
+### Sticky & Positioning
+
+The overlay portal can stick to the viewport and be positioned around the screen.
+On mobile devices only `top` or `bottom` positions are recommended.
+
+```tsx
+<Floatify sticky position="bottom-right">
+  {/* rest of your app */}
+</Floatify>
+```
+
 ## Debug Mode
 
 Enable debug logging by passing the `debug` prop to `Floatify` or
