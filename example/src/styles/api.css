@@ -1,61 +1,88 @@
 /* =======================================================
-   📚 API Reference Page Styles
-   - Modern documentation layout with top navigation
-   - Clean typography and code highlighting
-   - Compact, professional design for better developer experience
+   📚 API Reference Page Styles - Modern Design System
+   - Enhanced documentation layout with better hierarchy
+   - Improved code highlighting and readability
+   - Professional design with consistent spacing
 ========================================================== */
 
 .api-reference {
   min-height: 100vh;
-  max-width: 1200px;
+  max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--content-padding);
 }
 
 /* =======================================================
-   🎯 Compact Header
+   🎯 Enhanced Header
 ========================================================== */
 
 .api-header {
   text-align: center;
-  padding: var(--space-6) 0 var(--space-4);
-  border-bottom: 1px solid var(--border-primary);
+  padding: var(--space-8) 0 var(--space-6);
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    var(--bg-secondary) 100%
+  );
+  border-radius: var(--radius-xl);
   margin-bottom: var(--space-6);
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.api-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at 70% 30%,
+    rgba(187, 134, 252, 0.1) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .api-header-content {
   max-width: 600px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .api-header-badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   background-color: var(--accent-light);
   color: var(--accent-primary);
-  padding: var(--space-2) var(--space-3);
+  padding: 0.5rem var(--space-2);
   border-radius: var(--radius-lg);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
   border: 1px solid var(--accent-primary);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-wide);
+  box-shadow: var(--shadow-sm);
 }
 
 .api-header h1 {
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
   margin: 0;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 /* =======================================================
-   🧭 Top Navigation
+   🧭 Enhanced Top Navigation
 ========================================================== */
 
 .api-top-nav {
@@ -64,55 +91,57 @@
   background-color: var(--bg-elevated);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
   z-index: 10;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-md);
 }
 
 .api-nav-container {
   display: flex;
   overflow-x: auto;
-  padding: var(--space-3);
-  gap: var(--space-6);
+  padding: var(--space-2);
+  gap: var(--space-4);
 }
 
 .api-nav-category-group {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-1);
   min-width: 0;
   flex-shrink: 0;
 }
 
 .api-nav-category-header {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
 }
 
 .api-nav-category-badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
-  padding: var(--space-2) var(--space-3);
+  padding: 0.375rem var(--space-2);
   border-radius: var(--radius-md);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-wide);
   border: 1px solid currentColor;
   white-space: nowrap;
+  box-shadow: var(--shadow-sm);
 }
 
 .api-nav-items {
   display: flex;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 .api-nav-item {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
+  gap: var(--space-1);
+  padding: 0.5rem var(--space-2);
   border-radius: var(--radius-md);
   background: none;
   border: 1px solid var(--border-primary);
@@ -124,24 +153,36 @@
   text-align: left;
   white-space: nowrap;
   min-width: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .api-nav-item:hover {
-  background-color: var(--bg-secondary);
+  background-color: var(--hover-overlay);
   color: var(--text-primary);
   border-color: var(--border-secondary);
   transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.api-nav-item:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
 }
 
 .api-nav-item--active {
   background-color: var(--accent-primary);
-  color: white;
+  color: var(--text-inverse);
   border-color: var(--accent-primary);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
+}
+
+.api-nav-item--active:hover {
+  background-color: var(--accent-hover);
+  color: var(--text-inverse);
 }
 
 /* =======================================================
-   📄 Main Content
+   📄 Enhanced Main Content
 ========================================================== */
 
 .api-main {
@@ -151,12 +192,12 @@
 .api-sections {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
-  margin-bottom: var(--space-12);
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
 }
 
 /* =======================================================
-   📦 API Sections
+   📦 Enhanced API Sections
 ========================================================== */
 
 .api-section {
@@ -166,26 +207,28 @@
   overflow: hidden;
   transition: all var(--transition-normal);
   scroll-margin-top: calc(var(--header-height) + 120px);
+  box-shadow: var(--shadow-sm);
 }
 
 .api-section:hover {
   border-color: var(--border-secondary);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .api-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4);
-  background-color: var(--bg-secondary);
+  padding: var(--space-3);
+  background-color: var(--bg-surface);
   border-bottom: 1px solid var(--border-primary);
 }
 
 .api-section-meta {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   flex: 1;
 }
 
@@ -200,6 +243,7 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--accent-primary);
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .api-section-info {
@@ -210,8 +254,8 @@
 .api-section-title-row {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-1);
+  gap: var(--space-1);
+  margin-bottom: 0.25rem;
 }
 
 .api-section-title-row h2 {
@@ -224,54 +268,56 @@
 .api-section-category {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
-  padding: var(--space-1) var(--space-2);
+  padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-wide);
   border: 1px solid currentColor;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .api-section-description {
   color: var(--text-secondary);
   margin: 0;
   font-size: var(--font-size-sm);
-  line-height: 1.4;
+  line-height: var(--line-height-normal);
 }
 
 .api-section-content {
-  padding: var(--space-4);
+  padding: var(--space-3);
 }
 
 /* =======================================================
-   🔧 API Items
+   🔧 Enhanced API Items
 ========================================================== */
 
 .api-items {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .api-item {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-md);
-  padding: var(--space-4);
+  padding: var(--space-3);
   transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
 }
 
 .api-item:hover {
   border-color: var(--border-secondary);
   transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .api-item-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--space-3);
-  margin-bottom: var(--space-3);
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
 }
 
 .api-item-signature {
@@ -284,28 +330,30 @@
   font-weight: var(--font-weight-semibold);
   background-color: var(--accent-light);
   color: var(--accent-primary);
-  padding: var(--space-1) var(--space-2);
+  padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--accent-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 .api-item-meta {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  margin-top: var(--space-2);
+  gap: var(--space-1);
+  margin-top: var(--space-1);
   flex-wrap: wrap;
 }
 
 .api-item-required {
   background-color: var(--error);
-  color: white;
+  color: var(--text-inverse);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
-  padding: var(--space-1) var(--space-2);
+  padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-wide);
+  box-shadow: var(--shadow-sm);
 }
 
 .api-item-since {
@@ -313,16 +361,17 @@
   color: var(--text-tertiary);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
-  padding: var(--space-1) var(--space-2);
+  padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 .api-item-type {
   font-size: var(--font-size-xs);
   background-color: var(--bg-tertiary);
   color: var(--text-secondary);
-  padding: var(--space-2) var(--space-3);
+  padding: 0.5rem var(--space-2);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-primary);
   white-space: nowrap;
@@ -330,17 +379,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
 }
 
 .api-item-body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .api-item-description {
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: var(--line-height-relaxed);
   margin: 0;
   font-size: var(--font-size-sm);
 }
@@ -348,7 +398,7 @@
 .api-item-default {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   font-size: var(--font-size-sm);
 }
 
@@ -360,13 +410,15 @@
 .api-item-default code {
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
-  padding: var(--space-1) var(--space-2);
+  padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 /* =======================================================
-   💻 Code Examples
+   💻 Enhanced Code Examples
 ========================================================== */
 
 .api-item-example {
@@ -374,13 +426,14 @@
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-md);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .api-example-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-2) var(--space-3);
+  padding: 0.5rem var(--space-2);
   background-color: var(--bg-tertiary);
   border-bottom: 1px solid var(--border-primary);
 }
@@ -388,22 +441,29 @@
 .api-copy-button {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 0.25rem;
   background: none;
   border: 1px solid var(--border-primary);
   color: var(--text-secondary);
-  padding: var(--space-1) var(--space-2);
+  padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
 }
 
 .api-copy-button:hover {
-  background-color: var(--bg-secondary);
+  background-color: var(--hover-overlay);
   border-color: var(--border-secondary);
   color: var(--text-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.api-copy-button:active {
+  transform: translateY(1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .api-code-block {
@@ -412,11 +472,11 @@
 
 .api-code-block pre {
   margin: 0;
-  padding: var(--space-3);
+  padding: var(--space-2);
   background: none;
   border: none;
   font-size: var(--font-size-xs);
-  line-height: 1.4;
+  line-height: var(--line-height-normal);
   color: var(--text-primary);
 }
 
@@ -428,24 +488,49 @@
 }
 
 /* =======================================================
-   📖 TypeScript Guide
+   📖 Enhanced TypeScript Guide
 ========================================================== */
 
 .api-typescript-guide {
-  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  background: linear-gradient(
+    135deg,
+    var(--bg-secondary) 0%,
+    var(--bg-tertiary) 100%
+  );
   border-radius: var(--radius-xl);
-  padding: var(--space-8);
+  padding: var(--space-6);
   border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.api-typescript-guide::before {
+  content: '';
+  position: absolute;
+  bottom: -50%;
+  right: -50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    rgba(3, 218, 198, 0.1) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .api-guide-header {
   text-align: center;
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-4);
+  position: relative;
+  z-index: 1;
 }
 
 .api-guide-header h2 {
   font-size: var(--font-size-xl);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
+  color: var(--text-primary);
 }
 
 .api-guide-header p {
@@ -456,7 +541,9 @@
 
 .api-guide-content {
   display: grid;
-  gap: var(--space-6);
+  gap: var(--space-4);
+  position: relative;
+  z-index: 1;
 }
 
 .api-guide-example {
@@ -464,18 +551,20 @@
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .api-guide-tips {
   background-color: var(--bg-elevated);
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-lg);
-  padding: var(--space-4);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-sm);
 }
 
 .api-guide-tips h3 {
   font-size: var(--font-size-base);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
   color: var(--text-primary);
 }
 
@@ -485,15 +574,15 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 .api-guide-tips li {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-2);
+  gap: var(--space-1);
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: var(--line-height-relaxed);
   font-size: var(--font-size-sm);
 }
 
@@ -506,23 +595,23 @@
 }
 
 /* =======================================================
-   📱 Responsive Design
+   📱 Enhanced Responsive Design
 ========================================================== */
 
 @media (max-width: 1024px) {
   .api-reference {
-    padding: 0 var(--space-4);
+    padding: 0 var(--space-3);
   }
   
   .api-nav-container {
     flex-direction: column;
-    gap: var(--space-4);
+    gap: var(--space-3);
   }
   
   .api-nav-category-group {
     flex-direction: row;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-2);
   }
   
   .api-nav-items {
@@ -532,7 +621,7 @@
 
 @media (max-width: 768px) {
   .api-header {
-    padding: var(--space-4) 0;
+    padding: var(--space-6) 0 var(--space-4);
   }
   
   .api-header h1 {
@@ -542,7 +631,7 @@
   .api-item-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-2);
+    gap: var(--space-1);
   }
   
   .api-item-type {
@@ -554,11 +643,11 @@
   .api-example-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-2);
+    gap: var(--space-1);
   }
   
   .api-nav-container {
-    padding: var(--space-2);
+    padding: var(--space-1);
   }
   
   .api-nav-category-group {
@@ -569,10 +658,14 @@
   .api-top-nav {
     position: static;
   }
+  
+  .api-typescript-guide {
+    padding: var(--space-4);
+  }
 }
 
 /* =======================================================
-   🎭 Animations
+   🎭 Enhanced Animations
 ========================================================== */
 
 @keyframes fadeInUp {
@@ -586,6 +679,17 @@
   }
 }
 
+@keyframes slideInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 .api-item {
   animation: fadeInUp 0.3s ease-out;
 }
@@ -596,21 +700,26 @@
 .api-item:nth-child(4) { animation-delay: 0.2s; }
 .api-item:nth-child(5) { animation-delay: 0.25s; }
 
+.api-section {
+  animation: slideInScale 0.4s ease-out;
+}
+
 /* =======================================================
-   🎨 Scrollbar Styling
+   🎨 Enhanced Scrollbar Styling
 ========================================================== */
 
 .api-nav-container::-webkit-scrollbar {
-  height: 4px;
+  height: 6px;
 }
 
 .api-nav-container::-webkit-scrollbar-track {
   background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
 }
 
 .api-nav-container::-webkit-scrollbar-thumb {
   background: var(--border-secondary);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
 }
 
 .api-nav-container::-webkit-scrollbar-thumb:hover {

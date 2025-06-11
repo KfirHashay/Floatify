@@ -1,17 +1,19 @@
 /* =======================================================
-   📐 Layout Styles - Header, Sidebar, Main Content
-   - Responsive design with mobile-first approach
-   - Smooth animations and transitions
+   📐 Layout Styles - Modern Design System
+   - Enhanced header with glassmorphism
+   - Improved sidebar with better spacing
+   - Consistent elevation and shadows
 ========================================================== */
 
 .layout {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--bg-primary);
 }
 
 /* =======================================================
-   🎯 Header
+   🎯 Header - Enhanced Design
 ========================================================== */
 
 .header {
@@ -20,16 +22,17 @@
   left: 0;
   right: 0;
   height: var(--header-height);
-  background-color: rgba(var(--bg-elevated-rgb, 255, 255, 255), 0.8);
+  background-color: rgba(var(--bg-elevated-rgb, 45, 45, 45), 0.85);
   border-bottom: 1px solid var(--border-primary);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   z-index: 50;
   transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
 }
 
-[data-theme='dark'] .header {
-  background-color: rgba(30, 41, 59, 0.8);
+[data-theme='light'] .header {
+  background-color: rgba(255, 255, 255, 0.85);
 }
 
 .header-content {
@@ -37,21 +40,21 @@
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  max-width: 1200px;
+  max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--content-padding);
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-2);
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 /* Mobile Menu Button */
@@ -70,15 +73,19 @@
 }
 
 .mobile-menu-btn:hover {
-  background-color: var(--bg-secondary);
+  background-color: var(--hover-overlay);
   color: var(--text-primary);
+}
+
+.mobile-menu-btn:active {
+  background-color: var(--active-overlay);
 }
 
 /* Logo */
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   text-decoration: none;
   color: var(--text-primary);
   font-weight: var(--font-weight-bold);
@@ -91,7 +98,7 @@
 }
 
 .logo-text {
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -102,7 +109,7 @@
   font-weight: var(--font-weight-medium);
   background-color: var(--accent-light);
   color: var(--accent-primary);
-  padding: var(--space-1) var(--space-2);
+  padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--accent-primary);
 }
@@ -111,11 +118,11 @@
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 .nav-link {
-  padding: var(--space-2) var(--space-4);
+  padding: 0.5rem var(--space-2);
   border-radius: var(--radius-md);
   color: var(--text-secondary);
   text-decoration: none;
@@ -127,7 +134,11 @@
 
 .nav-link:hover {
   color: var(--text-primary);
-  background-color: var(--bg-secondary);
+  background-color: var(--hover-overlay);
+}
+
+.nav-link:active {
+  background-color: var(--active-overlay);
 }
 
 .nav-link-active {
@@ -135,8 +146,13 @@
   background-color: var(--accent-light);
 }
 
+.nav-link-active:hover {
+  background-color: var(--accent-light);
+  color: var(--accent-primary);
+}
+
 /* =======================================================
-   📱 Sidebar (Mobile)
+   📱 Sidebar (Mobile) - Enhanced Design
 ========================================================== */
 
 .sidebar {
@@ -151,6 +167,7 @@
   transition: transform var(--transition-normal);
   z-index: 40;
   overflow-y: auto;
+  box-shadow: var(--shadow-lg);
 }
 
 .sidebar-open {
@@ -161,7 +178,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: var(--space-6);
+  padding: var(--space-3);
 }
 
 .sidebar-nav {
@@ -174,8 +191,8 @@
 .sidebar-link {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  gap: var(--space-2);
+  padding: 0.75rem var(--space-2);
   border-radius: var(--radius-md);
   color: var(--text-secondary);
   text-decoration: none;
@@ -186,7 +203,11 @@
 
 .sidebar-link:hover {
   color: var(--text-primary);
-  background-color: var(--bg-secondary);
+  background-color: var(--hover-overlay);
+}
+
+.sidebar-link:active {
+  background-color: var(--active-overlay);
 }
 
 .sidebar-link-active {
@@ -196,8 +217,8 @@
 
 .sidebar-footer {
   border-top: 1px solid var(--border-primary);
-  padding-top: var(--space-4);
-  margin-top: var(--space-4);
+  padding-top: var(--space-2);
+  margin-top: var(--space-2);
 }
 
 .sidebar-overlay {
@@ -213,19 +234,20 @@
 }
 
 /* =======================================================
-   📄 Main Content
+   📄 Main Content - Enhanced Layout
 ========================================================== */
 
 .main-content {
   flex: 1;
   margin-top: var(--header-height);
-  padding: var(--space-8) 0;
+  padding: var(--section-spacing) 0;
+  min-height: calc(100vh - var(--header-height));
 }
 
 .content-wrapper {
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--content-padding);
 }
 
 /* =======================================================
@@ -246,11 +268,15 @@
   }
   
   .header-content {
-    padding: 0 var(--space-4);
+    padding: 0 var(--space-2);
   }
   
   .content-wrapper {
-    padding: 0 var(--space-4);
+    padding: 0 var(--space-2);
+  }
+  
+  .main-content {
+    padding: var(--space-3) 0;
   }
 }
 
@@ -261,7 +287,7 @@
 }
 
 /* =======================================================
-   🎭 Animations
+   🎭 Enhanced Animations
 ========================================================== */
 
 @keyframes slideInFromLeft {
@@ -275,10 +301,10 @@
   }
 }
 
-@keyframes fadeIn {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -291,5 +317,37 @@
 }
 
 .content-wrapper > * {
-  animation: fadeIn var(--transition-normal);
+  animation: fadeInUp var(--transition-normal);
+}
+
+/* =======================================================
+   🎨 Enhanced Interactive States
+========================================================== */
+
+.header .btn-ghost {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: var(--radius-md);
+}
+
+.header .btn-ghost:hover {
+  background-color: var(--hover-overlay);
+  transform: none;
+}
+
+.header .btn-ghost:active {
+  background-color: var(--active-overlay);
+}
+
+/* Focus improvements */
+.nav-link:focus-visible,
+.sidebar-link:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Enhanced elevation on hover */
+.sidebar:hover {
+  box-shadow: var(--shadow-xl);
 }
