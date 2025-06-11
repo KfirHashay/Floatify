@@ -15,6 +15,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
         removeCard,
         swipeNextCard,
         swipePrevCard,
+        config,
     } = useAggregator();
 
     const touchStartX = useRef<number | null>(null);
@@ -28,12 +29,22 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
         return null;
     }
 
+    const { splitLoading, defaultBubbleIcons } = config;
+
     const isExpanded = channel.state === 'expanded';
     const isLoading = channel.state === 'loading';
     const isIconOnly = channel.state === 'icon';
     const isBubble = channel.state === 'bubble';
-    const isSplit = channel.state === 'split' || isLoading;
+    const isSplit = channel.state === 'split' || (isLoading && splitLoading);
     const isHidden = channel.state === 'hidden';
+    const bubbleIconNode =
+        card?.bubbleIcon ??
+        card?.icon ??
+        (isLoading
+            ? defaultBubbleIcons.loading
+            : channel.state === 'alert'
+            ? defaultBubbleIcons.alert
+            : defaultBubbleIcons.message);
 
     // 🔹 Toggle expand/collapse on click
     const handleToggle = useCallback(() => {
@@ -153,16 +164,14 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                             )
                         )}
                     </div>
-                    {(card?.bubbleIcon || card?.icon) && (
-                        <div
-                            className="overlay-card-split-bubble"
-                            role="button"
-                            aria-label={card?.title ? `Show ${card.title}` : 'Show overlay'}
-                            aria-haspopup="true"
-                        >
-                            {card.bubbleIcon || card.icon}
-                        </div>
-                    )}
+                    <div
+                        className="overlay-card-split-bubble"
+                        role="button"
+                        aria-label={card?.title ? `Show ${card.title}` : 'Show overlay'}
+                        aria-haspopup="true"
+                    >
+                        {bubbleIconNode}
+                    </div>
                 </>
             ) : (
                 <>
@@ -184,14 +193,14 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                     )}
 
                     {/* 🔹 Bubble State */}
-                    {isBubble && (card?.bubbleIcon || card?.icon) && (
+                    {isBubble && (
                         <div
                             className="overlay-card-bubble-icon"
                             role="button"
                             aria-label={card?.title ? `Show ${card.title}` : 'Show overlay'}
                             aria-haspopup="true"
                         >
-                            {card.bubbleIcon || card.icon}
+                            {bubbleIconNode}
                         </div>
                     )}
 

@@ -5,11 +5,13 @@ import React, {
     useRef,
     useCallback,
     PropsWithChildren,
+    ReactNode,
 } from 'react';
 import { aggregatorReducer } from '../reducers/aggregatorReducer';
 import { OverlayAggregatorState, OverlayAggregatorAction } from '../types';
 import { AggregatorContext } from './aggregatorContext';
 import { OverlayPortal } from '../../core/portal';
+import { messageIcon, spinnerIcon, alertIcon } from '../../core/utils/defaultIcons';
 import '../../style/index.css';
 
 // Possible concurrency modes
@@ -58,6 +60,21 @@ export interface AggregatorProviderConfig {
         | 'top-right'
         | 'bottom-left'
         | 'bottom-right';
+
+    /**
+     * When true, the loading state uses the split layout.
+     * Defaults to true.
+     */
+    splitLoading?: boolean;
+
+    /**
+     * Icons used when a bubble icon isn't supplied.
+     */
+    defaultBubbleIcons?: {
+        message: ReactNode;
+        loading: ReactNode;
+        alert: ReactNode;
+    };
 }
 
 export interface AggregatorProviderProps extends PropsWithChildren<AggregatorProviderConfig> {}
@@ -88,6 +105,12 @@ export default function AggregatorProvider({
     unstyled = false,
     fixedToViewport = true,
     position = 'top',
+    splitLoading = true,
+    defaultBubbleIcons = {
+        message: messageIcon,
+        loading: spinnerIcon,
+        alert: alertIcon,
+    },
 }: AggregatorProviderProps) {
     const [state, baseDispatch] = useReducer(aggregatorReducer, initialAggregatorState);
 
@@ -195,8 +218,12 @@ export default function AggregatorProvider({
 
     // Memoize the context value so we don't cause re-renders beyond the aggregator state changes
     const contextValue = useMemo(() => {
-        return { state, dispatch };
-    }, [state, dispatch]);
+        return {
+            state,
+            dispatch,
+            config: { splitLoading, defaultBubbleIcons },
+        };
+    }, [state, dispatch, splitLoading, defaultBubbleIcons]);
 
     return (
         <AggregatorContext.Provider value={contextValue}>

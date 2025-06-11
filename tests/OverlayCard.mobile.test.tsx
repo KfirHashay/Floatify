@@ -5,13 +5,28 @@ import { aggregatorReducer } from '../src/components/state/reducers/aggregatorRe
 import { AggregatorContext } from '../src/components/state/context/aggregatorContext';
 import useAggregator from '../src/components/state/hooks/useAggregator';
 import { OverlayCard as OverlayCardComponent } from '../src/components/core/card/OverlayCard';
+import { messageIcon, spinnerIcon, alertIcon } from '../src/components/core/utils/defaultIcons';
 
 function TestProvider({ children }: { children: React.ReactNode }) {
     const [state, dispatch] = useReducer(aggregatorReducer, {
         channels: {},
         activeChannelId: null,
     });
-    const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
+    const value = useMemo(
+        () => ({
+            state,
+            dispatch,
+            config: {
+                splitLoading: true,
+                defaultBubbleIcons: {
+                    message: messageIcon,
+                    loading: spinnerIcon,
+                    alert: alertIcon,
+                },
+            },
+        }),
+        [state, dispatch]
+    );
     return (
         <AggregatorContext.Provider value={value}>{children}</AggregatorContext.Provider>
     );
