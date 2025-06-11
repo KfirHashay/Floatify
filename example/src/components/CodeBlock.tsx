@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react'
 import { Copy, Check } from 'lucide-react'
-import clsx from 'clsx'
 import Prism from 'prismjs'
 
 
