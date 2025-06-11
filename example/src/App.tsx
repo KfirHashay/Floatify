@@ -8,12 +8,8 @@ import APIReference from './pages/APIReference'
 import Roadmap from './pages/Roadmap'
 import { Position } from './types'
 
-import './styles/globals.css'
-import './styles/layout.css'
-import './styles/pages.css'
-import './styles/examples.css'
-import './styles/api.css'
-import './styles/roadmap.css'
+// Centralized CSS imports
+import './styles/index.css'
 
 export default function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
