@@ -81,7 +81,7 @@ const initialAggregatorState: OverlayAggregatorState = {
 export default function AggregatorProvider({
     children,
     concurrencyMode = 'single',
-    autoDismiss = false,
+    autoDismiss = true, // FIXED: Changed default to true
     autoDismissTimeout = 3000,
     debug = false,
     portalRoot,
@@ -98,7 +98,7 @@ export default function AggregatorProvider({
         stateRef.current = state;
     }, [state]);
 
-    // Ref to track active auto-dismiss timeouts
+    // Ref to track active auto-dismiss timeouts with improved key management
     const timeoutsRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
 
     // Dispatch wrapper that logs action and state transitions when debug is enabled
@@ -121,12 +121,15 @@ export default function AggregatorProvider({
     // Use the debug wrapper only when the flag is true
     const dispatch = debug ? debugDispatch : baseDispatch;
 
-    // Auto-dismiss logic: watch for newly added cards and set timers
+    // FIXED: Improved auto-dismiss logic with better timeout management
     useEffect(() => {
         if (!autoDismiss) {
             // Clear all timeouts if auto-dismiss is disabled
             timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
             timeoutsRef.current.clear();
+            if (debug) {
+                console.log('[Floatify] Auto-dismiss disabled, clearing all timeouts');
+            }
             return;
         }
 
@@ -134,33 +137,51 @@ export default function AggregatorProvider({
         timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
         timeoutsRef.current.clear();
 
+        if (debug) {
+            console.log('[Floatify] Setting up auto-dismiss timers');
+        }
+
         // Set up auto-dismiss for all active cards
         Object.values(state.channels).forEach((channel) => {
             channel.cards.forEach((card) => {
-                // Check if this card should auto-dismiss
+                // FIXED: Improved card-level auto-dismiss logic
                 const shouldAutoDismiss = card.autoDismiss !== undefined ? card.autoDismiss : autoDismiss;
                 
                 if (shouldAutoDismiss) {
                     // Use card-specific duration or global timeout
                     const duration = card.autoDismissDuration || autoDismissTimeout;
                     
+                    // FIXED: Use unique key combining channelId and cardId
+                    const timeoutKey = `${channel.channelId}-${card.id}`;
+                    
+                    if (debug) {
+                        console.log(`[Floatify] Setting auto-dismiss timer for card ${card.id} in channel ${channel.channelId} (${duration}ms)`);
+                    }
+                    
                     const timeoutId = setTimeout(() => {
-                        if (debug) {
-                            console.log(`[Floatify] Auto-dismissing card ${card.id} after ${duration}ms`);
+                        try {
+                            if (debug) {
+                                console.log(`[Floatify] Auto-dismissing card ${card.id} from channel ${channel.channelId} after ${duration}ms`);
+                            }
+                            dispatch({
+                                type: 'REMOVE_CARD',
+                                payload: {
+                                    channelId: channel.channelId,
+                                    cardId: card.id,
+                                },
+                            });
+                        } catch (error) {
+                            console.error('[Floatify] Error during auto-dismiss:', error);
+                        } finally {
+                            // Clean up the timeout reference
+                            timeoutsRef.current.delete(timeoutKey);
                         }
-                        dispatch({
-                            type: 'REMOVE_CARD',
-                            payload: {
-                                channelId: channel.channelId,
-                                cardId: card.id,
-                            },
-                        });
-                        // Clean up the timeout reference
-                        timeoutsRef.current.delete(card.id);
                     }, duration);
 
-                    // Store the timeout reference
-                    timeoutsRef.current.set(card.id, timeoutId);
+                    // Store the timeout reference with unique key
+                    timeoutsRef.current.set(timeoutKey, timeoutId);
+                } else if (debug) {
+                    console.log(`[Floatify] Card ${card.id} in channel ${channel.channelId} has auto-dismiss disabled`);
                 }
             });
         });
