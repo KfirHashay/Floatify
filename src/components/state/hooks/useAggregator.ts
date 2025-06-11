@@ -77,7 +77,8 @@ export default function useAggregator() {
     // ----- CHANNEL STATE -----
 
     /**
-     * Updates a channel's overlay state (e.g., 'collapsed', 'expanded', 'alert').
+     * Updates a channel's overlay state (e.g., 'collapsed', 'expanded', 'alert',
+     * 'split', 'bubble').
      * @param channelId Channel to update.
      * @param newState The new overlay state.
      */
