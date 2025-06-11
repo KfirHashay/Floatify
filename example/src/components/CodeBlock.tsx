@@ -2,8 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { Copy, Check } from 'lucide-react'
 import clsx from 'clsx'
 import Prism from 'prismjs'
-import 'prismjs/components/prism-jsx'   // import extra languages as needed
-import 'prismjs/themes/prism.css'       // or your own theme → see CSS vars below
+
 
 export interface CodeBlockProps {
   code: string
