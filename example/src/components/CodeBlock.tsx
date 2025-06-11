@@ -23,7 +23,6 @@ export default function CodeBlock({
   showLineNumbers = true,
   enableCopy = true,
   maxHeight = 400,
-  className = '',
   showLanguage = true,
   wordWrap = false
 }: CodeBlockProps) {
@@ -51,7 +50,7 @@ export default function CodeBlock({
 
   return (
     <div
-      className={clsx('code-block', className)}
+      className={'code-block'}
       style={{ '--cb-max-h': typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight } as React.CSSProperties}
     >
       {(title || showLanguage || enableCopy) && (
