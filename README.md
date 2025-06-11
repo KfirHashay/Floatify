@@ -153,6 +153,20 @@ the action object and the next state, helping you trace overlay updates.
 
 The `example` folder doubles as the documentation site. After running the steps in the *Linking the local build* section above, run `npm run dev` inside `example` and visit `http://localhost:5173` to explore the docs and interactive demos.
 
+### Split & Bubble Demo
+
+Navigate to **Examples → Split & Bubble Demo** to see how split loading and custom bubble icons work together. The page registers a `demo-split` channel and updates it to the `split` state after adding a card:
+
+```tsx
+addCard('demo-split', {
+  id: '1',
+  title: 'Processing...',
+  content: 'Demonstrating the split layout during loading.',
+  bubbleIcon: <Bell />
+});
+updateChannelState('demo-split', 'split');
+```
+
 ## Accessibility
 
 Overlay updates are announced to assistive technologies using a polite live region. Overlay cards are focusable and respond to **Enter** or **Space** so keyboard users can toggle or dismiss them.
