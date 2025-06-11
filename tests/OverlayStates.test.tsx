@@ -104,6 +104,8 @@ describe('overlay additional states', () => {
         const card = document.querySelector('.overlay-card');
         expect(portal?.getAttribute('data-state')).toBe('split');
         expect(card?.classList.contains('overlay-card--split')).toBe(true);
+        const style = getComputedStyle(portal as Element);
+        expect(style.width).toBe('');
     });
 
     it('portal and card reflect bubble state', () => {
@@ -116,5 +118,7 @@ describe('overlay additional states', () => {
         const card = document.querySelector('.overlay-card');
         expect(portal?.getAttribute('data-state')).toBe('bubble');
         expect(card?.classList.contains('overlay-card--bubble')).toBe(true);
+        const style = getComputedStyle(portal as Element);
+        expect(style.width).toBe('');
     });
 });
