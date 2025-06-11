@@ -33,7 +33,8 @@
 
     /* Transform-based scaling for performance */
     transform-origin: center;
-    transform: scale(1);
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
     
     /* Performance optimizations */
     will-change: var(--di-will-change);
@@ -63,8 +64,8 @@
 
 /* 🔹 STATE: Compact (Normal + Icon) */
 .overlay-styled .overlay-card--collapsed {
-    width: var(--overlay-collapsed-width);
-    height: var(--overlay-collapsed-height);
+    --di-scale-current: var(--di-scale-collapsed);
+    transform: scale(var(--di-scale-collapsed));
     border-radius: calc(var(--overlay-collapsed-height) / 2);
     padding: var(--overlay-padding-sm) var(--overlay-padding-md);
     flex-direction: row;
@@ -83,8 +84,8 @@
 
 /* 🔹 STATE: Expanded (Detailed) */
 .overlay-styled .overlay-card--expanded {
-    width: var(--overlay-expanded-width);
-    height: var(--overlay-expanded-height);
+    --di-scale-current: var(--di-scale-expanded);
+    transform: scale(var(--di-scale-expanded));
     border-radius: var(--di-border-radius);
     padding: var(--overlay-padding-lg);
     flex-direction: column;
@@ -241,20 +242,20 @@
 
 /* 🔹 Hover & Press Effects */
 .overlay-styled .overlay-card:hover {
-    transform: scale(var(--di-hover-scale, 1.03));
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-hover-scale, 1.03)));
     box-shadow: var(--di-shadow);
     transition: var(--di-overlay-transition);
 }
 
 .overlay-styled .overlay-card:active {
-    transform: scale(var(--di-active-scale, 0.97));
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-active-scale, 0.97)));
     transition: transform var(--di-duration-fast) var(--di-ease-out);
 }
 
 .overlay-styled .overlay-card:focus-visible {
     outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));
     outline-offset: 2px;
-    transform: scale(var(--di-hover-scale, 1.03));
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-hover-scale, 1.03)));
 }
 
 /* 🔹 Swipe Animations */
@@ -275,8 +276,6 @@
 /* 🔹 Mobile Optimizations */
 @media (max-width: 480px) {
     .overlay-styled .overlay-card--expanded {
-        width: var(--overlay-expanded-width);
-        height: auto;
         min-height: var(--overlay-expanded-height);
         max-height: 80vh;
     }
