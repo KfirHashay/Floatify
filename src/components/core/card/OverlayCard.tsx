@@ -32,6 +32,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
     const isLoading = channel.state === 'loading';
     const isIconOnly = channel.state === 'icon';
     const isBubble = channel.state === 'bubble';
+    const isSplit = channel.state === 'split' || isLoading;
     const isHidden = channel.state === 'hidden';
 
     // 🔹 Toggle expand/collapse on click
@@ -103,10 +104,11 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
         : isExpanded
         ? 'overlay-card--expanded'
         : 'overlay-card--collapsed';
+    const splitClass = isSplit ? 'overlay-card--split' : '';
 
     return (
         <div
-            className={`overlay-card ${stateClass} ${directionClass}`}
+            className={`overlay-card ${stateClass} ${splitClass} ${directionClass}`}
             onClick={handleToggle}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -122,49 +124,95 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                 }
             }}
         >
-            {/* 🔹 Loading State */}
-            {isLoading && (
+
+            {isSplit ? (
                 <>
-                    <LoadingIndicator />
-                    {card?.title && (
-                        <span className="overlay-card-title">{card.title}</span>
+                    <div className="overlay-card-split-main">
+                        {isLoading ? (
+                            <>
+                                <LoadingIndicator />
+                                {card?.title && (
+                                    <span className="overlay-card-title">{card.title}</span>
+                                )}
+                            </>
+                        ) : (
+                            !isHidden && card && (
+                                <>
+                                    {card.icon && (
+                                        <div className="overlay-card-icon" aria-hidden="true">
+                                            {card.icon}
+                                        </div>
+                                    )}
+                                    <div className="overlay-card-content">
+                                        {card.title && (
+                                            <h3 className="overlay-card-title">{card.title}</h3>
+                                        )}
+                                        <p className="overlay-card-body">{card.content}</p>
+                                    </div>
+                                </>
+                            )
+                        )}
+                    </div>
+                    {(card?.bubbleIcon || card?.icon) && (
+                        <div
+                            className="overlay-card-split-bubble"
+                            role="button"
+                            aria-label={card?.title ? `Show ${card.title}` : 'Show overlay'}
+                            aria-haspopup="true"
+                        >
+                            {card.bubbleIcon || card.icon}
+                        </div>
                     )}
                 </>
-            )}
-
-            {/* 🔹 Icon Only State */}
-            {isIconOnly && card?.icon && (
-                <div className="overlay-card-icon" aria-hidden="true">
-                    {card.icon}
-                </div>
-            )}
-
-            {/* 🔹 Bubble State */}
-            {isBubble && (card?.bubbleIcon || card?.icon) && (
-                <div className="overlay-card-bubble-icon" aria-hidden="true">
-                    {card.bubbleIcon || card.icon}
-                </div>
-            )}
-
-            {/* 🔹 Normal Content */}
-            {!isLoading && !isIconOnly && !isBubble && !isHidden && card && (
+            ) : (
                 <>
-                    {card.icon && (
-                        <div className="overlay-card-icon\" aria-hidden="true">
+                    {/* 🔹 Loading State */}
+                    {isLoading && (
+                        <>
+                            <LoadingIndicator />
+                            {card?.title && (
+                                <span className="overlay-card-title">{card.title}</span>
+                            )}
+                        </>
+                    )}
+
+                    {/* 🔹 Icon Only State */}
+                    {isIconOnly && card?.icon && (
+                        <div className="overlay-card-icon" aria-hidden="true">
                             {card.icon}
                         </div>
                     )}
-                    <div className="overlay-card-content">
-                        {card.title && (
-                            <h3 className="overlay-card-title">{card.title}</h3>
-                        )}
-                        <p className="overlay-card-body">
-                            {card.content}
-                        </p>
-                    </div>
+
+                    {/* 🔹 Bubble State */}
+                    {isBubble && (card?.bubbleIcon || card?.icon) && (
+                        <div
+                            className="overlay-card-bubble-icon"
+                            role="button"
+                            aria-label={card?.title ? `Show ${card.title}` : 'Show overlay'}
+                            aria-haspopup="true"
+                        >
+                            {card.bubbleIcon || card.icon}
+                        </div>
+                    )}
+
+                    {/* 🔹 Normal Content */}
+                    {!isLoading && !isIconOnly && !isBubble && !isHidden && card && (
+                        <>
+                            {card.icon && (
+                                <div className="overlay-card-icon" aria-hidden="true">
+                                    {card.icon}
+                                </div>
+                            )}
+                            <div className="overlay-card-content">
+                                {card.title && (
+                                    <h3 className="overlay-card-title">{card.title}</h3>
+                                )}
+                                <p className="overlay-card-body">{card.content}</p>
+                            </div>
+                        </>
+                    )}
                 </>
             )}
-
             {/* 🔹 Actions (only in expanded mode) */}
             {isExpanded && (
                 <div className="overlay-card-actions">
