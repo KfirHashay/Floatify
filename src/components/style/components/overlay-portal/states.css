@@ -1,0 +1,66 @@
+/* =======================================================
+   🌟 Overlay Portal States
+   - Different states for the overlay portal (expanded, collapsed, loading, etc.)
+   - Uses data-state attribute for state management
+========================================================== */
+
+/* State-based scaling instead of width/height changes */
+.overlay-styled .overlay-portal[data-state='expanded'] {
+    transform: scale(var(--di-scale-expanded));
+    --di-scale-current: var(--di-scale-expanded);
+    border-radius: var(--di-border-radius);
+}
+
+.overlay-styled .overlay-portal[data-state='collapsed'] {
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
+    border-radius: calc(var(--overlay-collapsed-height) / 2);
+}
+
+.overlay-styled .overlay-portal[data-state='loading'] {
+    width: var(--overlay-collapsed-height);
+    height: var(--overlay-collapsed-height);
+    border-radius: 50%;
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
+}
+
+.overlay-styled .overlay-portal[data-state='bubble'] {
+    width: var(--overlay-collapsed-height);
+    height: var(--overlay-collapsed-height);
+    border-radius: 50%;
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
+}
+
+.overlay-styled .overlay-portal[data-state='split'] {
+    width: calc(var(--overlay-collapsed-width) + var(--overlay-collapsed-height) + var(--overlay-gap-sm));
+    height: var(--overlay-collapsed-height);
+    border-radius: calc(var(--overlay-collapsed-height) / 2);
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
+}
+
+/* Hidden state */
+.overlay-styled .overlay-portal[data-hidden='true'] {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+    transition: opacity var(--di-duration-fast) var(--di-ease-out), transform var(--di-duration-fast) var(--di-ease-out),
+        visibility 0s linear var(--di-duration-fast);
+}
+
+/* Hide empty portals */
+.overlay-styled .overlay-portal:empty {
+    display: none;
+    pointer-events: none;
+}
+
+/* Swipe animation states */
+.overlay-styled .overlay-container[data-direction='next'] {
+    animation: slide-left var(--di-duration-fast) var(--di-ease-out) forwards;
+}
+
+.overlay-styled .overlay-container[data-direction='prev'] {
+    animation: slide-right var(--di-duration-fast) var(--di-ease-out) forwards;
+}

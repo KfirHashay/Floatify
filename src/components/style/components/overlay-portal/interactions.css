@@ -1,0 +1,29 @@
+/* =======================================================
+   🌟 Overlay Portal Interactions
+   - Hover, active, and focus states
+   - Accessibility enhancements
+========================================================== */
+
+/* Hover & Press Effects with spring timing */
+.overlay-styled .overlay-portal:hover {
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-hover-scale, 1.03)));
+    transition: var(--di-overlay-transition);
+}
+
+.overlay-styled .overlay-portal:active {
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-active-scale, 0.97)));
+    transition: transform var(--di-duration-fast) var(--di-ease-out);
+}
+
+/* Focus ring for accessibility */
+.overlay-styled .overlay-portal:focus-visible {
+    outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));
+    outline-offset: 2px;
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-hover-scale, 1.03)));
+}
+
+/* Note: Container element interactions moved to base.css */
+/* Multiple container child elements using the same pattern */
+.overlay-styled .overlay-multiple-container > * {
+    pointer-events: auto;
+}

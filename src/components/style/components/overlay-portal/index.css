@@ -1,0 +1,12 @@
+/* =======================================================
+   🌟 Overlay Portal Module
+   - Main entry point that imports all portal-related styles
+   - Modular approach for better organization and maintainability
+========================================================== */
+
+/* Import all portal-related styles */
+@import './base.css';
+@import './states.css';
+@import './interactions.css';
+@import './positioning.css';
+@import './responsive.css';

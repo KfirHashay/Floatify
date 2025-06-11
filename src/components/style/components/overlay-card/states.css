@@ -1,0 +1,133 @@
+/* =======================================================
+   🌟 Overlay Card States
+   - Different states for the overlay card (expanded, collapsed, loading, etc.)
+   - Uses CSS classes for state management
+========================================================== */
+
+/* 🔹 STATE: Loading */
+.overlay-styled .overlay-card--loading {
+    width: var(--overlay-collapsed-height);
+    height: var(--overlay-collapsed-height);
+    border-radius: 50%;
+    padding: var(--overlay-padding-sm);
+    justify-content: center;
+    align-items: center;
+}
+
+/* 🔹 STATE: Collapsed */
+.overlay-styled .overlay-card--collapsed {
+    width: var(--overlay-collapsed-width);
+    height: var(--overlay-collapsed-height);
+    padding: var(--overlay-padding-sm) var(--overlay-padding-md);
+    border-radius: calc(var(--overlay-collapsed-height) / 2);
+    transform-origin: center;
+}
+
+/* 🔹 STATE: Bubble */
+.overlay-styled .overlay-card--bubble {
+    width: var(--overlay-collapsed-height);
+    height: var(--overlay-collapsed-height);
+    padding: var(--overlay-padding-sm);
+    border-radius: 50%;
+    justify-content: center;
+}
+
+/* 🔹 STATE: Split with transform-based expansion */
+.overlay-styled .overlay-card--split {
+    width: calc(var(--overlay-collapsed-width) + var(--overlay-collapsed-height) + var(--overlay-gap-sm));
+    height: var(--overlay-collapsed-height);
+    border-radius: calc(var(--overlay-collapsed-height) / 2);
+    padding: var(--overlay-padding-sm) var(--overlay-padding-md);
+    gap: var(--overlay-gap-md);
+    justify-content: space-between;
+}
+
+/* 🔹 STATE: Expanded with content scaling */
+.overlay-styled .overlay-card--expanded {
+    width: var(--overlay-expanded-width);
+    padding: var(--overlay-padding-lg);
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: var(--overlay-gap-md);
+    animation: di-expand var(--di-duration-normal) var(--di-spring-timing-bounce) forwards;
+    transform-origin: top center;
+    /* Add auto height to respect content size */
+    height: auto;
+    min-height: var(--overlay-expanded-height);
+    max-height: min(80vh, calc(var(--overlay-expanded-height) * 2));
+    overflow: visible;
+}
+
+/* Expanded state-specific content layouts */
+.overlay-styled .overlay-card--expanded .overlay-card-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: di-content-appear 300ms var(--di-spring-timing-subtle) forwards;
+    width: 100%;
+    flex: 1;
+    overflow: visible;
+}
+
+.overlay-styled .overlay-card--expanded .overlay-card-title {
+    white-space: normal;
+    text-align: center;
+    font-size: var(--overlay-font-size-lg);
+}
+
+.overlay-styled .overlay-card--expanded .overlay-card-body {
+    opacity: 1;
+    overflow-y: auto; /* Add scrolling if content is very large */
+    max-height: min(60vh, calc(var(--overlay-expanded-height) * 2)); /* Much larger dynamic max height */
+    width: 100%;
+    white-space: normal;
+    text-overflow: initial;
+    margin: var(--overlay-gap-sm) 0;
+    padding: 0 var(--overlay-padding-sm);
+    box-sizing: border-box;
+}
+
+.overlay-styled .overlay-card--expanded .overlay-card-actions {
+    display: flex;
+    opacity: 1;
+}
+
+.overlay-styled .overlay-card--loading .overlay-card-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Content entrance animation */
+@keyframes di-content-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 🔹 STATE: Hidden */
+.overlay-styled .overlay-card--hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: opacity var(--di-duration-fast) var(--di-ease-out), transform var(--di-duration-fast) var(--di-ease-out),
+        visibility 0s linear var(--di-duration-fast);
+}
+
+/* 🔹 STATE: Alert with enhanced pulsing animation */
+.overlay-styled .overlay-card--alert {
+    background-color: var(--di-alert-bg);
+    color: white;
+    border-radius: calc(var(--overlay-collapsed-height) / 2);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    animation: alert-pulse 3s infinite var(--di-spring-timing-bounce);
+    box-shadow: 0 8px 24px rgba(255, 69, 58, 0.4), 0 2px 8px rgba(255, 69, 58, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 69, 58, 0.6);
+}

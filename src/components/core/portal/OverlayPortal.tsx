@@ -147,9 +147,10 @@ function DefaultOverlay({
     
     if (!shouldShow) return null;
 
-    // Build portal classes with proper positioning
+    // Build portal classes with proper positioning and glass effect
     const portalClasses = [
         'overlay-portal',
+        'glass-effect',
         fixedToViewport ? 'overlay-portal--fixed' : '',
         position !== 'relative' ? `overlay-portal--${position}` : '',
     ]

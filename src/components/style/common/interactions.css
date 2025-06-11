@@ -1,0 +1,25 @@
+/* =======================================================
+   🌟 Common Interaction Effects
+   - Reusable interaction styles for components
+   - Hover, active, and focus states
+========================================================== */
+
+/* Interactive element hover effect */
+.interactive-hover {
+    transition: transform var(--di-duration-normal) var(--di-spring-timing-subtle);
+}
+
+.interactive-hover:hover {
+    transform: scale(var(--di-hover-scale, 1.03));
+}
+
+.interactive-hover:active {
+    transform: scale(var(--di-active-scale, 0.97));
+    transition: transform var(--di-duration-fast) var(--di-ease-out);
+}
+
+/* Focus states for accessibility */
+.focus-outline:focus-visible {
+    outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));
+    outline-offset: 2px;
+}

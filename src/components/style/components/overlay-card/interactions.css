@@ -1,0 +1,41 @@
+/* =======================================================
+   🌟 Overlay Card Interactions
+   - Hover, active, and focus states
+   - Accessibility enhancements
+========================================================== */
+
+/* 🔹 Enhanced Interaction states (hover/active) */
+.overlay-styled .overlay-card:hover {
+    transform: scale(calc(var(--di-scale-current) * 1.02));
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 4px 6px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.15);
+    transition: transform 300ms var(--di-spring-timing-soft), box-shadow 300ms var(--di-spring-timing-soft), border-color 300ms ease;
+}
+
+.overlay-styled .overlay-card:active {
+    transform: scale(calc(var(--di-scale-current) * 0.97));
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2), 0 2px 3px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: transform 150ms var(--di-spring-timing-subtle), box-shadow 150ms var(--di-spring-timing-subtle);
+}
+
+.overlay-styled .overlay-card:focus-visible {
+    outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));
+    outline-offset: 2px;
+}
+
+/* 🔹 Action Buttons interactions */
+.overlay-styled .overlay-card-remove:hover,
+.overlay-styled .overlay-card-swipe-prev:hover,
+.overlay-styled .overlay-card-swipe-next:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.overlay-styled .overlay-card-remove:hover {
+    background: rgba(255, 69, 58, 0.9);
+}
+
+/* 🔹 Split state interaction */
+.overlay-styled .overlay-card--split:hover {
+    gap: var(--overlay-gap-lg);
+}

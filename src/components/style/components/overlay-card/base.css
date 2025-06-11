@@ -1,0 +1,106 @@
+/* =======================================================
+   🌟 Overlay Card Base Styles
+   - Core styling for the overlay card component
+   - Base dimensions and visual appearance
+   - Uses common .glass-effect class for glassmorphism styling
+========================================================== */
+
+/* Apply base card styles and structure */
+.overlay-styled .overlay-card {
+    /* Background styling with gradient overlay */
+    background: linear-gradient(135deg, rgba(30, 30, 32, 0.75) 0%, rgba(18, 18, 18, 0.85) 50%, rgba(10, 10, 10, 0.8) 100%);
+    color: var(--di-text);
+    font-size: var(--overlay-font-size-md);
+    border-radius: var(--di-border-radius);
+    
+    /* Note: Glass effect properties now applied via .glass-effect class */
+
+    /* Fixed dimensions with transform scaling */
+    width: auto;
+    height: auto;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--overlay-gap-sm);
+    padding: var(--overlay-padding-md);
+
+    /* Transform-based scaling for better performance */
+    transform-origin: center;
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
+
+    /* Performance optimizations */
+    will-change: transform, opacity; /* More specific than var to prevent overuse */
+
+    /* Further optimized transitions with coordinated timing */
+    transition: transform var(--di-duration-normal) var(--di-spring-timing-soft), opacity var(--di-duration-normal) var(--di-spring-timing-subtle),
+        border-radius var(--di-duration-normal) var(--di-spring-timing-expand), box-shadow var(--di-duration-normal) cubic-bezier(0.2, 0.8, 0.2, 1),
+        background var(--di-duration-normal) ease, width var(--di-duration-normal) var(--di-spring-timing-expand),
+        height var(--di-duration-normal) var(--di-spring-timing-expand), padding var(--di-duration-normal) cubic-bezier(0.25, 1, 0.5, 1),
+        margin var(--di-duration-normal) cubic-bezier(0.25, 1, 0.5, 1), visibility 0s linear;
+
+    /* Ensure interactions work */
+    pointer-events: auto;
+}
+
+/* 🔹 Content Layout */
+.overlay-styled .overlay-card-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+    gap: var(--overlay-gap-sm);
+    color: var(--di-text);
+}
+
+/* 🔹 Icon Styling */
+.overlay-styled .overlay-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--di-text);
+    width: 20px;
+    height: 20px;
+}
+
+/* 🔹 Title Styling */
+.overlay-styled .overlay-card-title {
+    font-size: var(--overlay-font-size-md);
+    font-weight: var(--overlay-font-weight-bold);
+    margin: 0;
+    line-height: 1.2;
+    color: var(--di-text);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+}
+
+/* 🔹 Body Text */
+.overlay-styled .overlay-card-body {
+    font-size: var(--overlay-font-size-md);
+    margin: 0;
+    line-height: 1.4;
+    color: var(--di-text);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity var(--di-duration-normal) var(--di-spring-timing), max-height var(--di-duration-normal) var(--di-spring-timing);
+}
+
+/* 🔹 Actions Container */
+.overlay-styled .overlay-card-actions {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    transition: opacity var(--di-duration-normal) var(--di-spring-timing);
+}

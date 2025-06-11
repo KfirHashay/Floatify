@@ -51,25 +51,87 @@
     }
 }
 
-/* 🔹 Pulse Animation for Alerts - with spring timing */
+/* 🔹 Enhanced Pulse Animation for Alerts - with spring timing */
 @keyframes alert-pulse {
     0%, 100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(var(--di-alert-rgb, 255, 69, 58), 0.4);
+        box-shadow: 0 8px 24px rgba(255, 69, 58, 0.4), 0 2px 8px rgba(255, 69, 58, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        background-color: rgba(var(--di-alert-rgb, 255, 69, 58), 0.8);
     }
     50% {
         transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(var(--di-alert-rgb, 255, 69, 58), 0);
+        box-shadow: 0 12px 36px rgba(255, 69, 58, 0.6), 0 4px 12px rgba(255, 69, 58, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.25);
+        background-color: rgba(var(--di-alert-rgb, 255, 69, 58), 0.9);
     }
 }
 
-/* 🔹 Loading spinner animation */
+/* 🔹 Breathing effect animation for subtle elements */
+@keyframes di-breathe {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* 🔹 Enhanced Loading animations */
 @keyframes loading-spin {
     from {
         transform: rotate(0deg);
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* Spinner animation - used for loading indicators */
+@keyframes spinner-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Circular progress animation */
+@keyframes progress-circle {
+    0% {
+        stroke-dasharray: 0, 100;
+    }
+    100% {
+        stroke-dasharray: 100, 0;
+    }
+}
+
+/* Number count animation - used with JS */
+@keyframes number-grow {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading dots animation */
+@keyframes loading-dots {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0.3;
+        transform: scale(0.8);
     }
 }
 
@@ -128,4 +190,54 @@
     transform: translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
+}
+
+/* 🔹 Enhanced state transition animations */
+@keyframes di-expand {
+    0% {
+        transform: scale(0.9) translateY(-10px);
+        opacity: 0.8;
+        border-radius: calc(var(--overlay-collapsed-height) / 2);
+    }
+    70% {
+        transform: scale(1.02) translateY(0);
+        border-radius: calc(var(--di-border-radius) * 0.9);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+        border-radius: var(--di-border-radius);
+    }
+}
+
+@keyframes di-collapse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+}
+
+@keyframes di-morph-to-bubble {
+    0% {
+        border-radius: var(--di-border-radius);
+    }
+    100% {
+        border-radius: 50%;
+    }
+}
+
+/* Card swipe animation */
+@keyframes di-swipe {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(-100% - 24px));
+        opacity: 0;
+    }
 }

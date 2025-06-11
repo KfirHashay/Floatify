@@ -1,0 +1,57 @@
+/* =======================================================
+   🌟 Overlay Card Responsive Styles
+   - Media queries for adapting to different screen sizes
+   - Mobile-first adjustments
+========================================================== */
+
+/* Mobile adjustments */
+@media screen and (max-width: 576px) {
+    /* Reduce expanded card width on small screens */
+    .overlay-styled .overlay-card--expanded {
+        width: 90%;
+        min-height: var(--overlay-expanded-height);
+        max-height: 80vh;
+    }
+
+    .overlay-styled .overlay-card-title {
+        font-size: var(--overlay-font-size-sm);
+    }
+
+    .overlay-styled .overlay-card--expanded .overlay-card-title {
+        font-size: var(--overlay-font-size-md);
+    }
+
+    /* Smaller icons on mobile */
+    .overlay-styled .overlay-card-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Adjust button sizes */
+    .overlay-styled .overlay-card-bubble {
+        width: calc(var(--overlay-collapsed-height) - 4px);
+        height: calc(var(--overlay-collapsed-height) - 4px);
+    }
+
+    .overlay-styled .overlay-card--split {
+        gap: var(--overlay-gap-sm); /* Smaller gap on mobile */
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .overlay-styled .overlay-card {
+        transition: none;
+        animation: none !important;
+    }
+
+    .overlay-styled .overlay-card--alert {
+        animation: none;
+        transition: none;
+        transform: none;
+    }
+
+    .overlay-styled .overlay-card--split:hover {
+        gap: var(--overlay-gap-md); /* Keep gap visible for reduced motion */
+    }
+}

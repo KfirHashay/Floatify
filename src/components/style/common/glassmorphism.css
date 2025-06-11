@@ -1,0 +1,39 @@
+/* =======================================================
+   🌟 Common Glassmorphism Effects
+   - Reusable glass effect styling for multiple components
+   - Can be applied to any element requiring glass morphism
+========================================================== */
+
+.glass-effect {
+    /* Base glass morphism effect */
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    
+    /* Standard glass border */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* Common glass shadow effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 
+                0 2px 4px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Light glass effect variant */
+.glass-effect-light {
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 
+                0 2px 4px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Dark glass effect variant */
+.glass-effect-dark {
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25), 
+                0 4px 8px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
