@@ -68,6 +68,22 @@
     --di-scale-current: var(--di-scale-collapsed);
 }
 
+.overlay-styled .overlay-portal[data-state='bubble'] {
+    width: var(--overlay-collapsed-height);
+    height: var(--overlay-collapsed-height);
+    border-radius: 50%;
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
+}
+
+.overlay-styled .overlay-portal[data-state='split'] {
+    width: calc(var(--overlay-collapsed-width) + var(--overlay-collapsed-height) + var(--overlay-gap-sm));
+    height: var(--overlay-collapsed-height);
+    border-radius: calc(var(--overlay-collapsed-height) / 2);
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
+}
+
 /* Hover & Press Effects with spring timing */
 .overlay-styled .overlay-portal:hover {
     transform: scale(calc(var(--di-scale-current, 1) * var(--di-hover-scale, 1.03)));
