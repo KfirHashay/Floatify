@@ -1,104 +1,636 @@
-/* --- variables --- */
+/* =======================================================
+   💻 CodeBlock Component - VSCode Dark Modern Theme
+   - Bulletproof Prism.js integration
+   - Performance optimized with CSS custom properties
+   - Responsive design with mobile-first approach
+   - Accessibility compliant with ARIA support
+========================================================== */
+
+/* =======================================================
+   🎨 Design Tokens - VSCode Dark Modern Authentic Colors
+========================================================== */
+
 :root {
-  --cb-bg: #1f1f1f;
-  --cb-fg: #f0f6fc;
-  --cb-border: #333;
-  --cb-header-bg: #252526;
-  --cb-copy-bg: rgba(255,255,255,.08);
-  --cb-copy-bg-active: rgba(40,202,66,.2);
+  /* VSCode Dark Modern Base Colors */
+  --code-bg-primary: #1f1f1f;
+  --code-bg-secondary: #252526;
+  --code-bg-tertiary: #2d2d30;
+  --code-text-primary: #cccccc;
+  --code-text-secondary: #969696;
+  --code-text-muted: #6a6a6a;
+  
+  /* VSCode Dark Modern Syntax Colors */
+  --code-syntax-keyword: #569cd6;
+  --code-syntax-string: #ce9178;
+  --code-syntax-number: #b5cea8;
+  --code-syntax-comment: #6a9955;
+  --code-syntax-function: #dcdcaa;
+  --code-syntax-variable: #9cdcfe;
+  --code-syntax-type: #4ec9b0;
+  --code-syntax-operator: #d4d4d4;
+  --code-syntax-punctuation: #cccccc;
+  --code-syntax-tag: #569cd6;
+  --code-syntax-attribute: #92c5f8;
+  --code-syntax-value: #ce9178;
+  
+  /* Interactive States */
+  --code-border-primary: #3c3c3c;
+  --code-border-secondary: #464647;
+  --code-hover-bg: rgba(255, 255, 255, 0.1);
+  --code-active-bg: rgba(255, 255, 255, 0.15);
+  --code-focus-ring: #007acc;
+  --code-success-color: #4caf50;
+  --code-success-bg: rgba(76, 175, 80, 0.1);
+  
+  /* Spacing & Layout */
+  --code-padding-sm: 0.5rem;
+  --code-padding-md: 0.75rem;
+  --code-padding-lg: 1rem;
+  --code-gap-sm: 0.5rem;
+  --code-gap-md: 0.75rem;
+  --code-border-radius: 8px;
+  --code-border-radius-sm: 6px;
+  
+  /* Typography */
+  --code-font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  --code-font-size: 0.875rem;
+  --code-font-size-sm: 0.75rem;
+  --code-line-height: 1.5;
+  
+  /* Animation */
+  --code-transition-fast: 0.15s ease-out;
+  --code-transition-normal: 0.25s ease-out;
+  --code-spring-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  /* Z-index */
+  --code-z-header: 10;
+  --code-z-copy: 20;
 }
 
-/* light theme demo */
+/* Light Theme Override */
 [data-theme='light'] {
-  --cb-bg: #fafafa;
-  --cb-fg: #24292f;
-  --cb-border: #e1e4e8;
-  --cb-header-bg: #f6f8fa;
-  --cb-copy-bg: rgba(0,0,0,.05);
-  --cb-copy-bg-active: rgba(40,202,66,.15);
+  --code-bg-primary: #ffffff;
+  --code-bg-secondary: #f8f8f8;
+  --code-bg-tertiary: #f0f0f0;
+  --code-text-primary: #333333;
+  --code-text-secondary: #666666;
+  --code-text-muted: #999999;
+  
+  /* Light Theme Syntax Colors */
+  --code-syntax-keyword: #0000ff;
+  --code-syntax-string: #a31515;
+  --code-syntax-number: #098658;
+  --code-syntax-comment: #008000;
+  --code-syntax-function: #795e26;
+  --code-syntax-variable: #001080;
+  --code-syntax-type: #267f99;
+  --code-syntax-operator: #000000;
+  --code-syntax-punctuation: #000000;
+  --code-syntax-tag: #800000;
+  --code-syntax-attribute: #ff0000;
+  --code-syntax-value: #0451a5;
+  
+  --code-border-primary: #e1e4e8;
+  --code-border-secondary: #d0d7de;
+  --code-hover-bg: rgba(0, 0, 0, 0.05);
+  --code-active-bg: rgba(0, 0, 0, 0.1);
+  --code-focus-ring: #0969da;
 }
 
-/* --- container --- */
+/* =======================================================
+   🏗️ Base Component Structure
+========================================================== */
+
 .code-block {
   position: relative;
-  border: 1px solid var(--cb-border);
-  border-radius: 8px;
-  background: var(--cb-bg);
-  color: var(--cb-fg);
-  font-family: 'Fira Code', monospace;
+  background-color: var(--code-bg-primary);
+  border: 1px solid var(--code-border-primary);
+  border-radius: var(--code-border-radius);
+  font-family: var(--code-font-family);
+  font-size: var(--code-font-size);
+  line-height: var(--code-line-height);
+  color: var(--code-text-primary);
   overflow: hidden;
+  
+  /* Performance optimizations */
+  contain: layout style paint;
   content-visibility: auto;
+  
+  /* Smooth transitions */
+  transition: border-color var(--code-transition-normal);
 }
 
-/* --- header --- */
-.cb-header {
+.code-block:hover {
+  border-color: var(--code-border-secondary);
+}
+
+.code-block:focus-within {
+  border-color: var(--code-focus-ring);
+  box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+}
+
+/* =======================================================
+   📋 Header Section
+========================================================== */
+
+.code-block__header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: .75rem 1rem;
-  background: var(--cb-header-bg);
-  border-bottom: 1px solid var(--cb-border);
+  justify-content: space-between;
+  padding: var(--code-padding-md) var(--code-padding-lg);
+  background-color: var(--code-bg-secondary);
+  border-bottom: 1px solid var(--code-border-primary);
+  position: relative;
+  z-index: var(--code-z-header);
 }
 
-.cb-left { display: flex; gap: .75rem; }
-
-.cb-title { font-weight: 600; font-size: .875rem; }
-
-.cb-lang {
-  font-size: .75rem;
-  padding: .25rem .5rem;
-  border-radius: 12px;
-  background: var(--cb-copy-bg);
-  text-transform: uppercase;
-}
-
-/* --- copy btn --- */
-.cb-copy {
-  display: grid;
-  place-items: center;
-  width: 2.25rem; height: 2.25rem;
-  border-radius: 6px;
-  background: var(--cb-copy-bg);
-  border: none;
-  color: inherit;
-  cursor: pointer;
-  transition: transform .15s;
-}
-
-.cb-copy:hover { transform: translateY(-2px); }
-.cb-copy.is-copied { background: var(--cb-copy-bg-active); }
-
-/* --- code panel --- */
-.cb-scroll {
+.code-block__meta {
   display: flex;
-  max-height: var(--cb-max-h, 400px);
-  overflow: auto;
-}
-
-.cb-lines {
-  padding: 1rem 0;
-  text-align: right;
-  user-select: none;
-  color: #6e7681;
-  border-right: 1px solid var(--cb-border);
-}
-
-.cb-lines span {
-  display: block;
-  padding: 0 .75rem;
-  line-height: 1.5;
-}
-
-.cb-pre {
-  margin: 0;
-  padding: 1rem 1.25rem;
+  align-items: center;
+  gap: var(--code-gap-md);
   min-width: 0;
-  font-size: .875rem;
-  line-height: 1.5;
-  white-space: pre;
+  flex: 1;
 }
 
-.cb-pre.wrap { white-space: pre-wrap; word-break: break-word; }
+.code-block__title {
+  font-size: var(--code-font-size);
+  font-weight: 600;
+  margin: 0;
+  color: var(--code-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-/* visually hidden for a11y */
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.code-block__language {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--code-bg-tertiary);
+  border: 1px solid var(--code-border-primary);
+  border-radius: var(--code-border-radius-sm);
+  font-size: var(--code-font-size-sm);
+  font-weight: 500;
+  color: var(--lang-color, var(--code-text-secondary));
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  position: relative;
+}
+
+.code-block__language::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--lang-color, var(--code-text-secondary));
+  border-radius: var(--code-border-radius-sm) 0 0 var(--code-border-radius-sm);
+}
+
+/* =======================================================
+   📋 Copy Button - Enhanced with Spring Animations
+========================================================== */
+
+.code-block__copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--code-bg-tertiary);
+  border: 1px solid var(--code-border-primary);
+  border-radius: var(--code-border-radius-sm);
+  color: var(--code-text-secondary);
+  cursor: pointer;
+  position: relative;
+  z-index: var(--code-z-copy);
+  overflow: hidden;
+  
+  /* Smooth transitions */
+  transition: all var(--code-transition-fast);
+  
+  /* Remove default button styles */
+  font: inherit;
+  outline: none;
+}
+
+.code-block__copy:hover {
+  background-color: var(--code-hover-bg);
+  border-color: var(--code-border-secondary);
+  color: var(--code-text-primary);
+  transform: translateY(-1px) scale(1.05);
+}
+
+.code-block__copy:active {
+  transform: translateY(0) scale(0.95);
+  transition: transform 0.1s ease-out;
+}
+
+.code-block__copy:focus-visible {
+  border-color: var(--code-focus-ring);
+  box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+}
+
+.code-block__copy:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Success state */
+.code-block__copy--success {
+  background-color: var(--code-success-bg);
+  border-color: var(--code-success-color);
+  color: var(--code-success-color);
+}
+
+.code-block__copy--success:hover {
+  background-color: var(--code-success-bg);
+  border-color: var(--code-success-color);
+  color: var(--code-success-color);
+  transform: translateY(-1px) scale(1.05);
+}
+
+/* Copy button icon */
+.code-block__copy-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--code-transition-fast) var(--code-spring-timing);
+}
+
+.code-block__copy--success .code-block__copy-icon {
+  transform: rotate(360deg) scale(1.1);
+}
+
+/* Accessible feedback - visually hidden but announced to screen readers */
+.code-block__copy-feedback {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =======================================================
+   💻 Code Content Area
+========================================================== */
+
+.code-block__content {
+  display: flex;
+  max-height: var(--code-max-height, 400px);
+  overflow: auto;
+  background-color: var(--code-bg-primary);
+}
+
+/* Custom scrollbar */
+.code-block__content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.code-block__content::-webkit-scrollbar-track {
+  background: var(--code-bg-secondary);
+}
+
+.code-block__content::-webkit-scrollbar-thumb {
+  background: var(--code-border-secondary);
+  border-radius: 4px;
+}
+
+.code-block__content::-webkit-scrollbar-thumb:hover {
+  background: var(--code-text-muted);
+}
+
+/* =======================================================
+   🔢 Line Numbers
+========================================================== */
+
+.code-block__lines {
+  display: flex;
+  flex-direction: column;
+  padding: var(--code-padding-lg) 0;
+  background-color: var(--code-bg-secondary);
+  border-right: 1px solid var(--code-border-primary);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.code-block__line-number {
+  display: block;
+  padding: 0 var(--code-padding-md);
+  color: var(--code-text-muted);
+  font-size: var(--code-font-size-sm);
+  line-height: var(--code-line-height);
+  text-align: right;
+  min-width: 2.5rem;
+}
+
+/* =======================================================
+   📝 Code Content
+========================================================== */
+
+.code-block__pre {
+  margin: 0;
+  padding: var(--code-padding-lg);
+  flex: 1;
+  min-width: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: pre;
+  overflow: visible;
+  background: none;
+  border: none;
+}
+
+.code-block--wrap .code-block__pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.code-block__code {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* =======================================================
+   🎨 Prism.js Syntax Highlighting - VSCode Dark Modern
+========================================================== */
+
+/* Keywords */
+.code-block .token.keyword,
+.code-block .token.important,
+.code-block .token.atrule {
+  color: var(--code-syntax-keyword);
+  font-weight: normal;
+}
+
+/* Strings */
+.code-block .token.string,
+.code-block .token.char,
+.code-block .token.attr-value,
+.code-block .token.regex,
+.code-block .token.variable {
+  color: var(--code-syntax-string);
+}
+
+/* Numbers */
+.code-block .token.number,
+.code-block .token.boolean,
+.code-block .token.constant {
+  color: var(--code-syntax-number);
+}
+
+/* Comments */
+.code-block .token.comment,
+.code-block .token.prolog,
+.code-block .token.doctype,
+.code-block .token.cdata {
+  color: var(--code-syntax-comment);
+  font-style: italic;
+}
+
+/* Functions */
+.code-block .token.function,
+.code-block .token.function-name,
+.code-block .token.method {
+  color: var(--code-syntax-function);
+}
+
+/* Variables and properties */
+.code-block .token.property,
+.code-block .token.tag,
+.code-block .token.selector,
+.code-block .token.class-name {
+  color: var(--code-syntax-variable);
+}
+
+/* Types */
+.code-block .token.builtin,
+.code-block .token.primitive {
+  color: var(--code-syntax-type);
+}
+
+/* Operators */
+.code-block .token.operator,
+.code-block .token.entity,
+.code-block .token.url {
+  color: var(--code-syntax-operator);
+}
+
+/* Punctuation */
+.code-block .token.punctuation {
+  color: var(--code-syntax-punctuation);
+}
+
+/* HTML/XML */
+.code-block .token.tag .token.tag,
+.code-block .token.tag .token.punctuation {
+  color: var(--code-syntax-tag);
+}
+
+.code-block .token.attr-name {
+  color: var(--code-syntax-attribute);
+}
+
+.code-block .token.attr-value .token.punctuation {
+  color: var(--code-syntax-value);
+}
+
+/* JSX */
+.code-block .token.script .token.keyword {
+  color: var(--code-syntax-keyword);
+}
+
+/* CSS */
+.code-block .token.property {
+  color: var(--code-syntax-variable);
+}
+
+.code-block .token.selector {
+  color: var(--code-syntax-tag);
+}
+
+/* JSON */
+.code-block .token.property.string {
+  color: var(--code-syntax-variable);
+}
+
+/* Bash */
+.code-block .token.function {
+  color: var(--code-syntax-function);
+}
+
+.code-block .token.parameter {
+  color: var(--code-syntax-variable);
+}
+
+/* =======================================================
+   📱 Mobile Responsive Design
+========================================================== */
+
+@media (max-width: 768px) {
+  .code-block {
+    border-radius: var(--code-border-radius-sm);
+  }
+  
+  .code-block__header {
+    padding: var(--code-padding-sm) var(--code-padding-md);
+    flex-wrap: wrap;
+    gap: var(--code-gap-sm);
+  }
+  
+  .code-block__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--code-gap-sm);
+  }
+  
+  .code-block__title {
+    font-size: var(--code-font-size-sm);
+  }
+  
+  .code-block__copy {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  
+  .code-block__lines {
+    padding: var(--code-padding-md) 0;
+  }
+  
+  .code-block__line-number {
+    padding: 0 var(--code-padding-sm);
+    min-width: 2rem;
+  }
+  
+  .code-block__pre {
+    padding: var(--code-padding-md);
+    font-size: var(--code-font-size-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .code-block__header {
+    padding: var(--code-padding-sm);
+  }
+  
+  .code-block__copy {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .code-block__pre {
+    padding: var(--code-padding-sm);
+  }
+  
+  /* Force horizontal scroll on very small screens */
+  .code-block__content {
+    overflow-x: auto;
+  }
+  
+  .code-block__pre {
+    white-space: pre;
+    min-width: max-content;
+  }
+}
+
+/* =======================================================
+   ♿ Accessibility Enhancements
+========================================================== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .code-block {
+    border-width: 2px;
+  }
+  
+  .code-block__copy {
+    border-width: 2px;
+  }
+  
+  .code-block__language {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .code-block,
+  .code-block__copy,
+  .code-block__copy-icon {
+    transition: none;
+  }
+  
+  .code-block__copy:hover,
+  .code-block__copy:active {
+    transform: none;
+  }
+  
+  .code-block__copy--success .code-block__copy-icon {
+    transform: none;
+  }
+}
+
+/* Focus visible improvements */
+.code-block__copy:focus-visible {
+  outline: 2px solid var(--code-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Selection styling */
+.code-block__code ::selection {
+  background-color: rgba(173, 214, 255, 0.3);
+  color: inherit;
+}
+
+[data-theme='light'] .code-block__code ::selection {
+  background-color: rgba(0, 120, 215, 0.3);
+  color: inherit;
+}
+
+/* =======================================================
+   🎭 Animation Keyframes
+========================================================== */
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Ripple effect for copy button */
+.code-block__copy::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.code-block__copy:active::after {
+  animation: ripple 0.6s ease-out;
+}
