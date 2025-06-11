@@ -40,11 +40,6 @@ export interface OverlayCard {
     timestamp?: number;
 
     /**
-     * Optional visual icon element to display with the card.
-     */
-    icon?: ReactNode;
-
-    /**
      * Optional icon used when the channel displays the card as a bubble.
      */
     bubbleIcon?: ReactNode;

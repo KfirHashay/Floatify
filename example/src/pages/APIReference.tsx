@@ -176,13 +176,6 @@ registerChannel('notifications', 1);`,
         since: 'v0.1.0'
       },
       {
-        name: 'icon',
-        type: 'ReactNode',
-        description: 'Optional icon element to display',
-        example: `icon: <CheckCircle />`,
-        since: 'v0.1.0'
-      },
-      {
         name: 'bubbleIcon',
         type: 'ReactNode',
         description: 'Icon shown when the card is minimized to a bubble',
@@ -235,12 +228,6 @@ registerChannel('notifications', 1);`,
         name: 'loading',
         type: 'OverlayState',
         description: 'Channel shows a loading spinner',
-        since: 'v0.2.0'
-      },
-      {
-        name: 'icon',
-        type: 'OverlayState',
-        description: 'Channel shows only an icon',
         since: 'v0.2.0'
       },
       {

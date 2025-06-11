@@ -87,10 +87,9 @@ On mobile devices only `top` or `bottom` positions are recommended.
 </Floatify>
 ```
 
-### Loading & Icon States
+### Loading & Bubble State
 
-Set a channel to `'loading'` to show a spinner or `'icon'` to display just the icon.
-A typical pattern is to drive this from a loading boolean:
+Set a channel to `'loading'` to show a spinner and switch to `'bubble'` when only an icon should remain. A typical pattern is to drive this from a loading boolean:
 
 ```tsx
 const { registerChannel, updateChannelState } = useAggregator();
@@ -104,7 +103,7 @@ useEffect(() => {
   updateChannelState('playback', loading ? 'loading' : 'collapsed');
 }, [loading, updateChannelState]);
 
-// later: setLoading(false); updateChannelState('playback', 'icon');
+// later: setLoading(false); updateChannelState('playback', 'bubble');
 ```
 
 ### Split Loading & Bubble Icons

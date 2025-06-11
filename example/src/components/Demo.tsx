@@ -39,7 +39,7 @@ export default function Demo({
       id,
       title: 'Loading…',
       content: 'Please wait',
-      icon: <Loader2 className="spin" />,
+      bubbleIcon: <Loader2 className="spin" />,
       autoDismiss: false // Don't auto-dismiss loading states
     })
 
@@ -49,7 +49,7 @@ export default function Demo({
         id: `${id}-done`,
         title: 'Complete',
         content: 'Operation successful',
-        icon: <CheckCircle />,
+        bubbleIcon: <CheckCircle />,
         autoDismiss: true,
         autoDismissDuration: 2000 // Shorter duration for success messages
       })

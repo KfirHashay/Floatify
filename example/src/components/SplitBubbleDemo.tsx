@@ -15,7 +15,6 @@ export default function SplitBubbleDemo() {
       id: Date.now().toString(),
       title: 'Processing...',
       content: 'Demonstrating the split layout during loading.',
-      icon: <Loader2 className="spin" />,
       bubbleIcon: <Bell />
     })
     updateChannelState('demo-split', 'split')
@@ -26,7 +25,6 @@ export default function SplitBubbleDemo() {
       id: Date.now().toString(),
       title: 'New Message',
       content: 'This card is displayed as a bubble.',
-      icon: <AlertCircle />,
       bubbleIcon: <MessageCircle />
     })
     updateChannelState('demo-split', 'bubble')
