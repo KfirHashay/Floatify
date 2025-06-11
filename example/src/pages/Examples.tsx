@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Copy, Play, RotateCcw, CheckCircle, AlertCircle, Info, Zap } from 'lucide-react';
 import Demo from '../components/Demo';
 import Button from '../components/Button';
+import CodeBlock from '../components/CodeBlock';
 import { Position } from '../types';
 
 interface Props {
@@ -90,13 +91,6 @@ export default function Examples({
   onPositionChange
 }: Props) {
   const [activeExample, setActiveExample] = useState('basic');
-  const [copiedCode, setCopiedCode] = useState<string | null>(null);
-
-  const copyToClipboard = (code: string, key: string) => {
-    navigator.clipboard.writeText(code);
-    setCopiedCode(key);
-    setTimeout(() => setCopiedCode(null), 2000);
-  };
 
   const examples = [
     {
@@ -166,21 +160,15 @@ export default function Examples({
         </div>
 
         <div className="code-display">
-          <div className="code-header">
-            <h3>{examples.find(e => e.key === activeExample)?.title}</h3>
-            <Button
-              variant="ghost"
-              size="sm"
-              leftIcon={copiedCode === activeExample ? <CheckCircle size={16} /> : <Copy size={16} />}
-              onClick={() => copyToClipboard(codeExamples[activeExample as keyof typeof codeExamples], activeExample)}
-            >
-              {copiedCode === activeExample ? 'Copied!' : 'Copy Code'}
-            </Button>
-          </div>
-          
-          <div className="code-content">
-            <pre><code>{codeExamples[activeExample as keyof typeof codeExamples]}</code></pre>
-          </div>
+          <CodeBlock
+            code={codeExamples[activeExample as keyof typeof codeExamples]}
+            language="typescript"
+            title={examples.find(e => e.key === activeExample)?.title}
+            showLineNumbers={true}
+            enableCopy={true}
+            maxHeight="500px"
+            showLanguage={true}
+          />
         </div>
       </section>
 

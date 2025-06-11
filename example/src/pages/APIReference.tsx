@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Code, Zap, Settings, Database, Copy, CheckCircle } from 'lucide-react';
+import { Book, Code, Zap, Settings, Database } from 'lucide-react';
 import APITopNavigation from '../components/APITopNavigation';
 import APISection from '../components/APISection';
+import CodeBlock from '../components/CodeBlock';
 
 interface APISection {
   id: string;
@@ -232,7 +233,6 @@ registerChannel('notifications', 1);`,
 
 export default function APIReference() {
   const [activeSection, setActiveSection] = useState<string>('floatify-component');
-  const [copiedExample, setCopiedExample] = useState<string | null>(null);
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -241,12 +241,6 @@ export default function APIReference() {
       const element = document.getElementById(sectionId);
       element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
-  };
-
-  const copyExample = (example: string, key: string) => {
-    navigator.clipboard.writeText(example);
-    setCopiedExample(key);
-    setTimeout(() => setCopiedExample(null), 2000);
   };
 
   // Track scroll position for active section highlighting
@@ -318,35 +312,19 @@ export default function APIReference() {
           </div>
           
           <div className="api-guide-content">
-            <div className="api-guide-example">
-              <div className="api-example-header">
-                <span className="api-item-label">Import Types:</span>
-                <button
-                  className="api-copy-button"
-                  onClick={() => copyExample(`import { Floatify, useAggregator, type OverlayCard, type OverlayState } from 'floatify';`, 'typescript-imports')}
-                >
-                  {copiedExample === 'typescript-imports' ? (
-                    <>
-                      <CheckCircle size={16} />
-                      Copied!
-                    </>
-                  ) : (
-                    <>
-                      <Copy size={16} />
-                      Copy
-                    </>
-                  )}
-                </button>
-              </div>
-              <div className="api-code-block">
-                <pre><code>{`import { 
+            <CodeBlock
+              code={`import { 
   Floatify, 
   useAggregator, 
   type OverlayCard, 
   type OverlayState 
-} from 'floatify';`}</code></pre>
-              </div>
-            </div>
+} from 'floatify';`}
+              language="typescript"
+              title="Import Types"
+              showLineNumbers={true}
+              enableCopy={true}
+              showLanguage={true}
+            />
 
             <div className="api-guide-tips">
               <h3>Pro Tips</h3>

@@ -11,12 +11,34 @@ import {
   ClipboardCopy
 } from 'lucide-react'
 import Button from '../components/Button'
+import CodeBlock from '../components/CodeBlock'
 
 const Home: FC = () => {
   const handleCopy = useCallback(() => {
     /* Best-effort clipboard write; swallow errors silently */
     navigator.clipboard.writeText('npm install floatify').catch(() => {})
   }, [])
+
+  const quickStartCode = `import { Floatify, useAggregator } from 'floatify'
+
+function App() {
+  const { registerChannel, addCard } = useAggregator()
+
+  useEffect(() => {
+    registerChannel('notifications', 1)
+    addCard('notifications', {
+      id: 'welcome',
+      title: 'Welcome!',
+      content: 'Thanks for trying Floatify'
+    })
+  }, [])
+
+  return (
+    <Floatify>
+      {/* app content */}
+    </Floatify>
+  )
+}`
 
   return (
     <main className='home'>
@@ -58,9 +80,14 @@ const Home: FC = () => {
             </Button>
           </div>
 
-          <pre className='hero-code'>
-            <code className='language-bash'>npm install floatify</code>
-          </pre>
+          <CodeBlock
+            code="npm install floatify"
+            language="bash"
+            enableCopy={true}
+            showLineNumbers={false}
+            showLanguage={false}
+            className="hero-code-block"
+          />
         </div>
       </section>
 
@@ -138,28 +165,17 @@ const Home: FC = () => {
             </Button>
           </div>
 
-          <pre className='quick-start-code'>
-            <code className='language-tsx'>{`import { Floatify, useAggregator } from 'floatify'
-
-function App() {
-  const { registerChannel, addCard } = useAggregator()
-
-  useEffect(() => {
-    registerChannel('notifications', 1)
-    addCard('notifications', {
-      id: 'welcome',
-      title: 'Welcome!',
-      content: 'Thanks for trying Floatify'
-    })
-  }, [])
-
-  return (
-    <Floatify>
-      {/* app content */}
-    </Floatify>
-  )
-}`}</code>
-          </pre>
+          <div className='quick-start-code'>
+            <CodeBlock
+              code={quickStartCode}
+              language="typescript"
+              title="Quick Start Example"
+              showLineNumbers={true}
+              enableCopy={true}
+              maxHeight="300px"
+              showLanguage={true}
+            />
+          </div>
         </div>
       </section>
 
