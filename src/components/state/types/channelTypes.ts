@@ -17,7 +17,6 @@ export type OverlayState =
     | 'alert'
     | 'swiping'
     | 'loading'
-    | 'icon'
     | 'split'
     | 'bubble';
 

@@ -33,13 +33,11 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
 
     const isExpanded = channel.state === 'expanded';
     const isLoading = channel.state === 'loading';
-    const isIconOnly = channel.state === 'icon';
     const isBubble = channel.state === 'bubble';
     const isSplit = channel.state === 'split' || (isLoading && splitLoading);
     const isHidden = channel.state === 'hidden';
     const bubbleIconNode =
         card?.bubbleIcon ??
-        card?.icon ??
         (isLoading
             ? defaultBubbleIcons.loading
             : channel.state === 'alert'
@@ -52,25 +50,25 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             swipeTriggered.current = false;
             return;
         }
-        if (isLoading || isIconOnly || isBubble || isHidden) return;
+        if (isLoading || isBubble || isHidden) return;
         updateChannelState(channelId, isExpanded ? 'collapsed' : 'expanded');
-    }, [channelId, isExpanded, updateChannelState, isLoading, isIconOnly, isBubble, isHidden]);
+    }, [channelId, isExpanded, updateChannelState, isLoading, isBubble, isHidden]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
-        if (isLoading || isIconOnly || isBubble || isHidden) return;
+        if (isLoading || isBubble || isHidden) return;
         touchStartX.current = e.touches[0].clientX;
         touchDeltaX.current = 0;
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
-        if (isLoading || isIconOnly || isBubble || isHidden) return;
+        if (isLoading || isBubble || isHidden) return;
         if (touchStartX.current !== null) {
             touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
         }
     };
 
     const handleTouchEnd = () => {
-        if (isLoading || isIconOnly || isBubble || isHidden) return;
+        if (isLoading || isBubble || isHidden) return;
         if (touchStartX.current === null) return;
         
         const deltaX = touchDeltaX.current;
@@ -108,8 +106,6 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
         ? 'overlay-card--hidden'
         : isLoading
         ? 'overlay-card--loading'
-        : isIconOnly
-        ? 'overlay-card--icon'
         : isBubble
         ? 'overlay-card--bubble'
         : isExpanded
@@ -149,11 +145,6 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                         ) : (
                             !isHidden && card && (
                                 <>
-                                    {card.icon && (
-                                        <div className="overlay-card-icon" aria-hidden="true">
-                                            {card.icon}
-                                        </div>
-                                    )}
                                     <div className="overlay-card-content">
                                         {card.title && (
                                             <h3 className="overlay-card-title">{card.title}</h3>
@@ -185,12 +176,6 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                         </>
                     )}
 
-                    {/* 🔹 Icon Only State */}
-                    {isIconOnly && card?.icon && (
-                        <div className="overlay-card-icon" aria-hidden="true">
-                            {card.icon}
-                        </div>
-                    )}
 
                     {/* 🔹 Bubble State */}
                     {isBubble && (
@@ -205,13 +190,8 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                     )}
 
                     {/* 🔹 Normal Content */}
-                    {!isLoading && !isIconOnly && !isBubble && !isHidden && card && (
+                    {!isLoading && !isBubble && !isHidden && card && (
                         <>
-                            {card.icon && (
-                                <div className="overlay-card-icon" aria-hidden="true">
-                                    {card.icon}
-                                </div>
-                            )}
                             <div className="overlay-card-content">
                                 {card.title && (
                                     <h3 className="overlay-card-title">{card.title}</h3>

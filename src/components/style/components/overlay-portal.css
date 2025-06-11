@@ -59,8 +59,7 @@
     border-radius: calc(var(--overlay-collapsed-height) / 2);
 }
 
-.overlay-styled .overlay-portal[data-state='loading'],
-.overlay-styled .overlay-portal[data-state='icon'] {
+.overlay-styled .overlay-portal[data-state='loading'] {
     width: var(--overlay-collapsed-height);
     height: var(--overlay-collapsed-height);
     border-radius: 50%;
