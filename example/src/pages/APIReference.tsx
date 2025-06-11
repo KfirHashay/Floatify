@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Code, Zap, Settings, Database } from 'lucide-react';
+import { Book, Code, Zap, Settings, Database, MessageCircle, Loader2, AlertCircle } from 'lucide-react';
 import APITopNavigation from '../components/APITopNavigation';
 import APISection from '../components/APISection';
 import CodeBlock from '../components/CodeBlock';
@@ -69,6 +69,21 @@ const apiSections: APISection[] = [
         description: 'Custom DOM element to render overlays into',
         example: `<Floatify portalRoot={document.getElementById('overlays')}>`,
         since: 'v0.1.0'
+      },
+      {
+        name: 'splitLoading',
+        type: 'boolean',
+        description: 'Use split layout while a channel is loading',
+        defaultValue: 'true',
+        example: `<Floatify splitLoading>`,
+        since: 'v0.4.0'
+      },
+      {
+        name: 'defaultBubbleIcons',
+        type: '{ message: ReactNode; loading: ReactNode; alert: ReactNode; }',
+        description: 'Icons used when a card does not specify a bubble icon',
+        example: `<Floatify defaultBubbleIcons={{ message: <MessageCircle />, loading: <Loader2 />, alert: <AlertCircle /> }}>`,
+        since: 'v0.4.0'
       }
     ]
   },

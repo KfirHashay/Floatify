@@ -107,6 +107,34 @@ useEffect(() => {
 // later: setLoading(false); updateChannelState('playback', 'icon');
 ```
 
+### Split Loading & Bubble Icons
+
+Use the `splitLoading` prop to show the split layout while a channel is loading.
+Provide bubble icons globally through `defaultBubbleIcons` or per card via the
+`bubbleIcon` field.
+
+```tsx
+import { MessageCircle, Loader2, Bell, AlertCircle } from 'lucide-react';
+
+<Floatify
+  splitLoading
+  defaultBubbleIcons={{
+    message: <MessageCircle />,
+    loading: <Loader2 className="animate-spin" />,
+    alert: <AlertCircle />
+  }}
+>
+  {/* rest of your app */}
+</Floatify>
+
+addCard('updates', {
+  id: 'done',
+  title: 'Complete',
+  content: 'Process finished',
+  bubbleIcon: <Bell />
+});
+```
+
 ## Debug Mode
 
 Enable debug logging by passing the `debug` prop to `Floatify` or

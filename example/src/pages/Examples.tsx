@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Copy, Play, RotateCcw, CheckCircle, AlertCircle, Info, Zap } from 'lucide-react';
+import { Copy, Play, RotateCcw, CheckCircle, AlertCircle, Info, Zap, Code } from 'lucide-react';
 import Demo from '../components/Demo';
 import Button from '../components/Button';
 import CodeBlock from '../components/CodeBlock';
@@ -81,7 +81,27 @@ const handleAsyncAction = async () => {
   concurrencyMode="single"    // single or multiple overlays
 >
   {/* Your app */}
-</Floatify>`
+</Floatify>`,
+
+  split: `import { MessageCircle, Loader2, Bell, AlertCircle } from 'lucide-react';
+
+<Floatify
+  splitLoading
+  defaultBubbleIcons={{
+    message: <MessageCircle />,
+    loading: <Loader2 className="animate-spin" />,
+    alert: <AlertCircle />
+  }}
+>
+  {/* app */}
+</Floatify>
+
+addCard('updates', {
+  id: 'done',
+  title: 'Complete',
+  content: 'Process finished',
+  bubbleIcon: <Bell />
+});`
 };
 
 export default function Examples({
@@ -110,6 +130,12 @@ export default function Examples({
       title: 'Positioning & Layout',
       description: 'Control overlay position and behavior',
       icon: <Zap size={16} />
+    },
+    {
+      key: 'split',
+      title: 'Split Loading & Bubbles',
+      description: 'Enable split layout and custom bubble icons',
+      icon: <Code size={16} />
     }
   ];
 
@@ -200,15 +226,23 @@ export default function Examples({
             <p>Notify users about system maintenance, new features, or important announcements.</p>
           </div>
           
-          <div className="use-case-card">
-            <div className="use-case-icon">
-              <RotateCcw size={24} />
+            <div className="use-case-card">
+              <div className="use-case-icon">
+                <RotateCcw size={24} />
+              </div>
+              <h3>Loading States</h3>
+              <p>Show progress for long-running operations with clear status updates.</p>
             </div>
-            <h3>Loading States</h3>
-            <p>Show progress for long-running operations with clear status updates.</p>
+
+            <div className="use-case-card">
+              <div className="use-case-icon">
+                <Code size={24} />
+              </div>
+              <h3>Split Layout & Bubbles</h3>
+              <p>Use split loading with custom bubble icons for minimized cards.</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Best Practices */}
       <section className="best-practices">
