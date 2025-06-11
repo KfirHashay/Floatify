@@ -5,12 +5,20 @@
  * Other files, like aggregatorProvider.ts, will set its value.
  */
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { OverlayAggregatorState, OverlayAggregatorAction } from '../types';
 
 export interface AggregatorContextValue {
     state: OverlayAggregatorState;
     dispatch: React.Dispatch<OverlayAggregatorAction>;
+    config: {
+        splitLoading: boolean;
+        defaultBubbleIcons: {
+            message: ReactNode;
+            loading: ReactNode;
+            alert: ReactNode;
+        };
+    };
 }
 
 // Create the context but provide an undefined default, so we can
