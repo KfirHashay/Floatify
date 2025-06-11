@@ -63,7 +63,7 @@ export default function CodeBlock({
 
           {enableCopy && (
             <button
-              className={clsx('cb-copy', copied && 'is-copied')}
+              className={'cb-copy', copied && 'is-copied'}
               onClick={handleCopy}
               aria-label='Copy code'
             >
