@@ -49,7 +49,7 @@ const handleAsyncAction = async () => {
     id: loadingId,
     title: 'Processing...',
     content: 'Please wait while we process your request',
-    icon: <Loader2 className="animate-spin" />
+    bubbleIcon: <Loader2 className="animate-spin" />
   });
 
   try {
@@ -61,7 +61,7 @@ const handleAsyncAction = async () => {
       id: \`\${loadingId}-success\`,
       title: 'Complete!',
       content: 'Operation completed successfully',
-      icon: <CheckCircle />
+      bubbleIcon: <CheckCircle />
     });
   } catch (error) {
     // Show error state
@@ -70,7 +70,7 @@ const handleAsyncAction = async () => {
       id: \`\${loadingId}-error\`,
       title: 'Error',
       content: 'Something went wrong. Please try again.',
-      icon: <AlertCircle />
+      bubbleIcon: <AlertCircle />
     });
   }
 };`,

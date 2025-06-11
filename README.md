@@ -89,7 +89,7 @@ On mobile devices only `top` or `bottom` positions are recommended.
 
 ### Loading & Bubble State
 
-Set a channel to `'loading'` to show a spinner and switch to `'bubble'` when only an icon should remain. A typical pattern is to drive this from a loading boolean:
+Set a channel to `'loading'` to show a spinner and switch to `'bubble'` once loading completes. A typical pattern is to drive this from a loading boolean:
 
 ```tsx
 const { registerChannel, updateChannelState } = useAggregator();
