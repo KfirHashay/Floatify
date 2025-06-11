@@ -48,29 +48,29 @@ describe('overlay additional states', () => {
 
     it('applies sticky class on top', async () => {
         render(
-            <AggregatorProvider sticky position="top">
+            <AggregatorProvider fixedToViewport position="top">
                 <PositionSetup />
             </AggregatorProvider>
         );
         await waitFor(() => {
-            const el = document.querySelector('.overlay-portal.overlay-portal--sticky');
+            const el = document.querySelector('.overlay-portal.overlay-portal--fixed');
             expect(el).toBeTruthy();
         });
-        const portal = document.querySelector('.overlay-portal.overlay-portal--sticky');
+        const portal = document.querySelector('.overlay-portal.overlay-portal--fixed');
         expect(portal?.classList.contains('overlay-portal--top')).toBe(true);
     });
 
     it('applies sticky class on bottom', async () => {
         render(
-            <AggregatorProvider sticky position="bottom">
+            <AggregatorProvider fixedToViewport position="bottom">
                 <PositionSetup />
             </AggregatorProvider>
         );
         await waitFor(() => {
-            const el = document.querySelector('.overlay-portal.overlay-portal--sticky');
+            const el = document.querySelector('.overlay-portal.overlay-portal--fixed');
             expect(el).toBeTruthy();
         });
-        const portal = document.querySelector('.overlay-portal.overlay-portal--sticky');
+        const portal = document.querySelector('.overlay-portal.overlay-portal--fixed');
         expect(portal?.classList.contains('overlay-portal--bottom')).toBe(true);
     });
 });

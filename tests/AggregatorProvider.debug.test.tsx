@@ -22,7 +22,8 @@ describe('AggregatorProvider debug logging', () => {
             </AggregatorProvider>
         );
         expect(groupSpy).toHaveBeenCalled();
-        expect(logSpy).toHaveBeenCalledTimes(3);
+        // Updated debug logging includes auto-dismiss setup messages
+        expect(logSpy).toHaveBeenCalledTimes(5);
         logSpy.mockRestore();
         groupSpy.mockRestore();
     });
