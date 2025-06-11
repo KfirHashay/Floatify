@@ -26,6 +26,26 @@ function PositionSetup() {
     return null;
 }
 
+function SplitStateSetup() {
+    const { registerChannel, addCard, updateChannelState } = useAggregator();
+    useEffect(() => {
+        registerChannel('split', 1);
+        addCard('split', { id: 'a', title: 'A', content: 'A' });
+        updateChannelState('split', 'split');
+    }, [registerChannel, addCard, updateChannelState]);
+    return null;
+}
+
+function BubbleStateSetup() {
+    const { registerChannel, addCard, updateChannelState } = useAggregator();
+    useEffect(() => {
+        registerChannel('bubble', 1);
+        addCard('bubble', { id: 'a', title: 'A', content: 'A' });
+        updateChannelState('bubble', 'bubble');
+    }, [registerChannel, addCard, updateChannelState]);
+    return null;
+}
+
 describe('overlay additional states', () => {
     it('renders spinner when loading', () => {
         render(
@@ -72,5 +92,29 @@ describe('overlay additional states', () => {
         });
         const portal = document.querySelector('.overlay-portal.overlay-portal--fixed');
         expect(portal?.classList.contains('overlay-portal--bottom')).toBe(true);
+    });
+
+    it('portal and card reflect split state', () => {
+        render(
+            <AggregatorProvider>
+                <SplitStateSetup />
+            </AggregatorProvider>
+        );
+        const portal = document.querySelector('.overlay-portal');
+        const card = document.querySelector('.overlay-card');
+        expect(portal?.getAttribute('data-state')).toBe('split');
+        expect(card?.classList.contains('overlay-card--split')).toBe(true);
+    });
+
+    it('portal and card reflect bubble state', () => {
+        render(
+            <AggregatorProvider>
+                <BubbleStateSetup />
+            </AggregatorProvider>
+        );
+        const portal = document.querySelector('.overlay-portal');
+        const card = document.querySelector('.overlay-card');
+        expect(portal?.getAttribute('data-state')).toBe('bubble');
+        expect(card?.classList.contains('overlay-card--bubble')).toBe(true);
     });
 });
