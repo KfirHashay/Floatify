@@ -1,199 +1,324 @@
 /* =======================================================
-   💻 CodeBlock Component Styles - Professional Design
-   - Syntax highlighting with proper contrast
-   - Responsive design for all screen sizes
-   - Dark/light theme support with smooth transitions
-   - Line numbers with perfect alignment
-   - Copy functionality with visual feedback
-   - Smooth scrolling and overflow handling
+   💻 VSCode-Inspired CodeBlock Component
+   - Always dark theme with VSCode color scheme
+   - Enhanced animations and micro-interactions
+   - Professional header with window controls
+   - Improved line numbers with hover effects
+   - Smooth copy animation with ripple effect
+   - Better syntax highlighting colors
 ========================================================== */
 
-.code-block {
-  background-color: var(--bg-elevated);
-  border: 1px solid var(--border-primary);
-  border-radius: var(--radius-lg);
+.vscode-code-block {
+  background-color: #1e1e1e;
+  border: 1px solid #3c3c3c;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-fast);
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   position: relative;
+  font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
-.code-block:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--border-secondary);
+.vscode-code-block:hover {
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  border-color: #404040;
+  transform: translateY(-2px);
 }
 
 /* =======================================================
-   📋 Header Section
+   🎨 Enhanced Header with VSCode Window Controls
 ========================================================== */
 
-.code-block-header {
+.vscode-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-2) var(--space-3);
-  background-color: var(--bg-surface);
-  border-bottom: 1px solid var(--border-primary);
-  gap: var(--space-2);
+  padding: 8px 16px;
+  background: linear-gradient(180deg, #2d2d30 0%, #252526 100%);
+  border-bottom: 1px solid #3c3c3c;
+  min-height: 40px;
 }
 
-.code-block-info {
+.vscode-header-left {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 12px;
   flex: 1;
   min-width: 0;
 }
 
-.code-block-title {
+.vscode-window-controls {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
-  color: var(--text-primary);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-sm);
+  gap: 8px;
 }
 
-.code-block-language {
-  background-color: var(--accent-light);
-  color: var(--accent-primary);
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide);
-  border: 1px solid var(--accent-primary);
-  box-shadow: var(--shadow-sm);
-}
-
-.code-block-copy {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  background: none;
-  border: 1px solid var(--border-primary);
-  color: var(--text-secondary);
-  padding: 0.375rem 0.75rem;
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
+.vscode-control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
   cursor: pointer;
-  transition: all var(--transition-fast);
-  box-shadow: var(--shadow-sm);
 }
 
-.code-block-copy:hover {
-  background-color: var(--hover-overlay);
-  border-color: var(--border-secondary);
-  color: var(--text-primary);
+.vscode-control-close {
+  background-color: #ff5f57;
+}
+
+.vscode-control-minimize {
+  background-color: #ffbd2e;
+}
+
+.vscode-control-maximize {
+  background-color: #28ca42;
+}
+
+.vscode-control:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px currentColor;
+}
+
+.vscode-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cccccc;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+.vscode-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Enhanced Language Tag */
+.vscode-language-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--lang-color, #cccccc);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.vscode-language-tag:hover {
+  background: rgba(255, 255, 255, 0.15);
   transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.code-block-copy:active {
+/* Enhanced Copy Button */
+.vscode-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cccccc;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.vscode-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.vscode-copy-btn:active {
   transform: translateY(0);
-  box-shadow: var(--shadow-sm);
+}
+
+.vscode-copy-success {
+  background: rgba(40, 202, 66, 0.2) !important;
+  border-color: rgba(40, 202, 66, 0.4) !important;
+  color: #28ca42 !important;
+}
+
+.vscode-copy-icon {
+  transition: transform 0.3s ease;
+}
+
+.vscode-copy-success .vscode-copy-icon {
+  transform: scale(1.1);
+}
+
+.vscode-copy-text {
+  transition: all 0.3s ease;
+}
+
+/* Copy Ripple Effect */
+.vscode-copy-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(40, 202, 66, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: vscode-ripple 0.6s ease-out;
+}
+
+@keyframes vscode-ripple {
+  to {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
 }
 
 /* =======================================================
-   📝 Content Section
+   📝 Enhanced Content Section
 ========================================================== */
 
-.code-block-content {
+.vscode-content {
   position: relative;
   overflow: auto;
-  background-color: var(--bg-primary);
+  background-color: #1e1e1e;
 }
 
-.code-block-scrollable {
-  /* Custom scrollbar styling */
+.vscode-scrollable {
   scrollbar-width: thin;
-  scrollbar-color: var(--border-secondary) var(--bg-secondary);
+  scrollbar-color: #424242 #1e1e1e;
 }
 
-.code-block-scrollable::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.vscode-scrollable::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
 }
 
-.code-block-scrollable::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
-  border-radius: var(--radius-sm);
+.vscode-scrollable::-webkit-scrollbar-track {
+  background: #1e1e1e;
 }
 
-.code-block-scrollable::-webkit-scrollbar-thumb {
-  background: var(--border-secondary);
-  border-radius: var(--radius-sm);
+.vscode-scrollable::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 6px;
+  border: 2px solid #1e1e1e;
 }
 
-.code-block-scrollable::-webkit-scrollbar-thumb:hover {
-  background: var(--text-tertiary);
+.vscode-scrollable::-webkit-scrollbar-thumb:hover {
+  background: #4f4f4f;
 }
 
-.code-block-inner {
+.vscode-scrollable::-webkit-scrollbar-corner {
+  background: #1e1e1e;
+}
+
+.vscode-inner {
   display: flex;
   min-height: 100%;
 }
 
 /* =======================================================
-   🔢 Line Numbers
+   🔢 Enhanced Line Numbers with Hover Effects
 ========================================================== */
 
-.code-block-line-numbers {
-  background-color: var(--bg-secondary);
-  border-right: 1px solid var(--border-primary);
-  padding: var(--space-2) var(--space-1);
+.vscode-line-numbers {
+  background-color: #1e1e1e;
+  border-right: 1px solid #3c3c3c;
+  padding: 16px 0;
   user-select: none;
   flex-shrink: 0;
-  min-width: 3rem;
-  text-align: right;
+  min-width: 60px;
+  position: relative;
 }
 
-.code-line-number {
-  color: var(--text-tertiary);
-  font-size: var(--font-size-xs);
-  line-height: 1.5;
-  height: 1.5em;
+.vscode-line-number {
+  color: #858585;
+  font-size: 12px;
+  line-height: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 0.5rem;
-  transition: color var(--transition-fast);
+  padding-right: 16px;
+  position: relative;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
-.code-line-number:hover {
-  color: var(--text-secondary);
+.vscode-line-number:hover {
+  color: #cccccc;
+}
+
+.vscode-line-hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.vscode-line-number-text {
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+
+.vscode-line-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #007acc;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.vscode-line-hover .vscode-line-indicator {
+  opacity: 1;
 }
 
 /* =======================================================
-   💻 Code Content
+   💻 Enhanced Code Content with VSCode Colors
 ========================================================== */
 
-.code-block-pre {
+.vscode-pre {
   flex: 1;
   margin: 0;
-  padding: var(--space-2);
+  padding: 16px 20px;
   background: none;
   border: none;
   overflow: visible;
-  font-size: var(--font-size-sm);
-  line-height: 1.5;
-  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 20px;
+  color: #d4d4d4;
   white-space: pre;
   word-spacing: normal;
   word-break: normal;
   tab-size: 2;
   hyphens: none;
+  font-weight: 400;
 }
 
-.code-word-wrap {
+.vscode-word-wrap {
   white-space: pre-wrap;
   word-break: break-word;
 }
 
-.code-block-code {
+.vscode-code {
   background: none;
   border: none;
   padding: 0;
@@ -206,209 +331,243 @@
 }
 
 /* =======================================================
-   🎨 Syntax Highlighting - Dark Theme
+   🎨 VSCode Dark Theme Syntax Highlighting
 ========================================================== */
 
-.code-keyword {
-  color: #ff79c6;
-  font-weight: var(--font-weight-medium);
+/* Keywords */
+.vscode-keyword {
+  color: #569cd6;
+  font-weight: 400;
 }
 
-.code-string {
-  color: #f1fa8c;
+/* Strings */
+.vscode-string {
+  color: #ce9178;
 }
 
-.code-comment {
-  color: #6272a4;
+/* Comments */
+.vscode-comment {
+  color: #6a9955;
   font-style: italic;
 }
 
-.code-number {
-  color: #bd93f9;
+/* Numbers */
+.vscode-number {
+  color: #b5cea8;
 }
 
-.code-boolean {
-  color: #ff79c6;
-  font-weight: var(--font-weight-medium);
+/* Booleans and null */
+.vscode-boolean {
+  color: #569cd6;
 }
 
-.code-react {
-  color: #8be9fd;
-  font-weight: var(--font-weight-medium);
+/* React/JSX specific */
+.vscode-react {
+  color: #4ec9b0;
+  font-weight: 500;
 }
 
-.code-selector {
-  color: #50fa7b;
+/* Types and interfaces */
+.vscode-type {
+  color: #4ec9b0;
 }
 
-.code-property {
-  color: #8be9fd;
+/* CSS Selectors */
+.vscode-selector {
+  color: #d7ba7d;
 }
 
-.code-value {
-  color: #f1fa8c;
+/* CSS Properties */
+.vscode-property {
+  color: #9cdcfe;
 }
 
-.code-tag {
-  color: #ff79c6;
+/* CSS Values */
+.vscode-value {
+  color: #ce9178;
 }
 
-.code-attribute {
-  color: #50fa7b;
+/* CSS At-rules */
+.vscode-at-rule {
+  color: #c586c0;
 }
 
-/* =======================================================
-   🌞 Light Theme Syntax Highlighting
-========================================================== */
-
-[data-theme='light'] .code-keyword {
-  color: #d73a49;
+/* HTML Tags */
+.vscode-tag {
+  color: #569cd6;
 }
 
-[data-theme='light'] .code-string {
-  color: #032f62;
+/* HTML Attributes */
+.vscode-attribute {
+  color: #9cdcfe;
 }
 
-[data-theme='light'] .code-comment {
-  color: #6a737d;
+/* Shell/Bash specific */
+.vscode-prompt {
+  color: #4ec9b0;
+  font-weight: 600;
 }
 
-[data-theme='light'] .code-number {
-  color: #005cc5;
+.vscode-command {
+  color: #569cd6;
+  font-weight: 500;
 }
 
-[data-theme='light'] .code-boolean {
-  color: #d73a49;
-}
-
-[data-theme='light'] .code-react {
-  color: #005cc5;
-}
-
-[data-theme='light'] .code-selector {
-  color: #22863a;
-}
-
-[data-theme='light'] .code-property {
-  color: #005cc5;
-}
-
-[data-theme='light'] .code-value {
-  color: #032f62;
-}
-
-[data-theme='light'] .code-tag {
-  color: #d73a49;
-}
-
-[data-theme='light'] .code-attribute {
-  color: #22863a;
+.vscode-flag {
+  color: #dcdcaa;
 }
 
 /* =======================================================
-   📊 Scroll Indicator
+   📊 Enhanced Scroll Indicator
 ========================================================== */
 
-.code-block-scroll-indicator {
+.vscode-scroll-indicator {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 2rem;
+  height: 40px;
   background: linear-gradient(
     to top,
-    var(--bg-primary) 0%,
+    #1e1e1e 0%,
+    rgba(30, 30, 30, 0.9) 50%,
     transparent 100%
   );
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 0.25rem;
+  padding-bottom: 8px;
   pointer-events: none;
 }
 
-.scroll-hint {
-  background-color: var(--bg-tertiary);
-  color: var(--text-tertiary);
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-xs);
-  border: 1px solid var(--border-primary);
-  box-shadow: var(--shadow-sm);
-  animation: fadeInUp 0.3s ease-out;
+.vscode-scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #cccccc;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  animation: vscode-pulse 2s infinite ease-in-out;
+}
+
+.vscode-scroll-icon {
+  font-size: 14px;
+  animation: vscode-bounce 1.5s infinite ease-in-out;
+}
+
+@keyframes vscode-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes vscode-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(2px); }
 }
 
 /* =======================================================
-   📱 Responsive Design
+   📱 Enhanced Responsive Design
 ========================================================== */
 
 @media (max-width: 768px) {
-  .code-block-header {
-    padding: var(--space-1) var(--space-2);
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-1);
+  .vscode-header {
+    padding: 6px 12px;
+    min-height: 36px;
   }
 
-  .code-block-info {
-    width: 100%;
-    justify-content: space-between;
+  .vscode-window-controls {
+    gap: 6px;
   }
 
-  .code-block-copy {
-    align-self: flex-end;
-    padding: 0.25rem 0.5rem;
+  .vscode-control {
+    width: 10px;
+    height: 10px;
   }
 
-  .code-block-line-numbers {
-    min-width: 2.5rem;
-    padding: var(--space-1) 0.5rem;
+  .vscode-title {
+    font-size: 12px;
+    gap: 6px;
   }
 
-  .code-block-pre {
-    padding: var(--space-1);
-    font-size: var(--font-size-xs);
+  .vscode-language-tag {
+    padding: 3px 8px;
+    font-size: 10px;
+    gap: 4px;
   }
 
-  .code-line-number {
-    font-size: 0.625rem;
+  .vscode-copy-btn {
+    padding: 4px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .vscode-line-numbers {
+    min-width: 50px;
+    padding: 12px 0;
+  }
+
+  .vscode-line-number {
+    padding-right: 12px;
+    font-size: 11px;
+  }
+
+  .vscode-pre {
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 18px;
   }
 }
 
 @media (max-width: 480px) {
-  .code-block-header {
-    padding: var(--space-1);
+  .vscode-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
   }
 
-  .code-block-title {
-    font-size: 0.75rem;
+  .vscode-header-left,
+  .vscode-header-right {
+    width: 100%;
+    justify-content: space-between;
   }
 
-  .code-block-language {
-    font-size: 0.625rem;
-    padding: 0.125rem 0.375rem;
-  }
-
-  .code-block-copy span {
+  .vscode-copy-btn .vscode-copy-text {
     display: none;
   }
 
-  .code-block-line-numbers {
-    min-width: 2rem;
-    padding: var(--space-1) 0.25rem;
+  .vscode-line-numbers {
+    min-width: 40px;
+    padding: 8px 0;
   }
 
-  .code-word-wrap {
+  .vscode-line-number {
+    padding-right: 8px;
+    font-size: 10px;
+  }
+
+  .vscode-pre {
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .vscode-word-wrap {
     white-space: pre-wrap;
     word-break: break-all;
   }
 }
 
 /* =======================================================
-   🎭 Animations
+   🎭 Enhanced Animations and Transitions
 ========================================================== */
 
-@keyframes fadeInUp {
+@keyframes vscode-fadeIn {
   from {
     opacity: 0;
     transform: translateY(10px);
@@ -419,45 +578,59 @@
   }
 }
 
-.code-block {
-  animation: fadeInUp 0.4s ease-out;
+.vscode-code-block {
+  animation: vscode-fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* =======================================================
-   ♿ Accessibility Enhancements
+   ♿ Enhanced Accessibility
 ========================================================== */
 
-.code-block-copy:focus-visible {
-  outline: 2px solid var(--border-focus);
+.vscode-copy-btn:focus-visible {
+  outline: 2px solid #007acc;
   outline-offset: 2px;
 }
 
-.code-block-content:focus-visible {
-  outline: 2px solid var(--border-focus);
+.vscode-content:focus-visible {
+  outline: 2px solid #007acc;
   outline-offset: -2px;
+}
+
+.vscode-line-number:focus-visible {
+  outline: 1px solid #007acc;
+  outline-offset: 1px;
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .code-block {
+  .vscode-code-block {
     border-width: 2px;
+    border-color: #ffffff;
   }
   
-  .code-block-header {
+  .vscode-header {
     border-bottom-width: 2px;
   }
   
-  .code-block-line-numbers {
+  .vscode-line-numbers {
     border-right-width: 2px;
   }
 }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .code-block,
-  .code-block-copy,
-  .scroll-hint {
+  .vscode-code-block,
+  .vscode-copy-btn,
+  .vscode-line-number,
+  .vscode-control,
+  .vscode-language-tag,
+  .vscode-scroll-hint,
+  .vscode-scroll-icon {
     animation: none;
     transition: none;
+  }
+  
+  .vscode-copy-ripple {
+    display: none;
   }
 }

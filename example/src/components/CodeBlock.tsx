@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Copy, CheckCircle, Code } from 'lucide-react';
+import { Copy, CheckCircle, Code2, Terminal, FileText } from 'lucide-react';
 
 export interface CodeBlockProps {
   /**
@@ -49,16 +49,17 @@ export interface CodeBlockProps {
 }
 
 /**
- * Professional CodeBlock component with syntax highlighting, line numbers, 
- * copy functionality, and full responsive design.
+ * Professional CodeBlock component with VSCode-inspired dark theme,
+ * syntax highlighting, line numbers, copy functionality, and full responsive design.
  * 
  * Features:
- * - Syntax highlighting for multiple languages
- * - Line numbers with proper alignment
- * - One-click copy with visual feedback
+ * - VSCode dark theme colors and styling
+ * - Enhanced syntax highlighting for multiple languages
+ * - Animated line numbers with hover effects
+ * - Smooth copy animation with success feedback
+ * - Professional header with language tags
  * - Responsive design for all screen sizes
- * - Dark/light theme support
- * - Smooth animations and micro-interactions
+ * - Always dark theme for consistency
  * - Accessibility compliant
  */
 export default function CodeBlock({
@@ -74,6 +75,7 @@ export default function CodeBlock({
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
+  const [hoveredLine, setHoveredLine] = useState<number | null>(null);
   const codeRef = useRef<HTMLPreElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -91,12 +93,12 @@ export default function CodeBlock({
     return () => window.removeEventListener('resize', checkOverflow);
   }, [code]);
 
-  // Copy functionality with feedback
+  // Enhanced copy functionality with animation
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopied(false), 2500);
     } catch (err) {
       console.error('Failed to copy code:', err);
     }
@@ -106,136 +108,169 @@ export default function CodeBlock({
   const lines = code.split('\n');
   const lineNumbers = lines.map((_, index) => index + 1);
 
-  // Language detection and formatting
-  const getLanguageLabel = (lang: string) => {
-    const languages: Record<string, string> = {
-      javascript: 'JavaScript',
-      typescript: 'TypeScript',
-      jsx: 'JSX',
-      tsx: 'TSX',
-      css: 'CSS',
-      html: 'HTML',
-      json: 'JSON',
-      bash: 'Bash',
-      shell: 'Shell',
-      python: 'Python',
-      sql: 'SQL',
-      yaml: 'YAML',
-      markdown: 'Markdown',
-      text: 'Text'
+  // Enhanced language detection with icons
+  const getLanguageInfo = (lang: string) => {
+    const languages: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
+      javascript: { label: 'JavaScript', icon: <Code2 size={12} />, color: '#f7df1e' },
+      typescript: { label: 'TypeScript', icon: <Code2 size={12} />, color: '#3178c6' },
+      jsx: { label: 'JSX', icon: <Code2 size={12} />, color: '#61dafb' },
+      tsx: { label: 'TSX', icon: <Code2 size={12} />, color: '#61dafb' },
+      css: { label: 'CSS', icon: <FileText size={12} />, color: '#1572b6' },
+      html: { label: 'HTML', icon: <FileText size={12} />, color: '#e34f26' },
+      json: { label: 'JSON', icon: <FileText size={12} />, color: '#000000' },
+      bash: { label: 'Bash', icon: <Terminal size={12} />, color: '#4eaa25' },
+      shell: { label: 'Shell', icon: <Terminal size={12} />, color: '#4eaa25' },
+      python: { label: 'Python', icon: <Code2 size={12} />, color: '#3776ab' },
+      sql: { label: 'SQL', icon: <FileText size={12} />, color: '#336791' },
+      yaml: { label: 'YAML', icon: <FileText size={12} />, color: '#cb171e' },
+      markdown: { label: 'Markdown', icon: <FileText size={12} />, color: '#083fa1' },
+      text: { label: 'Text', icon: <FileText size={12} />, color: '#6a737d' }
     };
-    return languages[lang.toLowerCase()] || lang.toUpperCase();
+    return languages[lang.toLowerCase()] || { label: lang.toUpperCase(), icon: <Code2 size={12} />, color: '#6a737d' };
   };
 
-  // Syntax highlighting (basic implementation)
+  // Enhanced syntax highlighting with VSCode colors
   const highlightSyntax = (code: string, lang: string) => {
     if (lang === 'javascript' || lang === 'typescript' || lang === 'jsx' || lang === 'tsx') {
       return code
-        .replace(/\b(const|let|var|function|class|import|export|from|default|return|if|else|for|while|try|catch|async|await)\b/g, '<span class="code-keyword">$1</span>')
-        .replace(/\b(true|false|null|undefined)\b/g, '<span class="code-boolean">$1</span>')
-        .replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>')
-        .replace(/(["'`])((?:\\.|(?!\1)[^\\])*?)\1/g, '<span class="code-string">$1$2$1</span>')
-        .replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, '<span class="code-comment">$&</span>')
-        .replace(/\b(React|useState|useEffect|useCallback|useMemo|Component)\b/g, '<span class="code-react">$1</span>');
+        .replace(/\b(const|let|var|function|class|import|export|from|default|return|if|else|for|while|try|catch|async|await|new|this|super|extends|implements|interface|type|enum|namespace)\b/g, '<span class="vscode-keyword">$1</span>')
+        .replace(/\b(true|false|null|undefined|void)\b/g, '<span class="vscode-boolean">$1</span>')
+        .replace(/\b(\d+\.?\d*)\b/g, '<span class="vscode-number">$1</span>')
+        .replace(/(["'`])((?:\\.|(?!\1)[^\\])*?)\1/g, '<span class="vscode-string">$1$2$1</span>')
+        .replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, '<span class="vscode-comment">$&</span>')
+        .replace(/\b(React|useState|useEffect|useCallback|useMemo|Component|Fragment|Props|FC|ReactNode)\b/g, '<span class="vscode-react">$1</span>')
+        .replace(/\b([A-Z][a-zA-Z0-9]*)\b/g, '<span class="vscode-type">$1</span>');
     }
     
     if (lang === 'css') {
       return code
-        .replace(/([.#]?[a-zA-Z-]+)\s*{/g, '<span class="code-selector">$1</span> {')
-        .replace(/([a-zA-Z-]+)\s*:/g, '<span class="code-property">$1</span>:')
-        .replace(/:\s*([^;]+);/g, ': <span class="code-value">$1</span>;')
-        .replace(/\/\*[\s\S]*?\*\//g, '<span class="code-comment">$&</span>');
+        .replace(/([.#]?[a-zA-Z-]+)\s*\{/g, '<span class="vscode-selector">$1</span> {')
+        .replace(/([a-zA-Z-]+)\s*:/g, '<span class="vscode-property">$1</span>:')
+        .replace(/:\s*([^;]+);/g, ': <span class="vscode-value">$1</span>;')
+        .replace(/\/\*[\s\S]*?\*\//g, '<span class="vscode-comment">$&</span>')
+        .replace(/@[a-zA-Z-]+/g, '<span class="vscode-at-rule">$&</span>');
     }
 
     if (lang === 'html') {
       return code
-        .replace(/(&lt;\/?)([a-zA-Z][a-zA-Z0-9]*)/g, '$1<span class="code-tag">$2</span>')
-        .replace(/([a-zA-Z-]+)=("[^"]*")/g, '<span class="code-attribute">$1</span>=<span class="code-string">$2</span>')
-        .replace(/&lt;!--[\s\S]*?--&gt;/g, '<span class="code-comment">$&</span>');
+        .replace(/(<\/?)([a-zA-Z][a-zA-Z0-9]*)/g, '$1<span class="vscode-tag">$2</span>')
+        .replace(/([a-zA-Z-]+)=("[^"]*")/g, '<span class="vscode-attribute">$1</span>=<span class="vscode-string">$2</span>')
+        .replace(/<!--[\s\S]*?-->/g, '<span class="vscode-comment">$&</span>');
+    }
+
+    if (lang === 'bash' || lang === 'shell') {
+      return code
+        .replace(/^(\$|#)\s*/gm, '<span class="vscode-prompt">$&</span>')
+        .replace(/\b(npm|yarn|git|cd|ls|mkdir|rm|cp|mv|chmod|sudo|echo|cat|grep|find|curl|wget)\b/g, '<span class="vscode-command">$1</span>')
+        .replace(/(--?[a-zA-Z-]+)/g, '<span class="vscode-flag">$1</span>')
+        .replace(/#.*$/gm, '<span class="vscode-comment">$&</span>');
     }
 
     return code;
   };
 
   const highlightedCode = highlightSyntax(code, language);
+  const languageInfo = getLanguageInfo(language);
 
   return (
-    <div className={`code-block ${className}`}>
-      {/* Header */}
+    <div className={`vscode-code-block ${className}`}>
+      {/* Enhanced Header */}
       {(title || showLanguage || enableCopy) && (
-        <div className="code-block-header">
-          <div className="code-block-info">
+        <div className="vscode-header">
+          <div className="vscode-header-left">
+            <div className="vscode-window-controls">
+              <div className="vscode-control vscode-control-close"></div>
+              <div className="vscode-control vscode-control-minimize"></div>
+              <div className="vscode-control vscode-control-maximize"></div>
+            </div>
+            
             {title && (
-              <div className="code-block-title">
-                <Code size={16} />
+              <div className="vscode-title">
+                <Code2 size={14} />
                 <span>{title}</span>
-              </div>
-            )}
-            {showLanguage && (
-              <div className="code-block-language">
-                {getLanguageLabel(language)}
               </div>
             )}
           </div>
           
-          {enableCopy && (
-            <button
-              className="code-block-copy"
-              onClick={handleCopy}
-              aria-label="Copy code to clipboard"
-              title="Copy code"
-            >
-              {copied ? (
-                <>
-                  <CheckCircle size={16} />
-                  <span>Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy size={16} />
-                  <span>Copy</span>
-                </>
-              )}
-            </button>
-          )}
+          <div className="vscode-header-right">
+            {showLanguage && (
+              <div 
+                className="vscode-language-tag"
+                style={{ '--lang-color': languageInfo.color } as React.CSSProperties}
+              >
+                {languageInfo.icon}
+                <span>{languageInfo.label}</span>
+              </div>
+            )}
+            
+            {enableCopy && (
+              <button
+                className={`vscode-copy-btn ${copied ? 'vscode-copy-success' : ''}`}
+                onClick={handleCopy}
+                aria-label="Copy code to clipboard"
+                title="Copy code"
+              >
+                <div className="vscode-copy-icon">
+                  {copied ? (
+                    <CheckCircle size={14} />
+                  ) : (
+                    <Copy size={14} />
+                  )}
+                </div>
+                <span className="vscode-copy-text">
+                  {copied ? 'Copied!' : 'Copy'}
+                </span>
+                {copied && <div className="vscode-copy-ripple"></div>}
+              </button>
+            )}
+          </div>
         </div>
       )}
 
       {/* Code Content */}
       <div 
         ref={containerRef}
-        className={`code-block-content ${isOverflowing ? 'code-block-scrollable' : ''}`}
+        className={`vscode-content ${isOverflowing ? 'vscode-scrollable' : ''}`}
         style={{ maxHeight }}
       >
-        <div className="code-block-inner">
-          {/* Line Numbers */}
+        <div className="vscode-inner">
+          {/* Enhanced Line Numbers */}
           {showLineNumbers && (
-            <div className="code-block-line-numbers" aria-hidden="true">
+            <div className="vscode-line-numbers">
               {lineNumbers.map((num) => (
-                <div key={num} className="code-line-number">
-                  {num}
+                <div 
+                  key={num} 
+                  className={`vscode-line-number ${hoveredLine === num ? 'vscode-line-hover' : ''}`}
+                  onMouseEnter={() => setHoveredLine(num)}
+                  onMouseLeave={() => setHoveredLine(null)}
+                >
+                  <span className="vscode-line-number-text">{num}</span>
+                  <div className="vscode-line-indicator"></div>
                 </div>
               ))}
             </div>
           )}
 
-          {/* Code */}
+          {/* Enhanced Code */}
           <pre 
             ref={codeRef}
-            className={`code-block-pre ${wordWrap ? 'code-word-wrap' : ''}`}
+            className={`vscode-pre ${wordWrap ? 'vscode-word-wrap' : ''}`}
           >
             <code 
-              className={`code-block-code language-${language}`}
+              className={`vscode-code language-${language}`}
               dangerouslySetInnerHTML={{ __html: highlightedCode }}
             />
           </pre>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Enhanced Scroll Indicator */}
       {isOverflowing && (
-        <div className="code-block-scroll-indicator">
-          <div className="scroll-hint">Scroll to see more</div>
+        <div className="vscode-scroll-indicator">
+          <div className="vscode-scroll-hint">
+            <div className="vscode-scroll-icon">⌄</div>
+            <span>Scroll for more</span>
+          </div>
         </div>
       )}
     </div>
