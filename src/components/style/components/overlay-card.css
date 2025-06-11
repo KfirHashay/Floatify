@@ -333,6 +333,12 @@
     transition: all var(--di-duration-normal) var(--di-spring-timing);
 }
 
+/* Hover effect for split main */
+.overlay-styled .overlay-card-split-main:hover {
+    transform: scale(1.02);
+    box-shadow: var(--di-shadow-hover);
+}
+
 /* Split Bubble - Distinct separate element */
 .overlay-styled .overlay-card-split-bubble {
     width: var(--overlay-collapsed-height);
@@ -361,7 +367,6 @@
 /* Hover effect - merge back animation */
 .overlay-styled .overlay-card--split:hover {
     gap: 0; /* Close the gap */
-    transform: scale(1.02); /* Slight scale increase for feedback */
 }
 
 /* Main content expands to fill space */
@@ -373,9 +378,9 @@
 
 /* Bubble fades out and becomes non-interactive */
 .overlay-styled .overlay-card--split:hover .overlay-card-split-bubble {
-    opacity: 0;
+    opacity: 0.5;
     pointer-events: none;
-    transform: scale(0.8);
+    transform: scale(0.5);
 }
 
 /* =======================================================
