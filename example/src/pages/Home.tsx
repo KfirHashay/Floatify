@@ -10,6 +10,7 @@ import {
   Globe,
   ClipboardCopy
 } from 'lucide-react'
+import Button from '../components/Button'
 
 const Home: FC = () => {
   const handleCopy = useCallback(() => {
@@ -39,20 +40,22 @@ const Home: FC = () => {
           </p>
 
           <div className='hero-actions'>
-            <Link to='/examples' className='btn btn-primary'>
+            <Button
+              as={Link}
+              to='/examples'
+              variant="primary"
+              rightIcon={<ArrowRight size={16} />}
+            >
               View examples
-              <ArrowRight size={16} aria-hidden className='ml-1' />
-            </Link>
+            </Button>
 
-            <button
-              type='button'
-              className='btn btn-secondary'
-              aria-label='Copy install command'
+            <Button
+              variant="secondary"
+              leftIcon={<ClipboardCopy size={16} />}
               onClick={handleCopy}
             >
-              <ClipboardCopy size={16} aria-hidden className='mr-1' />
               Copy install command
-            </button>
+            </Button>
           </div>
 
           <pre className='hero-code'>
@@ -125,10 +128,14 @@ const Home: FC = () => {
               Install, register a channel, and push a card—done. No boilerplate.
             </p>
 
-            <Link to='/examples' className='btn btn-primary'>
+            <Button
+              as={Link}
+              to='/examples'
+              variant="primary"
+              rightIcon={<ArrowRight size={16} />}
+            >
               Full examples
-              <ArrowRight size={16} aria-hidden className='ml-1' />
-            </Link>
+            </Button>
           </div>
 
           <pre className='quick-start-code'>

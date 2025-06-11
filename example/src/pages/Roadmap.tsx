@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckCircle, Clock, Lightbulb, Zap, Users, Globe, ArrowRight, Calendar, Target } from 'lucide-react';
+import Button from '../components/Button';
 
 interface RoadmapItem {
   title: string;
@@ -289,23 +290,25 @@ export default function Roadmap() {
           </div>
           
           <div className="contribute-actions">
-            <a
+            <Button
+              as="a"
               href="https://github.com/yourusername/floatify"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-primary"
+              variant="primary"
+              rightIcon={<ArrowRight size={16} />}
             >
               View on GitHub
-              <ArrowRight size={16} />
-            </a>
-            <a
+            </Button>
+            <Button
+              as="a"
               href="https://github.com/yourusername/floatify/issues"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-secondary"
+              variant="secondary"
             >
               Report Issues
-            </a>
+            </Button>
           </div>
         </div>
       </section>

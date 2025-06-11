@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useAggregator } from 'floatify'
 import { CheckCircle, Loader2 } from 'lucide-react'
+import Button from './Button'
 import { Position, POSITIONS } from '../types'
 
 interface Props {
@@ -90,16 +91,16 @@ export default function Demo({
         </select>
       </div>
       
-      <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', justifyContent: 'center' }}>
-        <button className="btn btn-primary" onClick={handleShow}>
+      <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <Button variant="primary" onClick={handleShow}>
           Auto-Dismiss (3s)
-        </button>
-        <button className="btn btn-secondary" onClick={handleLoading}>
+        </Button>
+        <Button variant="secondary" onClick={handleLoading}>
           Loading Example
-        </button>
-        <button className="btn btn-ghost" onClick={handlePersistent}>
+        </Button>
+        <Button variant="ghost" onClick={handlePersistent}>
           Persistent Message
-        </button>
+        </Button>
       </div>
     </div>
   )

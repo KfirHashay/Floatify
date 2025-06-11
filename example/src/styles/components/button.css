@@ -1,0 +1,324 @@
+/* =======================================================
+   🎛️ Button Component Styles - Modern Design System
+   - Consistent with home page button design
+   - Smooth animations and micro-interactions
+   - WCAG 2.1 AA compliant contrast ratios
+   - Multiple variants and sizes
+========================================================== */
+
+.btn {
+  /* Base button styles */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  font-family: inherit;
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  
+  /* Smooth transitions for all interactive states */
+  transition: all var(--transition-fast);
+  
+  /* Prevent text selection and improve touch targets */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Focus states for accessibility */
+.btn:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+/* Disabled state */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* =======================================================
+   📏 Button Sizes
+========================================================== */
+
+.btn-sm {
+  padding: 0.5rem var(--space-2);
+  font-size: var(--font-size-sm);
+  min-height: 2rem;
+}
+
+.btn-md {
+  padding: 0.75rem var(--space-2);
+  font-size: var(--font-size-sm);
+  min-height: 2.5rem;
+}
+
+.btn-lg {
+  padding: 1rem var(--space-3);
+  font-size: var(--font-size-base);
+  min-height: 3rem;
+}
+
+/* Full width variant */
+.btn-full-width {
+  width: 100%;
+}
+
+/* =======================================================
+   🎨 Button Variants
+========================================================== */
+
+/* Primary Button - Matches home page primary buttons */
+.btn-primary {
+  background-color: var(--accent-primary);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--accent-primary);
+}
+
+.btn-primary:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+  background-color: var(--accent-primary);
+}
+
+/* Secondary Button - Matches home page secondary buttons */
+.btn-secondary {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--bg-surface);
+  border-color: var(--border-secondary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+  background-color: var(--bg-elevated);
+}
+
+/* Ghost Button - Matches home page ghost buttons */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--hover-overlay);
+  color: var(--text-primary);
+  border-color: var(--border-primary);
+}
+
+.btn-ghost:active:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--active-overlay);
+}
+
+/* =======================================================
+   🔄 Loading State
+========================================================== */
+
+.btn-loading {
+  cursor: wait;
+}
+
+.btn-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+}
+
+.btn-spinner-icon {
+  width: 100%;
+  height: 100%;
+  animation: btn-spin 1s linear infinite;
+}
+
+.btn-spinner-icon circle {
+  animation: btn-dash 1.5s ease-in-out infinite;
+}
+
+.btn-content-loading {
+  opacity: 0.7;
+}
+
+/* =======================================================
+   🎯 Icons
+========================================================== */
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.btn-sm .btn-icon svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.btn-lg .btn-icon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* Icon spacing adjustments */
+.btn-icon-left {
+  margin-right: 0.125rem;
+}
+
+.btn-icon-right {
+  margin-left: 0.125rem;
+}
+
+/* =======================================================
+   🎭 Animations
+========================================================== */
+
+@keyframes btn-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes btn-dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+/* Micro-interaction for button press */
+.btn:active:not(:disabled):not([aria-disabled="true"]) {
+  transition: transform 0.1s ease-out;
+}
+
+/* =======================================================
+   🌊 Ripple Effect (Optional Enhancement)
+========================================================== */
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease-out, height 0.3s ease-out;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.btn:active:not(:disabled):not([aria-disabled="true"])::before {
+  width: 100px;
+  height: 100px;
+  opacity: 1;
+  transition: width 0.1s ease-out, height 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+/* =======================================================
+   📱 Mobile Optimizations
+========================================================== */
+
+@media (max-width: 768px) {
+  .btn {
+    min-height: 2.75rem; /* Larger touch targets on mobile */
+  }
+  
+  .btn-sm {
+    min-height: 2.25rem;
+  }
+  
+  .btn-lg {
+    min-height: 3.25rem;
+  }
+}
+
+/* =======================================================
+   🎨 High Contrast Mode Support
+========================================================== */
+
+@media (prefers-contrast: high) {
+  .btn-primary {
+    border-width: 2px;
+  }
+  
+  .btn-secondary {
+    border-width: 2px;
+  }
+  
+  .btn-ghost:hover {
+    border-width: 2px;
+  }
+}
+
+/* =======================================================
+   ♿ Reduced Motion Support
+========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+  
+  .btn::before {
+    display: none;
+  }
+  
+  .btn-spinner-icon {
+    animation: none;
+  }
+  
+  .btn-spinner-icon circle {
+    animation: none;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+}

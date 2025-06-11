@@ -5,6 +5,9 @@
    - Consistent spacing and typography system
 ========================================================== */
 
+/* Import Button Component Styles */
+@import './components/button.css';
+
 /* CSS Reset & Base Styles */
 *,
 *::before,
@@ -266,94 +269,6 @@ pre code {
 }
 
 /* =======================================================
-   🎛️ Interactive Elements - Buttons
-========================================================== */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
-  padding: 0.75rem var(--space-2);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  line-height: 1;
-  border: none;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  text-decoration: none;
-  white-space: nowrap;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn:focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 2px;
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-/* Primary Button */
-.btn-primary {
-  background-color: var(--accent-primary);
-  color: var(--text-inverse);
-  box-shadow: var(--shadow-sm);
-}
-
-.btn-primary:hover {
-  background-color: var(--accent-hover);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Secondary Button */
-.btn-secondary {
-  background-color: var(--bg-elevated);
-  color: var(--text-primary);
-  border: 1px solid var(--border-primary);
-  box-shadow: var(--shadow-sm);
-}
-
-.btn-secondary:hover {
-  background-color: var(--bg-tertiary);
-  border-color: var(--border-secondary);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
-
-.btn-secondary:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Ghost Button */
-.btn-ghost {
-  background-color: transparent;
-  color: var(--text-secondary);
-  border: 1px solid transparent;
-}
-
-.btn-ghost:hover {
-  background-color: var(--hover-overlay);
-  color: var(--text-primary);
-  border-color: var(--border-primary);
-}
-
-.btn-ghost:active {
-  background-color: var(--active-overlay);
-}
-
-/* =======================================================
    🃏 Cards & Surfaces
 ========================================================== */
 .card {
@@ -446,10 +361,6 @@ pre code {
   h1 { font-size: var(--font-size-3xl); }
   h2 { font-size: var(--font-size-2xl); }
   h3 { font-size: var(--font-size-xl); }
-  
-  .btn {
-    padding: 0.625rem var(--space-2);
-  }
 }
 
 /* =======================================================

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Copy, Play, RotateCcw, CheckCircle, AlertCircle, Info, Zap } from 'lucide-react';
 import Demo from '../components/Demo';
+import Button from '../components/Button';
 import { Position } from '../types';
 
 interface Props {
@@ -167,22 +168,14 @@ export default function Examples({
         <div className="code-display">
           <div className="code-header">
             <h3>{examples.find(e => e.key === activeExample)?.title}</h3>
-            <button
-              className="btn btn-ghost"
+            <Button
+              variant="ghost"
+              size="sm"
+              leftIcon={copiedCode === activeExample ? <CheckCircle size={16} /> : <Copy size={16} />}
               onClick={() => copyToClipboard(codeExamples[activeExample as keyof typeof codeExamples], activeExample)}
             >
-              {copiedCode === activeExample ? (
-                <>
-                  <CheckCircle size={16} />
-                  Copied!
-                </>
-              ) : (
-                <>
-                  <Copy size={16} />
-                  Copy Code
-                </>
-              )}
-            </button>
+              {copiedCode === activeExample ? 'Copied!' : 'Copy Code'}
+            </Button>
           </div>
           
           <div className="code-content">
