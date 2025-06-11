@@ -31,6 +31,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
     const isExpanded = channel.state === 'expanded';
     const isLoading = channel.state === 'loading';
     const isIconOnly = channel.state === 'icon';
+    const isBubble = channel.state === 'bubble';
     const isHidden = channel.state === 'hidden';
 
     // 🔹 Toggle expand/collapse on click
@@ -39,25 +40,25 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             swipeTriggered.current = false;
             return;
         }
-        if (isLoading || isIconOnly || isHidden) return;
+        if (isLoading || isIconOnly || isBubble || isHidden) return;
         updateChannelState(channelId, isExpanded ? 'collapsed' : 'expanded');
-    }, [channelId, isExpanded, updateChannelState, isLoading, isIconOnly, isHidden]);
+    }, [channelId, isExpanded, updateChannelState, isLoading, isIconOnly, isBubble, isHidden]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
-        if (isLoading || isIconOnly || isHidden) return;
+        if (isLoading || isIconOnly || isBubble || isHidden) return;
         touchStartX.current = e.touches[0].clientX;
         touchDeltaX.current = 0;
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
-        if (isLoading || isIconOnly || isHidden) return;
+        if (isLoading || isIconOnly || isBubble || isHidden) return;
         if (touchStartX.current !== null) {
             touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
         }
     };
 
     const handleTouchEnd = () => {
-        if (isLoading || isIconOnly || isHidden) return;
+        if (isLoading || isIconOnly || isBubble || isHidden) return;
         if (touchStartX.current === null) return;
         
         const deltaX = touchDeltaX.current;
@@ -97,6 +98,8 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
         ? 'overlay-card--loading'
         : isIconOnly
         ? 'overlay-card--icon'
+        : isBubble
+        ? 'overlay-card--bubble'
         : isExpanded
         ? 'overlay-card--expanded'
         : 'overlay-card--collapsed';
@@ -136,8 +139,15 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                 </div>
             )}
 
+            {/* 🔹 Bubble State */}
+            {isBubble && (card?.bubbleIcon || card?.icon) && (
+                <div className="overlay-card-bubble-icon" aria-hidden="true">
+                    {card.bubbleIcon || card.icon}
+                </div>
+            )}
+
             {/* 🔹 Normal Content */}
-            {!isLoading && !isIconOnly && !isHidden && card && (
+            {!isLoading && !isIconOnly && !isBubble && !isHidden && card && (
                 <>
                     {card.icon && (
                         <div className="overlay-card-icon\" aria-hidden="true">

@@ -168,6 +168,13 @@ registerChannel('notifications', 1);`,
         since: 'v0.1.0'
       },
       {
+        name: 'bubbleIcon',
+        type: 'ReactNode',
+        description: 'Icon shown when the card is minimized to a bubble',
+        example: `bubbleIcon: <MessageCircle />`,
+        since: 'v0.4.0'
+      },
+      {
         name: 'autoDismiss',
         type: 'boolean',
         description: 'Whether the card should auto-dismiss',
