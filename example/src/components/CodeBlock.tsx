@@ -85,7 +85,7 @@ export default function CodeBlock({
         )}
 
         <pre
-          className={clsx('cb-pre', wordWrap && 'wrap')}
+          className={'cb-pre', wordWrap && 'wrap'}
           dangerouslySetInnerHTML={{ __html: highlighted }}
         />
       </div>
