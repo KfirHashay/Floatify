@@ -1,0 +1,14 @@
+/* =======================================================
+   💻 CodeBlock Component Styles - Entry Point
+   - Modular CSS architecture for maintainability
+   - Theme-based design system with CSS custom properties
+   - Performance-optimized with content-visibility
+========================================================== */
+
+/* Core Styles */
+@import './base.css';
+@import './themes.css';
+@import './components.css';
+@import './animations.css';
+@import './responsive.css';
+@import './accessibility.css';

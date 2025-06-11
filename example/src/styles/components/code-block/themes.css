@@ -1,0 +1,201 @@
+/* =======================================================
+   🎨 CodeBlock Theme System
+   - CSS custom properties for flexible theming
+   - Dark/Light theme support
+   - Prism.js token styling with VSCode Dark Modern colors
+========================================================== */
+
+/* Dark Theme (Default) */
+.code-block--theme-dark {
+  --cb-bg-primary: #1f1f1f;
+  --cb-bg-secondary: #2d2d30;
+  --cb-bg-tertiary: #252526;
+  --cb-text-primary: #f0f6fc;
+  --cb-text-secondary: #cccccc;
+  --cb-text-muted: #8b949e;
+  --cb-border-primary: #333333;
+  --cb-border-secondary: #404040;
+  --cb-accent: #1f6feb;
+  --cb-success: #28ca42;
+  --cb-error: #ff6b6b;
+  --cb-warning: #ffa657;
+  
+  /* Syntax Highlighting Colors - VSCode Dark Modern */
+  --cb-syntax-keyword: #ff7b72;
+  --cb-syntax-string: #a5d6ff;
+  --cb-syntax-comment: #8b949e;
+  --cb-syntax-number: #79c0ff;
+  --cb-syntax-boolean: #ff7b72;
+  --cb-syntax-function: #d2a8ff;
+  --cb-syntax-class: #ffa657;
+  --cb-syntax-variable: #f0f6fc;
+  --cb-syntax-operator: #ff7b72;
+  --cb-syntax-punctuation: #f0f6fc;
+  --cb-syntax-property: #79c0ff;
+  --cb-syntax-tag: #7ee787;
+  --cb-syntax-attribute: #79c0ff;
+  --cb-syntax-value: #a5d6ff;
+  --cb-syntax-selector: #7ee787;
+  --cb-syntax-at-rule: #ff7b72;
+  --cb-syntax-regex: #7ee787;
+  --cb-syntax-important: #ff7b72;
+  --cb-syntax-builtin: #ffa657;
+  --cb-syntax-constant: #79c0ff;
+}
+
+/* Light Theme */
+.code-block--theme-light {
+  --cb-bg-primary: #ffffff;
+  --cb-bg-secondary: #f6f8fa;
+  --cb-bg-tertiary: #f1f3f4;
+  --cb-text-primary: #24292f;
+  --cb-text-secondary: #656d76;
+  --cb-text-muted: #8c959f;
+  --cb-border-primary: #d0d7de;
+  --cb-border-secondary: #afb8c1;
+  --cb-accent: #0969da;
+  --cb-success: #1a7f37;
+  --cb-error: #cf222e;
+  --cb-warning: #bf8700;
+  
+  /* Syntax Highlighting Colors - Light Theme */
+  --cb-syntax-keyword: #cf222e;
+  --cb-syntax-string: #0a3069;
+  --cb-syntax-comment: #8c959f;
+  --cb-syntax-number: #0550ae;
+  --cb-syntax-boolean: #cf222e;
+  --cb-syntax-function: #8250df;
+  --cb-syntax-class: #953800;
+  --cb-syntax-variable: #24292f;
+  --cb-syntax-operator: #cf222e;
+  --cb-syntax-punctuation: #24292f;
+  --cb-syntax-property: #0550ae;
+  --cb-syntax-tag: #116329;
+  --cb-syntax-attribute: #0550ae;
+  --cb-syntax-value: #0a3069;
+  --cb-syntax-selector: #116329;
+  --cb-syntax-at-rule: #cf222e;
+  --cb-syntax-regex: #116329;
+  --cb-syntax-important: #cf222e;
+  --cb-syntax-builtin: #953800;
+  --cb-syntax-constant: #0550ae;
+}
+
+/* Auto Theme - Respects system preference */
+.code-block--theme-auto {
+  /* Default to dark theme */
+  --cb-bg-primary: #1f1f1f;
+  --cb-bg-secondary: #2d2d30;
+  --cb-bg-tertiary: #252526;
+  --cb-text-primary: #f0f6fc;
+  --cb-text-secondary: #cccccc;
+  --cb-text-muted: #8b949e;
+  --cb-border-primary: #333333;
+  --cb-border-secondary: #404040;
+  --cb-accent: #1f6feb;
+  --cb-success: #28ca42;
+  --cb-error: #ff6b6b;
+  --cb-warning: #ffa657;
+}
+
+@media (prefers-color-scheme: light) {
+  .code-block--theme-auto {
+    --cb-bg-primary: #ffffff;
+    --cb-bg-secondary: #f6f8fa;
+    --cb-bg-tertiary: #f1f3f4;
+    --cb-text-primary: #24292f;
+    --cb-text-secondary: #656d76;
+    --cb-text-muted: #8c959f;
+    --cb-border-primary: #d0d7de;
+    --cb-border-secondary: #afb8c1;
+    --cb-accent: #0969da;
+    --cb-success: #1a7f37;
+    --cb-error: #cf222e;
+    --cb-warning: #bf8700;
+  }
+}
+
+/* Prism.js Token Styling */
+.code-syntax .token.comment,
+.code-syntax .token.prolog,
+.code-syntax .token.doctype,
+.code-syntax .token.cdata {
+  color: var(--cb-syntax-comment);
+  font-style: italic;
+}
+
+.code-syntax .token.punctuation {
+  color: var(--cb-syntax-punctuation);
+}
+
+.code-syntax .token.property,
+.code-syntax .token.tag,
+.code-syntax .token.boolean,
+.code-syntax .token.number,
+.code-syntax .token.constant,
+.code-syntax .token.symbol,
+.code-syntax .token.deleted {
+  color: var(--cb-syntax-number);
+}
+
+.code-syntax .token.selector,
+.code-syntax .token.attr-name,
+.code-syntax .token.string,
+.code-syntax .token.char,
+.code-syntax .token.builtin,
+.code-syntax .token.inserted {
+  color: var(--cb-syntax-string);
+}
+
+.code-syntax .token.operator,
+.code-syntax .token.entity,
+.code-syntax .token.url,
+.code-syntax .language-css .token.string,
+.code-syntax .style .token.string {
+  color: var(--cb-syntax-operator);
+}
+
+.code-syntax .token.atrule,
+.code-syntax .token.attr-value,
+.code-syntax .token.keyword {
+  color: var(--cb-syntax-keyword);
+}
+
+.code-syntax .token.function,
+.code-syntax .token.class-name {
+  color: var(--cb-syntax-function);
+}
+
+.code-syntax .token.regex,
+.code-syntax .token.important,
+.code-syntax .token.variable {
+  color: var(--cb-syntax-regex);
+}
+
+.code-syntax .token.important,
+.code-syntax .token.bold {
+  font-weight: bold;
+}
+
+.code-syntax .token.italic {
+  font-style: italic;
+}
+
+.code-syntax .token.entity {
+  cursor: help;
+}
+
+/* Enhanced Text Selection */
+.code-syntax ::selection,
+.code-pre ::selection,
+.code-block ::selection {
+  background: rgba(58, 117, 215, 0.3);
+  color: var(--cb-text-primary);
+}
+
+.code-syntax ::-moz-selection,
+.code-pre ::-moz-selection,
+.code-block ::-moz-selection {
+  background: rgba(58, 117, 215, 0.3);
+  color: var(--cb-text-primary);
+}
