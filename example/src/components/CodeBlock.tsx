@@ -8,4 +8,3 @@
 export { default } from './CodeBlock/CodeBlock';
 export type { CodeBlockProps } from './CodeBlock/types';
 
-export default type
