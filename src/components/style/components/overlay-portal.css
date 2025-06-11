@@ -15,7 +15,8 @@
     
     /* Transform-based scaling for better performance */
     transform-origin: center;
-    transform: scale(1);
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
     
     color: var(--di-text);
     border-radius: calc(var(--overlay-collapsed-height) / 2);
@@ -47,12 +48,14 @@
 
 /* State-based scaling instead of width/height changes */
 .overlay-styled .overlay-portal[data-state='expanded'] {
-    transform: scale(calc(var(--overlay-expanded-width) / var(--overlay-collapsed-width)));
+    transform: scale(var(--di-scale-expanded));
+    --di-scale-current: var(--di-scale-expanded);
     border-radius: var(--di-border-radius);
 }
 
 .overlay-styled .overlay-portal[data-state='collapsed'] {
-    transform: scale(1);
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
     border-radius: calc(var(--overlay-collapsed-height) / 2);
 }
 
@@ -61,17 +64,18 @@
     width: var(--overlay-collapsed-height);
     height: var(--overlay-collapsed-height);
     border-radius: 50%;
-    transform: scale(1);
+    transform: scale(var(--di-scale-collapsed));
+    --di-scale-current: var(--di-scale-collapsed);
 }
 
 /* Hover & Press Effects with spring timing */
 .overlay-styled .overlay-portal:hover {
-    transform: scale(var(--di-hover-scale, 1.03));
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-hover-scale, 1.03)));
     transition: var(--di-overlay-transition);
 }
 
 .overlay-styled .overlay-portal:active {
-    transform: scale(var(--di-active-scale, 0.97));
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-active-scale, 0.97)));
     transition: transform var(--di-duration-fast) var(--di-ease-out);
 }
 
@@ -79,7 +83,7 @@
 .overlay-styled .overlay-portal:focus-visible {
     outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));
     outline-offset: 2px;
-    transform: scale(var(--di-hover-scale, 1.03));
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-hover-scale, 1.03)));
 }
 
 /* FIXED: Minimal container - NO interference with app */
