@@ -44,10 +44,13 @@ export function OverlayPortal({
 
         const activeCard = getActiveCard(activeChannel.channelId);
         
-        // Show overlay if there's a card OR if channel is in loading/icon state
-        const shouldShow = activeCard || 
-                          activeChannel.state === 'loading' || 
-                          activeChannel.state === 'icon';
+        // Show overlay if there's a card OR if channel is in loading/icon/split/bubble state
+        const shouldShow =
+            activeCard ||
+            activeChannel.state === 'loading' ||
+            activeChannel.state === 'icon' ||
+            activeChannel.state === 'split' ||
+            activeChannel.state === 'bubble';
         
         if (!shouldShow) return null;
 
@@ -71,7 +74,11 @@ export function OverlayPortal({
     // 🔹 MULTIPLE CONCURRENCY MODE: Display multiple active overlays
     const activeChannels = Object.values(state.channels).filter(
         (ch) =>
-            ch.cards.length > 0 || ch.state === 'loading' || ch.state === 'icon'
+            ch.cards.length > 0 ||
+            ch.state === 'loading' ||
+            ch.state === 'icon' ||
+            ch.state === 'split' ||
+            ch.state === 'bubble'
     );
     
     // Nothing to render if no channel currently holds cards
@@ -133,10 +140,13 @@ function DefaultOverlay({
     const channel = state.channels[channelId];
     if (!channel) return null;
 
-    // Show overlay if there's a card OR if channel is in loading/icon state
-    const shouldShow = card || 
-                      channel.state === 'loading' || 
-                      channel.state === 'icon';
+    // Show overlay if there's a card OR if channel is in loading/icon/split/bubble state
+    const shouldShow =
+        card ||
+        channel.state === 'loading' ||
+        channel.state === 'icon' ||
+        channel.state === 'split' ||
+        channel.state === 'bubble';
     
     if (!shouldShow) return null;
 
