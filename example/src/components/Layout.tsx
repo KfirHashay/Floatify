@@ -11,6 +11,7 @@ interface Props {
 const navigation = [
   { name: 'Overview', href: '/' },
   { name: 'Examples', href: '/examples' },
+  { name: 'Split Bubble', href: '/split-bubble' },
   { name: 'API Reference', href: '/api' },
   { name: 'Roadmap', href: '/roadmap' },
 ];
