@@ -15,13 +15,11 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "floatify": "file:..",
-    "react-router-dom": "^6.30.1",
-    "prismjs": "^1.29.0"
+    "react-router-dom": "^6.30.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
     "typescript": "^5.8.2",
-    "vite": "^6.2.2",
-    "@types/prismjs": "^1.26.0"
+    "vite": "^6.2.2"
   }
 }

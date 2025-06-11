@@ -1,104 +1,596 @@
-/* --- variables --- */
-:root {
-  --cb-bg: #1f1f1f;
-  --cb-fg: #f0f6fc;
-  --cb-border: #333;
-  --cb-header-bg: #252526;
-  --cb-copy-bg: rgba(255,255,255,.08);
-  --cb-copy-bg-active: rgba(40,202,66,.2);
-}
+/* =======================================================
+   💻 VSCode Dark Modern CodeBlock Component
+   - Always dark theme with VSCode Dark Modern colors
+   - Enhanced animations and micro-interactions
+   - Professional header design
+   - Improved line numbers with hover effects
+   - Smooth copy animation with ripple effect
+   - Better syntax highlighting colors
+   - Fixed text selection visibility
+   - Improved mobile responsiveness
+========================================================== */
 
-/* light theme demo */
-[data-theme='light'] {
-  --cb-bg: #fafafa;
-  --cb-fg: #24292f;
-  --cb-border: #e1e4e8;
-  --cb-header-bg: #f6f8fa;
-  --cb-copy-bg: rgba(0,0,0,.05);
-  --cb-copy-bg-active: rgba(40,202,66,.15);
-}
-
-/* --- container --- */
 .code-block {
-  position: relative;
-  border: 1px solid var(--cb-border);
+  background-color: #1f1f1f;
+  border: 1px solid #333333;
   border-radius: 8px;
-  background: var(--cb-bg);
-  color: var(--cb-fg);
-  font-family: 'Fira Code', monospace;
   overflow: hidden;
-  content-visibility: auto;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  position: relative;
+  font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
-/* --- header --- */
-.cb-header {
+.code-block:hover {
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  border-color: #404040;
+  transform: translateY(-2px);
+}
+
+/* =======================================================
+   🎨 Enhanced Header Design
+========================================================== */
+
+.code-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: .75rem 1rem;
-  background: var(--cb-header-bg);
-  border-bottom: 1px solid var(--cb-border);
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(180deg, #2d2d30 0%, #252526 100%);
+  border-bottom: 1px solid #333333;
+  min-height: 48px;
 }
 
-.cb-left { display: flex; gap: .75rem; }
-
-.cb-title { font-weight: 600; font-size: .875rem; }
-
-.cb-lang {
-  font-size: .75rem;
-  padding: .25rem .5rem;
-  border-radius: 12px;
-  background: var(--cb-copy-bg);
-  text-transform: uppercase;
-}
-
-/* --- copy btn --- */
-.cb-copy {
-  display: grid;
-  place-items: center;
-  width: 2.25rem; height: 2.25rem;
-  border-radius: 6px;
-  background: var(--cb-copy-bg);
-  border: none;
-  color: inherit;
-  cursor: pointer;
-  transition: transform .15s;
-}
-
-.cb-copy:hover { transform: translateY(-2px); }
-.cb-copy.is-copied { background: var(--cb-copy-bg-active); }
-
-/* --- code panel --- */
-.cb-scroll {
+.code-header-left {
   display: flex;
-  max-height: var(--cb-max-h, 400px);
-  overflow: auto;
-}
-
-.cb-lines {
-  padding: 1rem 0;
-  text-align: right;
-  user-select: none;
-  color: #6e7681;
-  border-right: 1px solid var(--cb-border);
-}
-
-.cb-lines span {
-  display: block;
-  padding: 0 .75rem;
-  line-height: 1.5;
-}
-
-.cb-pre {
-  margin: 0;
-  padding: 1rem 1.25rem;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
   min-width: 0;
-  font-size: .875rem;
-  line-height: 1.5;
-  white-space: pre;
 }
 
-.cb-pre.wrap { white-space: pre-wrap; word-break: break-word; }
+.code-title {
+  color: #cccccc;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
 
-/* visually hidden for a11y */
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.code-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Enhanced Language Tag */
+.code-language-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--lang-color, #cccccc);
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.code-language-tag:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced Copy Button - Icon Only with Better Animation */
+.code-copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cccccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.code-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.code-copy-btn:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.code-copy-success {
+  background: rgba(40, 202, 66, 0.2) !important;
+  border-color: rgba(40, 202, 66, 0.4) !important;
+  color: #28ca42 !important;
+  transform: translateY(-2px) scale(1.1) !important;
+}
+
+.code-copy-icon {
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.code-copy-success .code-copy-icon {
+  transform: rotate(360deg) scale(1.2);
+}
+
+/* Enhanced Copy Ripple Effect */
+.code-copy-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(40, 202, 66, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: copy-ripple 0.8s ease-out;
+}
+
+@keyframes copy-ripple {
+  to {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+  }
+}
+
+/* =======================================================
+   📝 Enhanced Content Section
+========================================================== */
+
+.code-content {
+  position: relative;
+  overflow: auto;
+  background-color: #1f1f1f;
+}
+
+.code-content::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.code-content::-webkit-scrollbar-track {
+  background: #1f1f1f;
+}
+
+.code-content::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 6px;
+  border: 2px solid #1f1f1f;
+}
+
+.code-content::-webkit-scrollbar-thumb:hover {
+  background: #4f4f4f;
+}
+
+.code-content::-webkit-scrollbar-corner {
+  background: #1f1f1f;
+}
+
+.code-inner {
+  display: flex;
+  min-height: 100%;
+}
+
+/* =======================================================
+   🔢 Enhanced Line Numbers with Better Hover Effects
+========================================================== */
+
+.code-line-numbers {
+  background-color: #1f1f1f;
+  border-right: 1px solid #333333;
+  padding: 16px 0;
+  user-select: none;
+  flex-shrink: 0;
+  min-width: 60px;
+  position: relative;
+}
+
+.code-line-number {
+  color: #6e7681;
+  font-size: 13px;
+  line-height: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 16px;
+  position: relative;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.code-line-number:hover {
+  color: #f0f6fc;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.code-line-hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.code-line-number-text {
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+
+.code-line-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #1f6feb;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.code-line-hover .code-line-indicator {
+  opacity: 1;
+}
+
+/* =======================================================
+   💻 Enhanced Code Content with VSCode Dark Modern Colors
+========================================================== */
+
+.code-pre {
+  flex: 1;
+  margin: 0;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  overflow: visible;
+  font-size: 14px;
+  line-height: 20px;
+  color: #f0f6fc;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  tab-size: 2;
+  hyphens: none;
+  font-weight: 400;
+}
+
+.code-word-wrap {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.code-syntax {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  display: block;
+  overflow: visible;
+}
+
+/* =======================================================
+   🎨 VSCode Dark Modern Syntax Highlighting Colors
+========================================================== */
+
+/* Keywords */
+.syntax-keyword {
+  color: #ff7b72;
+  font-weight: 400;
+}
+
+/* Strings */
+.syntax-string {
+  color: #a5d6ff;
+}
+
+/* Comments */
+.syntax-comment {
+  color: #8b949e;
+  font-style: italic;
+}
+
+/* Numbers */
+.syntax-number {
+  color: #79c0ff;
+}
+
+/* Booleans and null */
+.syntax-boolean {
+  color: #ff7b72;
+}
+
+/* React/JSX specific */
+.syntax-react {
+  color: #7ee787;
+  font-weight: 500;
+}
+
+/* Types and interfaces */
+.syntax-type {
+  color: #ffa657;
+}
+
+/* CSS Selectors */
+.syntax-selector {
+  color: #7ee787;
+}
+
+/* CSS Properties */
+.syntax-property {
+  color: #79c0ff;
+}
+
+/* CSS Values */
+.syntax-value {
+  color: #a5d6ff;
+}
+
+/* CSS At-rules */
+.syntax-at-rule {
+  color: #ff7b72;
+}
+
+/* HTML Tags */
+.syntax-tag {
+  color: #7ee787;
+}
+
+/* HTML Attributes */
+.syntax-attribute {
+  color: #79c0ff;
+}
+
+/* Shell/Bash specific */
+.syntax-prompt {
+  color: #7ee787;
+  font-weight: 600;
+}
+
+.syntax-command {
+  color: #ff7b72;
+  font-weight: 500;
+}
+
+.syntax-flag {
+  color: #ffa657;
+}
+
+/* =======================================================
+   🎯 Fixed Text Selection Visibility
+========================================================== */
+
+.code-syntax ::selection,
+.code-pre ::selection,
+.code-block ::selection {
+  background: rgba(58, 117, 215, 0.3);
+  color: #f0f6fc;
+}
+
+.code-syntax ::-moz-selection,
+.code-pre ::-moz-selection,
+.code-block ::-moz-selection {
+  background: rgba(58, 117, 215, 0.3);
+  color: #f0f6fc;
+}
+
+/* =======================================================
+   📱 Improved Mobile Responsiveness
+========================================================== */
+
+@media (max-width: 768px) {
+  .code-header {
+    padding: 10px 12px;
+    min-height: 44px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .code-header-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .code-title {
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .code-language-tag {
+    padding: 4px 8px;
+    font-size: 11px;
+    border-radius: 12px;
+  }
+
+  .code-copy-btn {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .code-line-numbers {
+    min-width: 50px;
+    padding: 12px 0;
+  }
+
+  .code-line-number {
+    padding-right: 12px;
+    font-size: 12px;
+  }
+
+  .code-pre {
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .code-header {
+    padding: 8px 10px;
+    min-height: 40px;
+  }
+
+  .code-header-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .code-title {
+    font-size: 12px;
+  }
+
+  .code-language-tag {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+
+  .code-copy-btn {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+  }
+
+  .code-line-numbers {
+    min-width: 40px;
+    padding: 8px 0;
+  }
+
+  .code-line-number {
+    padding-right: 8px;
+    font-size: 11px;
+  }
+
+  .code-pre {
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .code-word-wrap {
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  /* Better touch targets on mobile */
+  .code-copy-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* =======================================================
+   🎭 Enhanced Animations and Transitions
+========================================================== */
+
+@keyframes code-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.code-block {
+  animation: code-fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =======================================================
+   ♿ Enhanced Accessibility
+========================================================== */
+
+.code-copy-btn:focus-visible {
+  outline: 2px solid #1f6feb;
+  outline-offset: 2px;
+}
+
+.code-content:focus-visible {
+  outline: 2px solid #1f6feb;
+  outline-offset: -2px;
+}
+
+.code-line-number:focus-visible {
+  outline: 1px solid #1f6feb;
+  outline-offset: 1px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .code-block {
+    border-width: 2px;
+    border-color: #ffffff;
+  }
+  
+  .code-header {
+    border-bottom-width: 2px;
+  }
+  
+  .code-line-numbers {
+    border-right-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .code-block,
+  .code-copy-btn,
+  .code-line-number,
+  .code-language-tag {
+    animation: none;
+    transition: none;
+  }
+  
+  .code-copy-ripple {
+    display: none;
+  }
+  
+  .code-copy-icon {
+    transition: none;
+  }
+}
+
+/* =======================================================
+   🌟 Performance Optimizations
+========================================================== */
+
+.code-block {
+  contain: layout style paint;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.code-pre {
+  contain: layout style;
+}
