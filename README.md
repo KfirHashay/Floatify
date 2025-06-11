@@ -129,6 +129,17 @@ The `example` folder doubles as the documentation site. After running the steps 
 
 Overlay updates are announced to assistive technologies using a polite live region. Overlay cards are focusable and respond to **Enter** or **Space** so keyboard users can toggle or dismiss them.
 
+## Running Tests
+
+Install dependencies and execute the test suite with:
+
+```bash
+npm install
+npm test
+```
+
+The `test` script runs `vitest` in single-run mode so it exits after completing all tests.
+
 ## Roadmap
 
 Upcoming development plans are tracked in [ROADMAP.md](ROADMAP.md). Highlights include:

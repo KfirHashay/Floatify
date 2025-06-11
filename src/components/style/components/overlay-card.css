@@ -296,3 +296,49 @@
     backface-visibility: hidden;
     perspective: 1000px;
 }
+/* 🔹 Bubble Only State */
+.overlay-styled .overlay-card--bubble {
+    width: var(--overlay-collapsed-height);
+    height: var(--overlay-collapsed-height);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--overlay-padding-sm);
+}
+
+.overlay-styled .overlay-card-bubble-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* 🔹 Split Layout */
+.overlay-styled .overlay-card--split {
+    display: flex;
+    align-items: center;
+    gap: var(--overlay-gap-sm);
+}
+
+.overlay-styled .overlay-card-split-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--overlay-gap-sm);
+}
+
+.overlay-styled .overlay-card-split-bubble {
+    width: var(--overlay-collapsed-height);
+    height: var(--overlay-collapsed-height);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--di-duration-normal) var(--di-spring-timing);
+}
+
+.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble {
+    transform: scale(0);
+}
