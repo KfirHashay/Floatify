@@ -324,10 +324,6 @@ export default function APIReference() {
               showLineNumbers={true}
               enableCopy={true}
               showLanguage={true}
-              themeConfig={{
-                theme: 'auto',
-                prismTheme: 'okaidia'
-              }}
             />
 
             <div className="api-guide-tips">

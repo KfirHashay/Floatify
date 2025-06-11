@@ -81,37 +81,7 @@ const handleAsyncAction = async () => {
   concurrencyMode="single"    // single or multiple overlays
 >
   {/* Your app */}
-</Floatify>`,
-
-  theming: `import { CodeBlock } from './components/CodeBlock';
-
-// Custom theme configuration
-const customTheme = {
-  theme: 'auto' as const,
-  prismTheme: 'okaidia' as const,
-  customTheme: {
-    background: '#1a1a1a',
-    text: '#f0f0f0',
-    tokens: {
-      keyword: '#ff6b6b',
-      string: '#4ecdc4',
-      function: '#45b7d1',
-      comment: '#96ceb4'
-    }
-  }
-};
-
-function MyComponent() {
-  return (
-    <CodeBlock
-      code="const hello = 'world';"
-      language="javascript"
-      themeConfig={customTheme}
-      showLineNumbers={true}
-      enableCopy={true}
-    />
-  );
-}`
+</Floatify>`
 };
 
 export default function Examples({
@@ -140,44 +110,8 @@ export default function Examples({
       title: 'Positioning & Layout',
       description: 'Control overlay position and behavior',
       icon: <Zap size={16} />
-    },
-    {
-      key: 'theming',
-      title: 'Custom Themes',
-      description: 'Configure syntax highlighting themes',
-      icon: <Palette size={16} />
     }
   ];
-
-  // Get theme config based on active example
-  const getThemeConfig = (exampleKey: string) => {
-    switch (exampleKey) {
-      case 'theming':
-        return {
-          theme: 'auto' as const,
-          prismTheme: 'okaidia' as const,
-          customTheme: {
-            background: '#272822',
-            text: '#f8f8f2'
-          }
-        };
-      case 'loading':
-        return {
-          theme: 'auto' as const,
-          prismTheme: 'twilight' as const
-        };
-      case 'positioning':
-        return {
-          theme: 'auto' as const,
-          prismTheme: 'tomorrow' as const
-        };
-      default:
-        return {
-          theme: 'auto' as const,
-          prismTheme: 'dark' as const
-        };
-    }
-  };
 
   return (
     <div className="examples">
@@ -186,7 +120,7 @@ export default function Examples({
         <h1>Examples & Demos</h1>
         <p>
           Explore different ways to use Floatify in your React applications. 
-          All examples include copy-paste ready code with configurable themes.
+          All examples include copy-paste ready code.
         </p>
       </section>
 
@@ -234,7 +168,6 @@ export default function Examples({
             enableCopy={true}
             maxHeight="500px"
             showLanguage={true}
-            themeConfig={getThemeConfig(activeExample)}
           />
         </div>
       </section>
