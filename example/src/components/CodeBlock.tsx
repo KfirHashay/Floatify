@@ -1,5 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Copy, Check } from 'lucide-react';
+import Prism from 'prismjs';
+
+// Import core Prism languages
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-scss';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-sql';
+import 'prismjs/components/prism-yaml';
+import 'prismjs/components/prism-markdown';
 
 export interface CodeBlockProps {
   /**
@@ -28,9 +43,9 @@ export interface CodeBlockProps {
   enableCopy?: boolean;
   
   /**
-   * Maximum height before scrolling
+   * Maximum height before scrolling (accepts number in px or string)
    */
-  maxHeight?: string;
+  maxHeight?: number | string;
   
   /**
    * Custom class name
@@ -46,11 +61,24 @@ export interface CodeBlockProps {
    * Enable word wrap
    */
   wordWrap?: boolean;
+  
+  /**
+   * Theme variant (always dark for consistency)
+   */
+  theme?: 'dark' | 'light';
 }
 
 /**
- * Professional CodeBlock component with VSCode Dark Modern theme,
- * enhanced syntax highlighting, animated copy button, and responsive design.
+ * Professional CodeBlock component with Prism.js syntax highlighting,
+ * CSS variable theming, enhanced accessibility, and performance optimizations.
+ * 
+ * Features:
+ * - Prism.js integration for robust syntax highlighting
+ * - CSS custom properties for flexible theming
+ * - Memoized highlighting for performance
+ * - ARIA live region for copy feedback
+ * - Content visibility optimization
+ * - Type-safe props with proper defaults
  */
 export default function CodeBlock({
   code,
@@ -58,165 +86,180 @@ export default function CodeBlock({
   title,
   showLineNumbers = true,
   enableCopy = true,
-  maxHeight = '400px',
+  maxHeight = 400,
   className = '',
   showLanguage = true,
-  wordWrap = false
+  wordWrap = false,
+  theme = 'dark'
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
-  const [hoveredLine, setHoveredLine] = useState<number | null>(null);
-  const codeRef = useRef<HTMLPreElement>(null);
+  const [copyFeedback, setCopyFeedback] = useState('');
 
-  // Enhanced copy functionality with animation
+  // Normalize maxHeight to string with px unit
+  const normalizedMaxHeight = useMemo(() => {
+    if (typeof maxHeight === 'number') {
+      return `${maxHeight}px`;
+    }
+    return maxHeight;
+  }, [maxHeight]);
+
+  // Memoized Prism highlighting for performance
+  const highlightedCode = useMemo(() => {
+    // Validate language exists in Prism
+    const validLanguage = Prism.languages[language] ? language : 'text';
+    
+    try {
+      if (validLanguage === 'text') {
+        // For plain text, escape HTML but don't highlight
+        return code
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+      
+      // Use Prism for syntax highlighting
+      return Prism.highlight(code, Prism.languages[validLanguage], validLanguage);
+    } catch (error) {
+      console.warn(`Prism highlighting failed for language "${language}":`, error);
+      // Fallback to escaped plain text
+      return code
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+  }, [code, language]);
+
+  // Enhanced copy functionality with accessibility
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopyFeedback('Code copied to clipboard');
+      setTimeout(() => {
+        setCopied(false);
+        setCopyFeedback('');
+      }, 2000);
     } catch (err) {
       console.error('Failed to copy code:', err);
+      setCopyFeedback('Failed to copy code');
+      setTimeout(() => setCopyFeedback(''), 2000);
     }
   };
 
-  // Generate line numbers
-  const lines = code.split('\n');
-  const lineNumbers = lines.map((_, index) => index + 1);
+  // Generate line numbers efficiently
+  const lineNumbers = useMemo(() => {
+    return code.split('\n').map((_, index) => index + 1);
+  }, [code]);
 
-  // Enhanced language detection with better colors
+  // Enhanced language detection with better metadata
   const getLanguageInfo = (lang: string) => {
-    const languages: Record<string, { label: string; color: string }> = {
-      javascript: { label: 'JavaScript', color: '#f7df1e' },
-      typescript: { label: 'TypeScript', color: '#3178c6' },
-      jsx: { label: 'JSX', color: '#61dafb' },
-      tsx: { label: 'TSX', color: '#61dafb' },
-      css: { label: 'CSS', color: '#1572b6' },
-      html: { label: 'HTML', color: '#e34f26' },
-      json: { label: 'JSON', color: '#5d4e75' },
-      bash: { label: 'Bash', color: '#4eaa25' },
-      shell: { label: 'Shell', color: '#4eaa25' },
-      python: { label: 'Python', color: '#3776ab' },
-      sql: { label: 'SQL', color: '#336791' },
-      yaml: { label: 'YAML', color: '#cb171e' },
-      markdown: { label: 'Markdown', color: '#083fa1' },
-      text: { label: 'Text', color: '#858585' }
+    const languages: Record<string, { label: string; color: string; family: string }> = {
+      javascript: { label: 'JavaScript', color: '#f7df1e', family: 'script' },
+      typescript: { label: 'TypeScript', color: '#3178c6', family: 'script' },
+      jsx: { label: 'JSX', color: '#61dafb', family: 'script' },
+      tsx: { label: 'TSX', color: '#61dafb', family: 'script' },
+      css: { label: 'CSS', color: '#1572b6', family: 'style' },
+      scss: { label: 'SCSS', color: '#cf649a', family: 'style' },
+      html: { label: 'HTML', color: '#e34f26', family: 'markup' },
+      json: { label: 'JSON', color: '#5d4e75', family: 'data' },
+      bash: { label: 'Bash', color: '#4eaa25', family: 'shell' },
+      shell: { label: 'Shell', color: '#4eaa25', family: 'shell' },
+      python: { label: 'Python', color: '#3776ab', family: 'script' },
+      sql: { label: 'SQL', color: '#336791', family: 'data' },
+      yaml: { label: 'YAML', color: '#cb171e', family: 'data' },
+      markdown: { label: 'Markdown', color: '#083fa1', family: 'markup' },
+      text: { label: 'Text', color: '#858585', family: 'plain' }
     };
-    return languages[lang.toLowerCase()] || { label: lang.toUpperCase(), color: '#858585' };
+    return languages[lang.toLowerCase()] || { label: lang.toUpperCase(), color: '#858585', family: 'unknown' };
   };
 
-  // Enhanced syntax highlighting with VSCode Dark Modern colors
-  const highlightSyntax = (code: string, lang: string) => {
-    if (lang === 'javascript' || lang === 'typescript' || lang === 'jsx' || lang === 'tsx') {
-      return code
-        .replace(/\b(const|let|var|function|class|import|export|from|default|return|if|else|for|while|try|catch|async|await|new|this|super|extends|implements|interface|type|enum|namespace)\b/g, '<span class="syntax-keyword">$1</span>')
-        .replace(/\b(true|false|null|undefined|void)\b/g, '<span class="syntax-boolean">$1</span>')
-        .replace(/\b(\d+\.?\d*)\b/g, '<span class="syntax-number">$1</span>')
-        .replace(/(["'`])((?:\\.|(?!\1)[^\\])*?)\1/g, '<span class="syntax-string">$1$2$1</span>')
-        .replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, '<span class="syntax-comment">$&</span>')
-        .replace(/\b(React|useState|useEffect|useCallback|useMemo|Component|Fragment|Props|FC|ReactNode)\b/g, '<span class="syntax-react">$1</span>')
-        .replace(/\b([A-Z][a-zA-Z0-9]*)\b/g, '<span class="syntax-type">$1</span>');
-    }
-    
-    if (lang === 'css') {
-      return code
-        .replace(/([.#]?[a-zA-Z-]+)\s*\{/g, '<span class="syntax-selector">$1</span> {')
-        .replace(/([a-zA-Z-]+)\s*:/g, '<span class="syntax-property">$1</span>:')
-        .replace(/:\s*([^;]+);/g, ': <span class="syntax-value">$1</span>;')
-        .replace(/\/\*[\s\S]*?\*\//g, '<span class="syntax-comment">$&</span>')
-        .replace(/@[a-zA-Z-]+/g, '<span class="syntax-at-rule">$&</span>');
-    }
-
-    if (lang === 'html') {
-      return code
-        .replace(/(<\/?)([a-zA-Z][a-zA-Z0-9]*)/g, '$1<span class="syntax-tag">$2</span>')
-        .replace(/([a-zA-Z-]+)=("[^"]*")/g, '<span class="syntax-attribute">$1</span>=<span class="syntax-string">$2</span>')
-        .replace(/<!--[\s\S]*?-->/g, '<span class="syntax-comment">$&</span>');
-    }
-
-    if (lang === 'bash' || lang === 'shell') {
-      return code
-        .replace(/^(\$|#)\s*/gm, '<span class="syntax-prompt">$&</span>')
-        .replace(/\b(npm|yarn|git|cd|ls|mkdir|rm|cp|mv|chmod|sudo|echo|cat|grep|find|curl|wget)\b/g, '<span class="syntax-command">$1</span>')
-        .replace(/(--?[a-zA-Z-]+)/g, '<span class="syntax-flag">$1</span>')
-        .replace(/#.*$/gm, '<span class="syntax-comment">$&</span>');
-    }
-
-    return code;
-  };
-
-  const highlightedCode = highlightSyntax(code, language);
   const languageInfo = getLanguageInfo(language);
 
   return (
-    <div className={`code-block ${className}`}>
+    <div 
+      className={`code-block ${className}`}
+      data-theme={theme}
+      data-language={language}
+      data-family={languageInfo.family}
+    >
+      {/* ARIA live region for copy feedback */}
+      <div 
+        aria-live="polite" 
+        aria-atomic="true"
+        className="sr-only"
+      >
+        {copyFeedback}
+      </div>
+
       {/* Enhanced Header */}
       {(title || showLanguage || enableCopy) && (
         <div className="code-header">
-          <div className="code-header-left">
+          <div className="code-header-content">
             {title && (
-              <div className="code-title">
-                <span>{title}</span>
-              </div>
+              <h3 className="code-title">{title}</h3>
             )}
             
             {showLanguage && (
               <div 
-                className="code-language-tag"
-                style={{ '--lang-color': languageInfo.color } as React.CSSProperties}
+                className="code-language-badge"
+                style={{ 
+                  '--lang-color': languageInfo.color,
+                  '--lang-family': languageInfo.family
+                } as React.CSSProperties}
               >
-                <span>{languageInfo.label}</span>
+                <span className="code-language-label">{languageInfo.label}</span>
               </div>
             )}
           </div>
           
-          <div className="code-header-right">
-            {enableCopy && (
-              <button
-                className={`code-copy-btn ${copied ? 'code-copy-success' : ''}`}
-                onClick={handleCopy}
-                aria-label="Copy code to clipboard"
-                title="Copy code"
-              >
-                <div className="code-copy-icon">
-                  {copied ? (
-                    <Check size={16} />
-                  ) : (
-                    <Copy size={16} />
-                  )}
-                </div>
-                {copied && <div className="code-copy-ripple"></div>}
-              </button>
-            )}
-          </div>
+          {enableCopy && (
+            <button
+              className={`code-copy-button ${copied ? 'code-copy-success' : ''}`}
+              onClick={handleCopy}
+              aria-label={copied ? 'Code copied!' : 'Copy code to clipboard'}
+              title={copied ? 'Copied!' : 'Copy code'}
+              type="button"
+            >
+              <span className="code-copy-icon">
+                {copied ? <Check size={16} /> : <Copy size={16} />}
+              </span>
+              <span className="code-copy-ripple" aria-hidden="true"></span>
+            </button>
+          )}
         </div>
       )}
 
-      {/* Code Content */}
+      {/* Code Content with Performance Optimization */}
       <div 
         className="code-content"
-        style={{ maxHeight }}
+        style={{ 
+          maxHeight: normalizedMaxHeight,
+          contentVisibility: 'auto',
+          containIntrinsicSize: '0 400px'
+        }}
       >
-        <div className="code-inner">
-          {/* Enhanced Line Numbers */}
+        <div className="code-viewport">
+          {/* Line Numbers */}
           {showLineNumbers && (
-            <div className="code-line-numbers">
+            <div className="code-line-numbers" aria-hidden="true">
               {lineNumbers.map((num) => (
-                <div 
-                  key={num} 
-                  className={`code-line-number ${hoveredLine === num ? 'code-line-hover' : ''}`}
-                  onMouseEnter={() => setHoveredLine(num)}
-                  onMouseLeave={() => setHoveredLine(null)}
-                >
-                  <span className="code-line-number-text">{num}</span>
-                  <div className="code-line-indicator"></div>
+                <div key={num} className="code-line-number">
+                  {num}
                 </div>
               ))}
             </div>
           )}
 
-          {/* Enhanced Code */}
+          {/* Code Content */}
           <pre 
-            ref={codeRef}
             className={`code-pre ${wordWrap ? 'code-word-wrap' : ''}`}
+            tabIndex={0}
+            role="region"
+            aria-label={`Code block${title ? `: ${title}` : ''}`}
           >
             <code 
               className={`code-syntax language-${language}`}
