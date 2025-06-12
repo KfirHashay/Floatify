@@ -7,7 +7,6 @@
 
 /* ---------- Desktop‑class pointers only ---------- */
 @media (hover:hover) and (pointer:fine) {
-  /* Base card hover - subtle scale increase for detail view */
   :where(.overlay-styled .overlay-card:hover) {
     /* scale from token, preserve current state scale */
     transform: scale(calc(var(--di-scale-current, 1) * var(--di-hover-scale, 1.03)));
@@ -32,39 +31,9 @@
     background: var(--di-alert-bg, rgba(255,69,58,.98));
   }
 
-  /* Split layout: Enhanced merge-back hover effect */
+  /* Split layout: widen gap on hover */
   :where(.overlay-styled .overlay-card--split:hover) {
-    /* Override base card hover to prevent double scaling */
-    transform: scale(1);
-    
-    /* Enhanced shadow for the merged state */
-    box-shadow: var(--di-shadow-hover, 0 12px 32px rgba(0,0,0,.45));
-  }
-
-  /* Split main pill hover adjustments */
-  :where(.overlay-styled .overlay-card--split:hover .overlay-card-split-main) {
-    /* Enhanced shadow and slight scale for the main pill */
-    box-shadow: var(--di-shadow-hover, 0 12px 32px rgba(0,0,0,.45));
-    transform: scale(1.02);
-  }
-
-  /* Bubble hover in non-split states */
-  :where(.overlay-styled .overlay-card--bubble:hover) {
-    /* Subtle pulse effect for bubble state */
-    animation: di-pulse 1.5s ease-in-out infinite;
-  }
-
-  /* Loading state hover */
-  :where(.overlay-styled .overlay-card--loading:hover) {
-    /* Subtle scale increase for loading state */
-    transform: scale(1.05);
-  }
-
-  /* Collapsed state hover */
-  :where(.overlay-styled .overlay-card--collapsed:hover) {
-    /* Slight expansion hint */
-    transform: scale(1.02);
-    border-radius: calc(var(--overlay-collapsed-height, 44px) / 2.2);
+    gap: var(--overlay-gap-lg, 14px);
   }
 }
 
@@ -72,47 +41,4 @@
 :where(.overlay-styled .overlay-card:focus-visible) {
   outline: 2px solid var(--overlay-focus-ring, rgba(0,122,255,.8));
   outline-offset: 2px;
-}
-
-/* ---------- Split state specific focus ---------- */
-:where(.overlay-styled .overlay-card--split:focus-visible) {
-  /* Focus ring around the entire split container */
-  outline: 2px solid var(--overlay-focus-ring, rgba(0,122,255,.8));
-  outline-offset: 4px;
-  border-radius: calc(var(--overlay-collapsed-height, 44px) / 2);
-}
-
-/* ---------- Touch device optimizations ---------- */
-@media (hover: none) and (pointer: coarse) {
-  /* Remove hover effects on touch devices */
-  :where(.overlay-styled .overlay-card--split:hover) {
-    gap: var(--di-split-gap, 12px);
-  }
-
-  :where(.overlay-styled .overlay-card--split:hover .overlay-card-split-main) {
-    inline-size: var(--di-split-main-width, 140px);
-    transform: none;
-  }
-
-  :where(.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble) {
-    transform: none;
-    opacity: 1;
-  }
-}
-
-/* ---------- Reduced motion support ---------- */
-@media (prefers-reduced-motion: reduce) {
-  :where(.overlay-styled .overlay-card--split) {
-    transition: none;
-  }
-
-  :where(.overlay-styled .overlay-card--split .overlay-card-split-main,
-         .overlay-styled .overlay-card--split .overlay-card-split-bubble) {
-    transition: none;
-  }
-
-  :where(.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble) {
-    transform: none;
-    opacity: 1;
-  }
 }

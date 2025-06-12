@@ -36,8 +36,6 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
     const isBubble = channel.state === 'bubble';
     const isSplit = channel.state === 'split' || (isLoading && splitLoading);
     const isHidden = channel.state === 'hidden';
-    
-    // Use bubbleIcon from card, or fallback to default icons based on state
     const bubbleIconNode =
         card?.bubbleIcon ??
         (isLoading
@@ -177,6 +175,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                             )}
                         </>
                     )}
+
 
                     {/* 🔹 Bubble State */}
                     {isBubble && (

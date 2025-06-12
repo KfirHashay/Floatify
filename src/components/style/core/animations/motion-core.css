@@ -50,36 +50,3 @@
   from { border-radius: var(--di-border-radius); }
   to   { border-radius: 50%; }
 }
-
-/* ---------- Split merge animation -------------- */
-@keyframes di-split-merge {
-  0% {
-    gap: var(--di-split-gap, 12px);
-  }
-  100% {
-    gap: 0;
-  }
-}
-
-@keyframes di-bubble-merge {
-  0% {
-    transform: translateX(0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(calc(-1 * var(--di-split-main-width, 140px) / 2)) scale(0.8);
-    opacity: 0.7;
-  }
-}
-
-/* ---------- Pulse animation for bubble state ---------- */
-@keyframes di-pulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: var(--di-shadow);
-  }
-  50% {
-    transform: scale(1.05);
-    box-shadow: var(--di-shadow-hover, 0 12px 32px rgba(0,0,0,.45));
-  }
-}
