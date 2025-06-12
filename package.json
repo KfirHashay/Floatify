@@ -116,7 +116,7 @@
         "typedoc": "^0.25.13",
         "typescript": "^5.8.2",
         "vite": "^6.2.2",
-        "vitest": "^3.0.8"
+            "vitest": "^3.0.8"
     },
     "size-limit": [
         {
