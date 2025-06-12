@@ -1,14 +1,10 @@
 import React from 'react';
 import { motion } from "motion/react";
 import '../style/components/loading-indicator.css';
-
-function usePrefersReducedMotion() {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
+import { prefersReducedMotion } from '../../motion/utils';
 
 export default function LoadingIndicator() {
-    const reduceMotion = usePrefersReducedMotion();
+    const reduceMotion = prefersReducedMotion();
     return (
         <div className="loading-indicator" role="status" aria-label="Loading">
             <motion.div
