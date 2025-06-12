@@ -9,7 +9,7 @@ import useAggregator from '../../state/hooks/useAggregator';
 import { OverlayCard as DefaultCardUI } from '../card/OverlayCard';
 import '../../style/index.css';
 
-interface OverlayPortalProps {
+export interface OverlayPortalProps {
     concurrencyMode?: 'single' | 'multiple';
     portalRoot?: HTMLElement;
     unstyled?: boolean;
