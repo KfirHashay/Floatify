@@ -4,16 +4,6 @@
    - Hover, active, and focus states
 ========================================================== */
 
-/* Interactive element hover effect */
-.interactive-hover {
-}
-
-.interactive-hover:hover {
-}
-
-.interactive-hover:active {
-}
-
 /* Focus states for accessibility */
 .focus-outline:focus-visible {
     outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));

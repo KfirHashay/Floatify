@@ -58,10 +58,6 @@
   --overlay-border-color       : rgba(0, 0, 0, 0.10);
   --overlay-border-width       : 1px;
 
-  /* --- Scale factors --- */
-  --di-scale-collapsed         : 1;
-  --di-scale-expanded          : calc(var(--overlay-expanded-width) / var(--overlay-collapsed-width));
-
   /* --- Durations --- */
   --di-duration-fast           : 200ms;
   --di-duration-normal         : 400ms;
@@ -85,11 +81,6 @@
     box-shadow    var(--di-duration-normal) var(--di-ease-out);
   /* backward compat */
   --overlay-transition         : var(--di-overlay-transition);
-
-  /* --- Interaction scaling --- */
-  --overlay-scale-hover        : 1.02; /* legacy */
-  --di-hover-scale             : 1.03;
-  --di-active-scale            : 0.97;
 
   /* --- Layering & Performance --- */
   --overlay-z-index            : 1000;

@@ -22,7 +22,7 @@
   /* Transition removed */
 }
 
-/* ---------- Stand‑alone bubble (clickable) ---------- */
+/* ---------- Stand‑alone bubble ---------- */
 :where(.overlay-styled .overlay-card-bubble) {
   --_size: var(--overlay-collapsed-height, 44px);
   border-radius: 50%;
@@ -62,9 +62,7 @@
   /* Transition removed */
 }
 
-/* ---------- Specific actions (remove / swipe) ---------- */
-:where(.overlay-styled .overlay-card-remove,
-       .overlay-styled .overlay-card-swipe-prev,
-       .overlay-styled .overlay-card-swipe-next) {
+/* ---------- Remove button ---------- */
+:where(.overlay-styled .overlay-card-remove) {
   font-size: 16px;
 }

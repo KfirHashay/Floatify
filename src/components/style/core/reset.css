@@ -51,9 +51,9 @@
   outline-offset: 2px;
 }
 
-/* 7. Hide scrollbars on portals */
+/* 7. Ensure portal content is visible */
 :where(.overlay-library .overlay-portal) {
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* 8. Motion safety */

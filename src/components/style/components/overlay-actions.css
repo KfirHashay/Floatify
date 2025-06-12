@@ -22,29 +22,4 @@
   cursor: pointer;
 }
 
-@media (hover:hover) and (pointer:fine) {
-}
-
-/* ---------- Swipe buttons (prev / next) ---------- */
-:where(.overlay-styled .overlay-card-swipe-prev,
-       .overlay-styled .overlay-card-swipe-next) {
-  background: var(--overlay-primary-color);
-  color: #fff;
-  font-size: var(--overlay-font-size-md, 16px);
-  padding: var(--overlay-padding-sm, 8px) var(--overlay-padding-md, 12px);
-  border-radius: var(--di-border-radius);
-  cursor: pointer;
-}
-
-@media (hover:hover) and (pointer:fine) {
-}
-
-:where(.overlay-styled .overlay-card-swipe-prev:disabled,
-       .overlay-styled .overlay-card-swipe-next:disabled) {
-  opacity: .4;
-  cursor: not-allowed;
-}
-
-/* Alignment helpers */
-:where(.overlay-styled .overlay-card-swipe-prev) { margin-inline-end: auto; }
-:where(.overlay-styled .overlay-card-swipe-next) { margin-inline-start: auto; }
+/* Swipe actions removed */
