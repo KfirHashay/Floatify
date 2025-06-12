@@ -46,7 +46,6 @@
   background  : var(--di-alert-bg, rgba(255,69,58,.95));
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  animation: alert-pulse 2s infinite ease-in-out;
 }
 
 /* ---------- Bubble ---------- */
