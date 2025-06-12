@@ -30,8 +30,16 @@
   gap: var(--overlay-gap-md, 12px);
   padding: var(--overlay-padding-md, 8px);
 
+  overflow: visible;
+  box-sizing: border-box;
+
   width: auto;
   max-inline-size: 90vw;         /* replaces max-width */
+}
+
+/* RTL support */
+:where([dir='rtl'] .overlay-container) {
+  direction: rtl;
 }
 
 /* ---------- Layout helpers ---------- */

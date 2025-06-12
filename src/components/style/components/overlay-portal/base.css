@@ -21,7 +21,6 @@
   /* Animations */
   /* Transition removed */
   will-change: transform, opacity;
-  contain: paint;      
 }
 
 /* wrapper that does not mess with layout */

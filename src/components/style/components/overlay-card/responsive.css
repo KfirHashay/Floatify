@@ -12,9 +12,6 @@
   /* Icon downsizing */
   :where(.overlay-styled .overlay-card-icon) {}
 
-  /* Bubble (remove / swipe) touch targets */
-  :where(.overlay-styled .overlay-card-bubble) {}
-
   /* Split variant – tighter gap */
   :where(.overlay-styled .overlay-card--split) {
     gap: var(--overlay-gap-sm, 6px);

@@ -4,14 +4,7 @@
 
 /* Transition removed */
 
-/* ---------------- Hover / Focus -------------------- */
-/* Desktop-class pointers only */
-@media (hover:hover) and (pointer:fine) {
-}
-
-/* ---------------- Active / Press ------------------- */
-.overlay-styled .overlay-portal:active {
-}
+/* Pointer-based interactions removed */
 
 /* ---------------- Focus Ring (a11y) ---------------- */
 .overlay-styled .overlay-portal:focus-visible {

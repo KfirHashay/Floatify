@@ -5,9 +5,7 @@
    so we avoid accidental triggers on touch devices.
    ===================================================== */
 
-/* ---------- Desktop‑class pointers only ---------- */
-@media (hover:hover) and (pointer:fine) {
-}
+/* Pointer interactions removed */
 
 /* ---------- Focus ring (always on) ---------- */
 :where(.overlay-styled .overlay-card:focus-visible) {
