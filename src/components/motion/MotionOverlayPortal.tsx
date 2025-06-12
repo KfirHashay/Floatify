@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from "motion/react"
 import { OverlayPortal, OverlayPortalProps } from '../core/portal';
-import { prefersReducedMotion } from '../../motion/utils';
+import { prefersReducedMotion } from '../../motion';
 
 export default function MotionOverlayPortal(props: OverlayPortalProps) {
   const ref = useRef<HTMLDivElement>(null);

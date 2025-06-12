@@ -3,8 +3,7 @@ import { motion } from 'motion/react';
 import useAggregator from '../state/hooks/useAggregator';
 import { OverlayCard } from '../core/card/OverlayCard';
 import type { OverlayCard as OverlayCardType } from '../state/types';
-import { variants, type OverlayState } from '../../motion/variants';
-import { prefersReducedMotion } from '../../motion/utils';
+import { variants, type OverlayState, prefersReducedMotion } from '../../motion';
 
 interface MotionOverlayCardProps {
   channelId: string;
