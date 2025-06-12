@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useAggregator } from 'floatify'
-import { CheckCircle, Loader2 } from 'lucide-react'
+import { CheckCircle, Loader2, Sparkles, Zap, Bell } from 'lucide-react'
 import Button from './Button'
 import { Position, POSITIONS } from '../types'
 
@@ -91,14 +91,31 @@ export default function Demo({
         </select>
       </div>
       
-      <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', justifyContent: 'center' }}>
-        <Button variant="primary" onClick={handleShow}>
+      <div className="btn-group">
+        <Button 
+          variant="primary" 
+          onClick={handleShow}
+          leftIcon={<Sparkles size={16} />}
+          enhanced
+        >
           Auto-Dismiss (3s)
         </Button>
-        <Button variant="secondary" onClick={handleLoading}>
+        
+        <Button 
+          variant="secondary" 
+          onClick={handleLoading}
+          leftIcon={<Zap size={16} />}
+          enhanced
+        >
           Loading Example
         </Button>
-        <Button variant="ghost" onClick={handlePersistent}>
+        
+        <Button 
+          variant="ghost" 
+          onClick={handlePersistent}
+          leftIcon={<Bell size={16} />}
+          enhanced
+        >
           Persistent Message
         </Button>
       </div>

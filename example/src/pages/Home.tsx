@@ -8,7 +8,8 @@ import {
   Code,
   Palette,
   Globe,
-  ClipboardCopy
+  ClipboardCopy,
+  Sparkles
 } from 'lucide-react'
 import Button from '../components/Button'
 import CodeBlock from '../components/CodeBlock'
@@ -46,7 +47,7 @@ function App() {
       <section className='hero'>
         <div className='hero-content'>
           <span className='hero-badge flex items-center gap-1'>
-            <Zap size={16} aria-hidden />
+            <Sparkles size={16} aria-hidden />
             Modern React Overlay Library
           </span>
 
@@ -66,15 +67,19 @@ function App() {
               as={Link}
               to='/examples'
               variant="primary"
-              rightIcon={<ArrowRight size={16} />}
+              size="lg"
+              rightIcon={<ArrowRight size={18} />}
+              enhanced
             >
               View examples
             </Button>
 
             <Button
               variant="secondary"
-              leftIcon={<ClipboardCopy size={16} />}
+              size="lg"
+              leftIcon={<ClipboardCopy size={18} />}
               onClick={handleCopy}
+              enhanced
             >
               Copy install command
             </Button>
@@ -159,7 +164,9 @@ function App() {
               as={Link}
               to='/examples'
               variant="primary"
-              rightIcon={<ArrowRight size={16} />}
+              size="lg"
+              rightIcon={<ArrowRight size={18} />}
+              enhanced
             >
               Full examples
             </Button>
