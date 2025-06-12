@@ -13,3 +13,13 @@ export { createVariant } from './utils';
 
 /** Detects if the user prefers reduced motion. */
 export { prefersReducedMotion } from './utils';
+
+/** Gesture helpers for common interactions. */
+export {
+    hoverExpand,
+    tapToggle,
+    bounce,
+    inertiaDismiss,
+    secondarySwipe,
+    longPressPulse,
+} from './gestures';
