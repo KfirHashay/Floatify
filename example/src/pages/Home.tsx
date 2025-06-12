@@ -9,8 +9,14 @@ import {
   Palette,
   Globe,
   ClipboardCopy,
-  Sparkles
+  Sparkles,
+  Star,
+  GitFork,
+  Download,
+  Users,
+  CheckCircle
 } from 'lucide-react'
+import { motion } from 'motion/react'
 import Button from '../components/Button'
 import CodeBlock from '../components/CodeBlock'
 
@@ -46,23 +52,93 @@ function App() {
       {/* ───────────────────────── Hero ───────────────────────── */}
       <section className='hero'>
         <div className='hero-content'>
-          <span className='hero-badge flex items-center gap-1'>
+          {/* GitHub-style stats bar */}
+          <motion.div 
+            className='hero-stats'
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <div className='stat-item'>
+              <Star size={16} />
+              <span>2.1k</span>
+            </div>
+            <div className='stat-item'>
+              <GitFork size={16} />
+              <span>156</span>
+            </div>
+            <div className='stat-item'>
+              <Download size={16} />
+              <span>12k/week</span>
+            </div>
+            <div className='stat-item'>
+              <Users size={16} />
+              <span>450+ devs</span>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            className='hero-badge'
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <Sparkles size={16} aria-hidden />
-            Modern React Overlay Library
-          </span>
+            <span>Production Ready</span>
+            <div className='badge-pulse' />
+          </motion.div>
 
-          <h1 className='hero-title'>
-            Beautiful overlays for
-            <span className='hero-gradient'> modern React apps</span>
-          </h1>
+          <motion.h1 
+            className='hero-title'
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+          >
+            Modern overlay system for
+            <span className='hero-gradient'> React applications</span>
+          </motion.h1>
 
-          <p className='hero-description'>
-            Floatify delivers a flexible, accessible overlay stack for toasts,
-            in-app alerts, and dynamic content. Built with TypeScript, engineered
-            for velocity.
-          </p>
+          <motion.p 
+            className='hero-description'
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            Build beautiful, accessible notifications and overlays with TypeScript support, 
+            motion animations, and Dynamic Island-inspired design patterns.
+          </motion.p>
 
-          <div className='hero-actions'>
+          {/* Key features highlight */}
+          <motion.div 
+            className='hero-features'
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <div className='feature-pill'>
+              <CheckCircle size={14} />
+              <span>TypeScript</span>
+            </div>
+            <div className='feature-pill'>
+              <CheckCircle size={14} />
+              <span>Motion Ready</span>
+            </div>
+            <div className='feature-pill'>
+              <CheckCircle size={14} />
+              <span>Accessible</span>
+            </div>
+            <div className='feature-pill'>
+              <CheckCircle size={14} />
+              <span>5KB Gzipped</span>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            className='hero-actions'
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
             <Button
               as={Link}
               to='/examples'
@@ -71,7 +147,7 @@ function App() {
               rightIcon={<ArrowRight size={18} />}
               enhanced
             >
-              View examples
+              Get Started
             </Button>
 
             <Button
@@ -81,26 +157,49 @@ function App() {
               onClick={handleCopy}
               enhanced
             >
-              Copy install command
+              npm install floatify
             </Button>
-          </div>
+          </motion.div>
 
-          <CodeBlock
-            code="npm install floatify"
-            language="bash"
-            enableCopy={true}
-            showLineNumbers={false}
-            showLanguage={false}
-            className="hero-code-block"
-          />
+          <motion.div 
+            className='hero-code'
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.7 }}
+          >
+            <CodeBlock
+              code={quickStartCode}
+              language="typescript"
+              title="Quick Start"
+              showLineNumbers={true}
+              enableCopy={true}
+              maxHeight="300px"
+              showLanguage={true}
+              className="hero-code-block"
+            />
+          </motion.div>
         </div>
       </section>
 
       {/* ──────────────────────── Features ─────────────────────── */}
       <section className='features'>
         <header className='features-header'>
-          <h2>Why Floatify?</h2>
-          <p>Modern patterns, stellar DX, zero runtime cruft.</p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            Why Floatify?
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Modern patterns, stellar DX, zero runtime cruft.
+          </motion.p>
         </header>
 
         <div className='features-grid'>
@@ -108,45 +207,47 @@ function App() {
             {
               icon: <Smartphone size={24} aria-hidden />,
               title: 'Mobile-First',
-              copy:
-                'Gesture-friendly and fully responsive—fits every viewport.'
+              copy: 'Gesture-friendly and fully responsive—fits every viewport.'
             },
             {
               icon: <Shield size={24} aria-hidden />,
               title: 'Accessibility Built-In',
-              copy:
-                'WCAG-aligned ARIA roles, full keyboard support, screen-reader ready.'
+              copy: 'WCAG-aligned ARIA roles, full keyboard support, screen-reader ready.'
             },
             {
               icon: <Code size={24} aria-hidden />,
               title: 'TypeScript Native',
-              copy:
-                '100 % typed API—IntelliSense out of the box, compile-time safety.'
+              copy: '100% typed API—IntelliSense out of the box, compile-time safety.'
             },
             {
               icon: <Palette size={24} aria-hidden />,
               title: 'Themeable',
-              copy:
-                'Dark/light via CSS variables; drop-in theming for any design system.'
+              copy: 'Dark/light via CSS variables; drop-in theming for any design system.'
             },
             {
               icon: <Zap size={24} aria-hidden />,
               title: 'Lean & Mean',
-              copy:
-                '≈ 5 kB gzipped, tree-shakeable. GPU-accelerated animations.'
+              copy: '≈ 5 kB gzipped, tree-shakeable. GPU-accelerated animations.'
             },
             {
               icon: <Globe size={24} aria-hidden />,
               title: 'Framework Agnostic',
-              copy:
-                'Core patterns portable beyond React—clean separation of concerns.'
+              copy: 'Core patterns portable beyond React—clean separation of concerns.'
             }
-          ].map(({ icon, title, copy }) => (
-            <article key={title} className='feature-card'>
+          ].map(({ icon, title, copy }, index) => (
+            <motion.article 
+              key={title} 
+              className='feature-card'
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -4 }}
+            >
               <div className='feature-icon'>{icon}</div>
               <h3>{title}</h3>
               <p>{copy}</p>
-            </article>
+            </motion.article>
           ))}
         </div>
       </section>
@@ -154,7 +255,13 @@ function App() {
       {/* ────────────────────── Quick Start ────────────────────── */}
       <section className='quick-start'>
         <div className='quick-start-content'>
-          <div className='quick-start-text'>
+          <motion.div 
+            className='quick-start-text'
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2>Onboard in seconds</h2>
             <p>
               Install, register a channel, and push a card—done. No boilerplate.
@@ -170,9 +277,15 @@ function App() {
             >
               Full examples
             </Button>
-          </div>
+          </motion.div>
 
-          <div className='quick-start-code'>
+          <motion.div 
+            className='quick-start-code'
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <CodeBlock
               code={quickStartCode}
               language="typescript"
@@ -182,7 +295,7 @@ function App() {
               maxHeight="300px"
               showLanguage={true}
             />
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -191,14 +304,22 @@ function App() {
         <div className='stats-grid'>
           {[
             { value: '≈ 5 kB', label: 'Gzipped size' },
-            { value: '100 %', label: 'TypeScript coverage' },
+            { value: '100%', label: 'TypeScript coverage' },
             { value: '0', label: 'Runtime deps' },
             { value: 'A11Y', label: 'WCAG compliant' }
-          ].map(({ value, label }) => (
-            <div key={label} className='stat'>
+          ].map(({ value, label }, index) => (
+            <motion.div 
+              key={label} 
+              className='stat'
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+            >
               <div className='stat-number'>{value}</div>
               <div className='stat-label'>{label}</div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
