@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Play, RotateCcw, Zap, MessageCircle, Loader2, Bell, AlertCircle, ChevronRight, Sparkles } from 'lucide-react';
+import { Play, RotateCcw, Zap, MessageCircle, Loader2, Bell, AlertCircle, ChevronRight, Sparkles, Code2, Layers, Palette } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import Demo from '../components/Demo';
 import Button from '../components/Button';
@@ -151,7 +151,34 @@ addCard('alerts', {
 });`
 };
 
-const demoExamples = [
+const demoModes = [
+  {
+    key: 'interactive',
+    title: 'Interactive Demo',
+    description: 'Try different overlay modes and see them in action',
+    icon: <Play size={20} />,
+    color: 'var(--accent-primary)',
+    gradient: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))'
+  },
+  {
+    key: 'split',
+    title: 'Split Layout',
+    description: 'Content alongside bubble icon for ongoing processes',
+    icon: <Layers size={20} />,
+    color: 'var(--warning)',
+    gradient: 'linear-gradient(135deg, #f59e0b, #d97706)'
+  },
+  {
+    key: 'bubble',
+    title: 'Bubble Mode',
+    description: 'Compact, unobtrusive icons that expand when needed',
+    icon: <MessageCircle size={20} />,
+    color: 'var(--success)',
+    gradient: 'linear-gradient(135deg, #10b981, #059669)'
+  }
+];
+
+const codeExampleTabs = [
   {
     key: 'basic',
     title: 'Basic Notifications',
@@ -188,8 +215,8 @@ export default function Examples({
   onFixedToViewportChange,
   onPositionChange
 }: Props) {
+  const [activeDemo, setActiveDemo] = useState('interactive');
   const [activeExample, setActiveExample] = useState('basic');
-  const [demoMode, setDemoMode] = useState<'interactive' | 'split' | 'bubble'>('interactive');
   const { registerChannel, addCard, updateChannelState, removeCard } = useAggregator();
 
   useEffect(() => {
@@ -259,127 +286,187 @@ export default function Examples({
 
   return (
     <div className="examples">
-      {/* Reusable Page Header */}
+      {/* Page Header */}
       <PageHeader
-        title="Examples & Demos"
-        subtitle="Explore Floatify's overlay system with interactive demos and ready-to-use code examples."
-        badge="Interactive"
+        title="Interactive Examples"
+        subtitle="Explore Floatify's overlay system with live demos and ready-to-use code examples."
+        badge="Live Demos"
         icon={<Sparkles size={16} />}
         theme="primary"
       />
 
-      {/* Demo Mode Navigation */}
+      {/* Interactive Demos Section */}
       <motion.section 
-        className="demo-modes"
+        className="interactive-demos"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
       >
-        <div className="demo-modes-header">
-          <h2>Interactive Demos</h2>
-          <p>Try different overlay modes and see them in action</p>
+        <div className="section-header">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2>Interactive Demos</h2>
+            <p>Experience different overlay modes with live interactions</p>
+          </motion.div>
         </div>
         
-        <div className="demo-modes-nav">
-          {[
-            { key: 'interactive', label: 'Interactive Demo', icon: <Play size={16} /> },
-            { key: 'split', label: 'Split Layout', icon: <RotateCcw size={16} /> },
-            { key: 'bubble', label: 'Bubble Mode', icon: <MessageCircle size={16} /> }
-          ].map((mode) => (
+        {/* Demo Mode Navigation */}
+        <motion.div 
+          className="demo-nav"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          {demoModes.map((mode, index) => (
             <motion.button
               key={mode.key}
-              className={`demo-mode-btn ${demoMode === mode.key ? 'demo-mode-btn--active' : ''}`}
-              onClick={() => setDemoMode(mode.key as any)}
-              whileHover={{ scale: 1.02 }}
+              className={`demo-nav-item ${activeDemo === mode.key ? 'demo-nav-item--active' : ''}`}
+              onClick={() => setActiveDemo(mode.key)}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+              whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
+              style={{
+                '--demo-color': mode.color,
+                '--demo-gradient': mode.gradient
+              } as React.CSSProperties}
             >
-              {mode.icon}
-              <span>{mode.label}</span>
+              <div className="demo-nav-icon">
+                {mode.icon}
+              </div>
+              <div className="demo-nav-content">
+                <h3>{mode.title}</h3>
+                <p>{mode.description}</p>
+              </div>
+              <div className="demo-nav-indicator" />
             </motion.button>
           ))}
-        </div>
+        </motion.div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={demoMode}
-            className="demo-content"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {demoMode === 'interactive' && (
-              <div className="demo-interactive">
-                <Demo
-                  fixedToViewport={fixedToViewport}
-                  position={position}
-                  onFixedToViewportChange={onFixedToViewportChange}
-                  onPositionChange={onPositionChange}
-                />
-              </div>
-            )}
+        {/* Demo Content */}
+        <motion.div 
+          className="demo-showcase"
+          layout
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeDemo}
+              className="demo-content"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              {activeDemo === 'interactive' && (
+                <div className="demo-interactive">
+                  <div className="demo-description">
+                    <h3>Try the Interactive Demo</h3>
+                    <p>Test different overlay configurations and see how they behave in real-time.</p>
+                  </div>
+                  <div className="demo-container">
+                    <Demo
+                      fixedToViewport={fixedToViewport}
+                      position={position}
+                      onFixedToViewportChange={onFixedToViewportChange}
+                      onPositionChange={onPositionChange}
+                    />
+                  </div>
+                </div>
+              )}
 
-            {demoMode === 'split' && (
-              <div className="demo-split">
-                <div className="demo-description">
-                  <h3>Split Layout Demo</h3>
-                  <p>The split layout shows content alongside a bubble icon, perfect for loading states and ongoing processes.</p>
+              {activeDemo === 'split' && (
+                <div className="demo-split">
+                  <div className="demo-description">
+                    <h3>Split Layout Demo</h3>
+                    <p>The split layout shows content alongside a bubble icon, perfect for loading states and ongoing processes.</p>
+                  </div>
+                  <div className="demo-actions">
+                    <Button 
+                      variant="primary" 
+                      onClick={runSplitDemo} 
+                      leftIcon={<Layers size={16} />}
+                      enhanced
+                    >
+                      Run Split Demo
+                    </Button>
+                    <Button 
+                      variant="secondary" 
+                      onClick={runLoadingDemo} 
+                      leftIcon={<Loader2 size={16} />}
+                      enhanced
+                    >
+                      Loading State
+                    </Button>
+                  </div>
                 </div>
-                <div className="demo-actions">
-                  <Button variant="primary" onClick={runSplitDemo} leftIcon={<RotateCcw size={16} />}>
-                    Run Split Demo
-                  </Button>
-                  <Button variant="secondary" onClick={runLoadingDemo} leftIcon={<Loader2 size={16} />}>
-                    Loading State
-                  </Button>
-                </div>
-              </div>
-            )}
+              )}
 
-            {demoMode === 'bubble' && (
-              <div className="demo-bubble">
-                <div className="demo-description">
-                  <h3>Bubble Mode Demo</h3>
-                  <p>Bubble mode displays notifications as compact, unobtrusive icons that can be expanded when needed.</p>
+              {activeDemo === 'bubble' && (
+                <div className="demo-bubble">
+                  <div className="demo-description">
+                    <h3>Bubble Mode Demo</h3>
+                    <p>Bubble mode displays notifications as compact, unobtrusive icons that can be expanded when needed.</p>
+                  </div>
+                  <div className="demo-actions">
+                    <Button 
+                      variant="primary" 
+                      onClick={runBubbleDemo} 
+                      leftIcon={<MessageCircle size={16} />}
+                      enhanced
+                    >
+                      Show Bubble
+                    </Button>
+                  </div>
                 </div>
-                <div className="demo-actions">
-                  <Button variant="primary" onClick={runBubbleDemo} leftIcon={<MessageCircle size={16} />}>
-                    Show Bubble
-                  </Button>
-                </div>
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
       </motion.section>
 
-      {/* Code Examples */}
+      {/* Code Examples Section */}
       <motion.section 
         className="code-examples"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
       >
-        <div className="code-examples-header">
-          <h2>Code Examples</h2>
-          <p>Copy-paste ready code for common use cases</p>
+        <div className="section-header">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <h2>Code Examples</h2>
+            <p>Copy-paste ready code for common use cases</p>
+          </motion.div>
         </div>
 
         <div className="examples-layout">
-          <div className="examples-nav">
-            {demoExamples.map((example, index) => (
+          {/* Code Navigation */}
+          <motion.div 
+            className="examples-nav"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {codeExampleTabs.map((example, index) => (
               <motion.button
                 key={example.key}
                 className={`example-tab ${activeExample === example.key ? 'example-tab--active' : ''}`}
                 onClick={() => setActiveExample(example.key)}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                whileHover={{ scale: 1.02, x: 4 }}
                 whileTap={{ scale: 0.98 }}
                 style={{ '--example-color': example.color } as React.CSSProperties}
               >
-                <div className="example-tab-icon" style={{ color: example.color }}>
+                <div className="example-tab-icon">
                   {example.icon}
                 </div>
                 <div className="example-tab-content">
@@ -387,40 +474,55 @@ export default function Examples({
                   <div className="example-tab-description">{example.description}</div>
                 </div>
                 <ChevronRight size={16} className="example-tab-arrow" />
+                <div className="example-tab-indicator" />
               </motion.button>
             ))}
-          </div>
+          </motion.div>
 
+          {/* Code Display */}
           <motion.div 
             className="code-display"
-            key={activeExample}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
+            layout
           >
-            <CodeBlock
-              code={codeExamples[activeExample as keyof typeof codeExamples]}
-              language="typescript"
-              title={demoExamples.find(e => e.key === activeExample)?.title}
-              showLineNumbers={true}
-              enableCopy={true}
-              maxHeight="500px"
-              showLanguage={true}
-            />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeExample}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <CodeBlock
+                  code={codeExamples[activeExample as keyof typeof codeExamples]}
+                  language="typescript"
+                  title={codeExampleTabs.find(e => e.key === activeExample)?.title}
+                  showLineNumbers={true}
+                  enableCopy={true}
+                  maxHeight="500px"
+                  showLanguage={true}
+                />
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* Use Cases */}
+      {/* Use Cases Section */}
       <motion.section 
         className="use-cases"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
       >
-        <div className="use-cases-header">
-          <h2>Common Use Cases</h2>
-          <p>Real-world scenarios where Floatify shines</p>
+        <div className="section-header">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <h2>Common Use Cases</h2>
+            <p>Real-world scenarios where Floatify excels</p>
+          </motion.div>
         </div>
         
         <div className="use-cases-grid">
@@ -429,40 +531,49 @@ export default function Examples({
               icon: <Bell size={24} />,
               title: 'Real-time Notifications',
               description: 'Live updates, chat messages, and system alerts with bubble mode for minimal disruption.',
-              color: 'var(--accent-primary)'
+              color: 'var(--accent-primary)',
+              gradient: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))'
             },
             {
               icon: <Loader2 size={24} />,
               title: 'Loading & Progress',
               description: 'Split layout for file uploads, data processing, and long-running operations.',
-              color: 'var(--warning)'
+              color: 'var(--warning)',
+              gradient: 'linear-gradient(135deg, #f59e0b, #d97706)'
             },
             {
               icon: <AlertCircle size={24} />,
               title: 'Error Handling',
               description: 'User-friendly error messages with actionable next steps and retry options.',
-              color: 'var(--error)'
+              color: 'var(--error)',
+              gradient: 'linear-gradient(135deg, #ef4444, #dc2626)'
             },
             {
               icon: <MessageCircle size={24} />,
               title: 'User Feedback',
               description: 'Success confirmations, form validation, and interactive user guidance.',
-              color: 'var(--success)'
+              color: 'var(--success)',
+              gradient: 'linear-gradient(135deg, #10b981, #059669)'
             }
           ].map((useCase, index) => (
             <motion.div
               key={useCase.title}
               className="use-case-card"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-              whileHover={{ scale: 1.02, y: -4 }}
+              transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              style={{
+                '--use-case-color': useCase.color,
+                '--use-case-gradient': useCase.gradient
+              } as React.CSSProperties}
             >
-              <div className="use-case-icon" style={{ color: useCase.color }}>
+              <div className="use-case-icon">
                 {useCase.icon}
               </div>
               <h3>{useCase.title}</h3>
               <p>{useCase.description}</p>
+              <div className="use-case-glow" />
             </motion.div>
           ))}
         </div>
