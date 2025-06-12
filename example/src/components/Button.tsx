@@ -96,7 +96,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const defaultMotionProps: MotionProps = {
       whileHover: enhanced && !isDisabled ? { 
         scale: 1.02,
-        y: -2,
+        y: -1,
         transition: { duration: 0.2, ease: "easeOut" }
       } : undefined,
       whileTap: enhanced && !isDisabled ? { 
@@ -104,7 +104,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         y: 0,
         transition: { duration: 0.1, ease: "easeInOut" }
       } : undefined,
-      initial: { opacity: 0, y: 10 },
+      initial: { opacity: 0, y: 4 },
       animate: { opacity: 1, y: 0 },
       transition: { 
         duration: 0.3, 
@@ -173,7 +173,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             <motion.span 
               className="btn__icon btn__icon--left" 
               aria-hidden="true"
-              initial={{ opacity: 0, x: -5 }}
+              initial={{ opacity: 0, x: -4 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.2, delay: 0.1 }}
             >
@@ -194,7 +194,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             <motion.span 
               className="btn__icon btn__icon--right" 
               aria-hidden="true"
-              initial={{ opacity: 0, x: 5 }}
+              initial={{ opacity: 0, x: 4 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.2, delay: 0.1 }}
             >
