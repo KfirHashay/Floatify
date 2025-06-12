@@ -1,140 +1,57 @@
+
+
 {
     "name": "floatify",
-    "version": "0.1.0",
+    "version": "0.0.1",
+    "type": "module",
     "description": "A modern, flexible overlay and notification library for React applications with Dynamic Island-inspired design",
+    "main": "dist/index.cjs.js",
+    "module": "dist/index.esm.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "rollup -c",
+        "test": "vitest run",
+        "dev": "npm run build && cd example && npm install && npm run dev"
+    },
     "keywords": [
-        "react",
-        "overlay",
-        "notification",
-        "toast",
-        "dynamic-island",
-        "ui",
-        "components",
-        "typescript",
-        "glassmorphism",
-        "mobile-first",
-        "accessibility"
-    ],
-    "homepage": "https://github.com/yourusername/floatify#readme",
-    "bugs": {
-        "url": "https://github.com/yourusername/floatify/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/yourusername/floatify.git"
-    },
-    "license": "MIT",
-    "author": {
+            "react",
+            "overlay",
+            "notification",
+            "toast",
+            "dynamic-island",
+            "ui",
+            "components",
+            "typescript",
+            "glassmorphism",
+            "mobile-first",
+            "accessibility"
+        ],
+     "author": {
         "name": "Kfir Hahsay",
         "email": "your.email@example.com",
         "url": "https://github.com/yourusername"
     },
-    "contributors": [],
-    "type": "module",
-    "main": "dist/index.cjs.js",
-    "module": "dist/index.esm.js",
-    "types": "dist/index.d.ts",
-    "exports": {
-        ".": {
-            "import": "./dist/index.esm.js",
-            "require": "./dist/index.cjs.js",
-            "types": "./dist/index.d.ts"
-        },
-        "./package.json": "./package.json"
-    },
-    "files": [
-        "dist",
-        "README.md",
-        "CHANGELOG.md",
-        "LICENSE"
-    ],
-    "sideEffects": [
-        "**/*.css"
-    ],
-    "engines": {
-        "node": ">=16.0.0",
-        "npm": ">=8.0.0"
-    },
-    "scripts": {
-        "build": "rollup -c",
-        "build:watch": "rollup -c --watch",
-        "dev": "npm run build && cd example && npm install && npm run dev",
-        "dev:watch": "concurrently \"npm run build:watch\" \"cd example && npm run dev\"",
-        "test": "vitest run",
-        "test:watch": "vitest",
-        "test:coverage": "vitest run --coverage",
-        "test:ui": "vitest --ui",
-        "type-check": "tsc --noEmit",
-        "lint": "eslint src --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
-        "lint:fix": "npm run lint -- --fix",
-        "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-        "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
-        "clean": "rimraf dist",
-        "prepublishOnly": "npm run clean && npm run build && npm run test",
-        "prepack": "npm run build",
-        "example": "cd example && npm run dev",
-        "example:build": "cd example && npm run build",
-        "docs": "typedoc src/index.ts --out docs",
-        "size": "size-limit",
-        "analyze": "npm run build && npx bundle-analyzer dist/index.esm.js",
-        "release": "standard-version",
-        "release:dry": "standard-version --dry-run"
-    },
-    "peerDependencies": {
-        "react": ">=18.0.0",
-        "react-dom": ">=18.0.0"
-    },
-     "dependencies": {
+    "license": "MIT",
+    "dependencies": {
         "react": "^19.0.0",
         "react-dom": "^19.0.0"
     },
-      "devDependencies": {
+    "devDependencies": {
         "@rollup/plugin-commonjs": "^28.0.3",
         "@rollup/plugin-node-resolve": "^16.0.1",
-@@ -26,14 +93,46 @@
+        "@rollup/plugin-typescript": "^12.1.2",
+        "@testing-library/react": "^16.3.0",
         "@types/node": "^22.13.10",
         "@types/react": "^19.0.10",
-        "@types/react-dom": "^19.0.4",Add commentMore actions
-
-
+        "@types/react-dom": "^19.0.4",
         "@vitejs/plugin-react": "^4.3.4",
-
-
-
-
-
-
-
         "jsdom": "^26.1.0",
         "postcss-import": "^16.1.0",
-
-
         "rollup": "^4.35.0",
         "rollup-plugin-postcss": "^4.0.2",
-
-
-
         "tslib": "^2.8.1",
-
         "typescript": "^5.8.2",
         "vite": "^6.2.2",
         "vitest": "^3.0.8"
-    },
-    "size-limit": [
-        {
-            "path": "dist/index.esm.js",
-            "limit": "15 KB",
-            "gzip": true
-        }
-    ],
-    "browserslist": [
-        "> 1%",
-        "last 2 versions",
-        "not dead",
-        "not ie 11"
-    ],
-    "funding": {
-        "type": "github",
-        "url": "https://github.com/sponsors/yourusername"
     }
 }
