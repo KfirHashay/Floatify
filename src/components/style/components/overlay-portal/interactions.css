@@ -2,10 +2,7 @@
    🌟 Overlay Portal – Interactions
    ===================================================== */
 
-/* One source of truth for transition */
-.overlay-styled .overlay-portal {
-  transition: transform var(--di-duration-fast) var(--di-ease-out);
-}
+/* Transition removed */
 
 /* ---------------- Hover / Focus -------------------- */
 /* Desktop-class pointers only */

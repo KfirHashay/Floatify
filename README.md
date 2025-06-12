@@ -18,7 +18,8 @@ For a full guide with code snippets and live demos, open the React docs app unde
 
 ## Installation
 
-The library is published to npm as `floatify`.
+The library is published to npm as `floatify` and bundles the
+`motion` library so you get the motion components out of the box.
 
 ```bash
 npm install floatify@^1.0.0
@@ -62,6 +63,21 @@ function App() {
     </Floatify>
   );
 }
+```
+
+### Motion Components
+
+`floatify` installs the `motion` dependency automatically. Import
+the Motion components to animate overlays:
+
+```tsx
+import { MotionOverlayPortal, MotionOverlayCard } from 'floatify';
+
+// Use MotionOverlayPortal in place of the regular portal
+<MotionOverlayPortal />
+
+// When rendering cards directly
+<MotionOverlayCard channelId="alerts" card={card} />
 ```
 
 ### Custom Portal Root

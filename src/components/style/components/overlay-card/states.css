@@ -57,7 +57,7 @@
   gap: var(--overlay-gap-md, 10px);
   transform-origin: top center;
   overflow: visible;
-  animation: di-expand var(--di-duration-normal, 400ms) var(--di-spring-timing-bounce) forwards;
+  /* Animation removed */
 }
 
 /* Expanded – internal adjustments */
@@ -67,7 +67,7 @@
   text-align: center;
   width: 100%;
   flex: 1 1 auto;
-  animation: di-enter 300ms var(--di-spring-timing-subtle) both;
+  /* Animation removed */
 }
 
 :where(.overlay-styled .overlay-card--expanded .overlay-card-title) {
@@ -95,7 +95,7 @@
 /* ---------- Hidden ---------- */
 :where(.overlay-styled .overlay-card--hidden) {
   pointer-events: none;
-  animation: di-exit var(--di-duration-normal, 400ms) var(--di-ease-out) forwards;
+  /* Animation removed */
 }
 
 /* ---------- Alert (pulse) ---------- */
@@ -103,7 +103,7 @@
   background: var(--di-alert-bg, rgba(255,69,58,.98));
   color: #fff;
   border-radius: calc(var(--overlay-collapsed-height, 44px) / 2);
-  animation: di-pulse 2.5s infinite var(--di-spring-timing-bounce);
+  /* Animation removed */
   box-shadow: 0 8px 24px rgba(255, 69, 58, .4), 0 2px 8px rgba(255,69,58,.3);
 }
 

@@ -26,8 +26,7 @@
   transform       : scale(var(--di-scale-collapsed));
   --di-scale-current: var(--di-scale-collapsed);
 
-  /* One source of truth for transitions */
-  transition: var(--di-overlay-transition);
+  /* Transition removed */
 
   /* GPU hint – applied only while animating via JS */
   will-change: transform, opacity;
@@ -79,8 +78,7 @@
   opacity: 0;
   max-block-size: 0;
   overflow: hidden;
-  transition: opacity var(--di-duration-normal, 400ms) var(--di-spring-timing),
-              max-block-size var(--di-duration-normal, 400ms) var(--di-spring-timing);
+  /* Transition removed */
 }
 
 /* ---------- Actions ---------- */
@@ -89,5 +87,5 @@
   align-items: center;
   justify-content: space-between;
   opacity: 0;
-  transition: opacity var(--di-duration-normal, 400ms) var(--di-spring-timing);
+  /* Transition removed */
 }
