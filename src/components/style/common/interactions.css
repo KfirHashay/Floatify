@@ -6,16 +6,12 @@
 
 /* Interactive element hover effect */
 .interactive-hover {
-    transition: transform var(--di-duration-normal) var(--di-spring-timing-subtle);
 }
 
 .interactive-hover:hover {
-    transform: scale(var(--di-hover-scale, 1.03));
 }
 
 .interactive-hover:active {
-    transform: scale(var(--di-active-scale, 0.97));
-    transition: transform var(--di-duration-fast) var(--di-ease-out);
 }
 
 /* Focus states for accessibility */

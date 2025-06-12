@@ -4,11 +4,7 @@
 
 /* ---------- Base card ---------- */
 :where(.overlay-styled .overlay-card) {
-  /* one source of truth for core transition */
-  transition:
-    transform var(--di-duration-normal, .4s) var(--di-transition-timing, cubic-bezier(.4,0,.2,1)),
-    opacity   var(--di-duration-fast,   .2s) ease-out,
-    visibility 0s linear;
+  /* Core styles only – animations handled via Motion */
 }
 
 /* ---------- Expanded ---------- */
@@ -29,19 +25,11 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(-100%);
-  inline-size : var(--overlay-collapsed-width, 120px);
-  block-size  : var(--overlay-collapsed-height, 36px);
-  transition:                                         /* delayed visibility hide */
-    opacity     var(--di-duration-fast, .2s)   ease-out,
-    transform   var(--di-duration-normal, .4s) ease-out,
-    visibility  0s linear var(--di-duration-normal, .4s);
+  /* Transition removed – handled via Motion */
 }
 
 /* ---------- Alert ---------- */
 :where(.overlay-styled .overlay-card--alert) {
-  inline-size : var(--overlay-collapsed-width ,120px);
-  block-size  : var(--overlay-collapsed-height, 36px);
   border-radius: calc(var(--overlay-collapsed-height, 36px) / 2);
   background  : var(--di-alert-bg, rgba(255,69,58,.95));
   backdrop-filter: none;
@@ -51,8 +39,6 @@
 /* ---------- Bubble ---------- */
 :where(.overlay-styled .overlay-card--bubble) {
   --_bubble-size: var(--overlay-collapsed-height, 36px);
-  inline-size : var(--_bubble-size);
-  block-size  : var(--_bubble-size);
   border-radius: 50%;
   display: flex;
   place-content: center;
@@ -68,17 +54,12 @@
 
 :where(.overlay-styled .overlay-card-split-bubble) {
   --_bubble-size: var(--overlay-collapsed-height, 36px);
-  inline-size : var(--_bubble-size);
-  block-size  : var(--_bubble-size);
   border-radius: 50%;
   display: flex;
   place-content: center;
-  transition: transform var(--di-duration-normal, .4s) var(--di-spring-timing, cubic-bezier(.34,1.56,.64,1));
+  /* Transition removed – handled via Motion */
 }
 
-:where(.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble) {
-  transform: scale(0);
-}
 
 /* ---------- Motion safety ---------- */
 @media (prefers-reduced-motion: reduce) {

@@ -7,15 +7,10 @@
 /* ---------------- Hover / Focus -------------------- */
 /* Desktop-class pointers only */
 @media (hover:hover) and (pointer:fine) {
-  .overlay-styled .overlay-portal:hover,
-  .overlay-styled .overlay-portal:focus-visible {
-    transform: scale(calc(var(--di-scale-current, 1) * var(--di-hover-scale, 1.03)));
-  }
 }
 
 /* ---------------- Active / Press ------------------- */
 .overlay-styled .overlay-portal:active {
-  transform: scale(calc(var(--di-scale-current, 1) * var(--di-active-scale, 0.97)));
 }
 
 /* ---------------- Focus Ring (a11y) ---------------- */
@@ -26,11 +21,6 @@
 
 /* ---------------- Reduced-Motion ------------------- */
 @media (prefers-reduced-motion: reduce) {
-  .overlay-styled .overlay-portal:hover,
-  .overlay-styled .overlay-portal:focus-visible,
-  .overlay-styled .overlay-portal:active {
-    transform: scale(var(--di-scale-current, 1)); /* No bounce */
-  }
 }
 
 /* ---------------- Wrapper Overrides ---------------- */
