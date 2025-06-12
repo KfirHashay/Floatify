@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Play, RotateCcw, Zap, MessageCircle, Loader2, Bell, AlertCircle, ChevronRight, Sparkles, Code2, Layers, Palette } from 'lucide-react';
+import { Play, RotateCcw, Zap, MessageCircle, Loader2, Bell, AlertCircle, ChevronRight, Sparkles, Code2, Layers, Palette, Settings, Monitor, Smartphone } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
 import Demo from '../components/Demo';
 import Button from '../components/Button';
@@ -363,9 +363,28 @@ export default function Examples({
             >
               {activeDemo === 'interactive' && (
                 <div className="demo-interactive">
-                  <div className="demo-description">
-                    <h3>Try the Interactive Demo</h3>
-                    <p>Test different overlay configurations and see how they behave in real-time.</p>
+                  <div className="demo-hero">
+                    <div className="demo-hero-content">
+                      <div className="demo-hero-icon">
+                        <Settings size={32} />
+                      </div>
+                      <h3>Interactive Playground</h3>
+                      <p>Test different overlay configurations and see how they behave in real-time. Adjust settings and trigger notifications to explore all features.</p>
+                    </div>
+                    <div className="demo-hero-features">
+                      <div className="demo-feature">
+                        <Monitor size={16} />
+                        <span>Live Preview</span>
+                      </div>
+                      <div className="demo-feature">
+                        <Settings size={16} />
+                        <span>Real-time Config</span>
+                      </div>
+                      <div className="demo-feature">
+                        <Smartphone size={16} />
+                        <span>Mobile Ready</span>
+                      </div>
+                    </div>
                   </div>
                   <div className="demo-container">
                     <Demo
@@ -380,9 +399,28 @@ export default function Examples({
 
               {activeDemo === 'split' && (
                 <div className="demo-split">
-                  <div className="demo-description">
-                    <h3>Split Layout Demo</h3>
-                    <p>The split layout shows content alongside a bubble icon, perfect for loading states and ongoing processes.</p>
+                  <div className="demo-hero">
+                    <div className="demo-hero-content">
+                      <div className="demo-hero-icon">
+                        <Layers size={32} />
+                      </div>
+                      <h3>Split Layout Demo</h3>
+                      <p>The split layout shows content alongside a bubble icon, perfect for loading states and ongoing processes. Watch how it transitions between states.</p>
+                    </div>
+                    <div className="demo-hero-features">
+                      <div className="demo-feature">
+                        <Loader2 size={16} />
+                        <span>Loading States</span>
+                      </div>
+                      <div className="demo-feature">
+                        <Bell size={16} />
+                        <span>Progress Updates</span>
+                      </div>
+                      <div className="demo-feature">
+                        <MessageCircle size={16} />
+                        <span>Bubble Transition</span>
+                      </div>
+                    </div>
                   </div>
                   <div className="demo-actions">
                     <Button 
@@ -407,9 +445,28 @@ export default function Examples({
 
               {activeDemo === 'bubble' && (
                 <div className="demo-bubble">
-                  <div className="demo-description">
-                    <h3>Bubble Mode Demo</h3>
-                    <p>Bubble mode displays notifications as compact, unobtrusive icons that can be expanded when needed.</p>
+                  <div className="demo-hero">
+                    <div className="demo-hero-content">
+                      <div className="demo-hero-icon">
+                        <MessageCircle size={32} />
+                      </div>
+                      <h3>Bubble Mode Demo</h3>
+                      <p>Bubble mode displays notifications as compact, unobtrusive icons that can be expanded when needed. Perfect for minimal UI disruption.</p>
+                    </div>
+                    <div className="demo-hero-features">
+                      <div className="demo-feature">
+                        <Palette size={16} />
+                        <span>Minimal Design</span>
+                      </div>
+                      <div className="demo-feature">
+                        <Play size={16} />
+                        <span>Expandable</span>
+                      </div>
+                      <div className="demo-feature">
+                        <AlertCircle size={16} />
+                        <span>Non-intrusive</span>
+                      </div>
+                    </div>
                   </div>
                   <div className="demo-actions">
                     <Button 
