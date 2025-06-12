@@ -1,0 +1,72 @@
+/* =======================================================
+   🌟 Overlay Portal (Styled Version)
+   - Inspired by the original Dynamic Island styles
+   - Features glassmorphism, smooth animations, and swipe effects
+========================================================== */
+
+.overlay-styled .overlay-portal {
+    position: fixed;
+    top: var(--di-top-offset, 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--compact-width);
+    height: var(--compact-height);
+    color: var(--di-text, #fff);
+
+    border-radius: var(--overlay-border-radius);
+    overflow: hidden;
+    user-select: none;
+    cursor: pointer;
+    z-index: var(--di-z-index, 9999);
+    will-change: transform, width, height, opacity, visibility;
+    transition: width 0.3s var(--di-transition-timing), height 0.3s var(--di-transition-timing), transform 0.3s var(--di-transition-timing),
+        opacity 0.2s ease-out, visibility 0s linear, background-color 0.15s ease-in-out, backdrop-filter 0.15s ease-in-out;
+}
+
+/* Focus ring for accessibility */
+.overlay-styled .overlay-portal:focus-visible {
+    outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));
+    outline-offset: 2px;
+}
+
+/* Smooth content area inside the overlay */
+.overlay-styled .overlay-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--overlay-padding, 8px);
+    opacity: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: transform 0.2s ease-in-out;
+}
+
+.overlay-styled .overlay-portal:empty {
+    display: none; /* ✅ Hide portal when there’s no content */
+    pointer-events: none;
+}
+
+.overlay-styled .overlay-portal[data-hidden='true'] {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0s linear 0.2s;
+}
+
+/* Active swipe interactions */
+.overlay-styled .overlay-container[data-animating='true'] {
+    transform: scale(0.98);
+}
+
+/* Channel-specific styles (positioning content inside) */
+.overlay-styled .overlay-portal[data-channel] .overlay-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.overlay-styled .overlay-container[data-direction='next'] {
+    animation: slide-left 200ms ease-out forwards;
+}
+
+.overlay-styled .overlay-container[data-direction='prev'] {
+    animation: slide-right 200ms ease-out forwards;
+}

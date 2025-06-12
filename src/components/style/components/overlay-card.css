@@ -1,0 +1,77 @@
+/* =======================================================
+   🃏 Overlay Card (Styled Version)
+   - Merges previous styles with new structure
+   - Ensures accessibility, responsiveness, and animations
+========================================================== */
+
+.overlay-styled .overlay-card {
+    background-color: var(--di-background);
+    color: var(--di-text);
+    font-size: var(--overlay-font-size-md);
+    padding: var(--overlay-padding-md);
+    border-radius: var(--overlay-border-radius);
+    box-shadow: var(--di-shadow);
+    border: var(--di-glass-border) solid 1px;
+    width: fit-content;
+    min-width: 200px;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--overlay-gap-sm);
+    cursor: pointer;
+    user-select: none;
+
+    transition: width var(--di-duration-normal) var(--di-spring-timing), height var(--di-duration-normal) var(--di-spring-timing),
+        transform var(--di-duration-fast) var(--di-transition-timing), opacity var(--di-duration-fast) var(--di-transition-timing);
+    will-change: width, height, transform, opacity;
+}
+
+/* 🔹 Compact Mode (Default) */
+.overlay-styled .overlay-card--collapsed {
+    width: var(--overlay-collapsed-width, 120px);
+    height: var(--overlay-collapsed-height, 36px);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: var(--overlay-padding-sm);
+    animation: overlay-collapse var(--di-duration-normal) var(--di-spring-timing);
+}
+
+/* 🔹 Expanded Mode */
+.overlay-styled .overlay-card--expanded {
+    width: var(--overlay-expanded-width, 350px);
+    height: var(--overlay-expanded-height, 120px);
+    padding: var(--overlay-padding-lg);
+    justify-content: space-between;
+    animation: overlay-expand var(--di-duration-normal) var(--di-spring-timing);
+}
+
+/* 🔹 Title Styling */
+.overlay-styled .overlay-card-title {
+    font-size: var(--overlay-font-size-lg);
+    font-weight: var(--overlay-font-weight-bold);
+    text-align: center;
+}
+
+/* 🔹 Body (Hidden in Compact Mode) */
+.overlay-styled .overlay-card-body {
+    font-size: var(--overlay-font-size-md);
+    text-align: center;
+    opacity: 0;
+    transition: opacity var(--di-duration-normal) var(--di-transition-timing);
+}
+
+.overlay-styled .overlay-card--expanded .overlay-card-body {
+    opacity: 1;
+}
+
+/* 🔹 Hover & Press Effects */
+.overlay-styled .overlay-card:hover {
+    transform: scale(var(--di-hover-scale));
+    box-shadow: var(--di-shadow);
+}
+
+.overlay-styled .overlay-card:active {
+    transform: scale(var(--di-active-scale));
+}
