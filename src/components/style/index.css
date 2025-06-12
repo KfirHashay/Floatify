@@ -1,7 +1,6 @@
 /* CORE */
 @import './core/reset.css';
 @import './core/variables.css';
-@import './core/animations/index.css'; 
 @import './core/base.css';
 @import './core/states.css';
 

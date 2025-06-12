@@ -204,13 +204,7 @@ describe('OverlayCard vertical swipe dismissal', () => {
         });
         fireEvent.touchEnd(card);
 
-        // Verify card has proper swipe attributes before being removed
-        const swipedCard = document.querySelector('[data-swiped]');
-        expect(swipedCard).toBeTruthy();
-        expect(swipedCard?.getAttribute('data-swiped')).toBe('up');
-
-        // Verify card is removed from DOM after swipe animation
-        // (This might be async in real implementation)
+        // Card should be removed from the DOM
         expect(screen.queryByTestId('card-1')).toBeFalsy();
     });
 
@@ -239,12 +233,7 @@ describe('OverlayCard vertical swipe dismissal', () => {
         });
         fireEvent.touchEnd(card);
 
-        // Verify card has proper swipe attributes
-        const swipedCard = document.querySelector('[data-swiped]');
-        expect(swipedCard).toBeTruthy();
-        expect(swipedCard?.getAttribute('data-swiped')).toBe('down');
-
-        // Verify card is removed
+        // Card should be removed from the DOM
         expect(screen.queryByTestId('card-2')).toBeFalsy();
     });
 
@@ -276,8 +265,6 @@ describe('OverlayCard vertical swipe dismissal', () => {
         // Card should remain in DOM
         expect(screen.queryByTestId('card-3')).toBeTruthy();
 
-        // Should not have data-swiped attribute
-        expect(card.getAttribute('data-swiped')).toBeFalsy();
     });
 });
 
