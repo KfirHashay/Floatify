@@ -1,58 +1,255 @@
 /* =======================================================
-   🎛️ Enhanced Button Component - Modern Design System
-   - Glassmorphism effects and micro-interactions
-   - Dynamic Island inspired design
-   - Smooth animations and state transitions
+   🎛️ Enhanced Button Component - Motion & Modern Design
+   - Motion-powered animations with satisfying micro-interactions
+   - Proper dark/light mode theming with CSS custom properties
+   - Subtle, modern animations that feel responsive
    - WCAG 2.1 AA compliant contrast ratios
 ========================================================== */
 
+/* =======================================================
+   🎨 CSS Custom Properties for Theming
+========================================================== */
+
+:root {
+  /* Button Colors - Light Mode */
+  --btn-primary-bg: #6366f1;
+  --btn-primary-bg-hover: #5855eb;
+  --btn-primary-text: #ffffff;
+  --btn-primary-border: #6366f1;
+  
+  --btn-secondary-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-bg-hover: rgba(255, 255, 255, 0.15);
+  --btn-secondary-text: #374151;
+  --btn-secondary-border: #d1d5db;
+  
+  --btn-ghost-bg: transparent;
+  --btn-ghost-bg-hover: rgba(0, 0, 0, 0.05);
+  --btn-ghost-text: #6b7280;
+  --btn-ghost-text-hover: #374151;
+  
+  --btn-outline-bg: transparent;
+  --btn-outline-bg-hover: #6366f1;
+  --btn-outline-text: #6366f1;
+  --btn-outline-text-hover: #ffffff;
+  --btn-outline-border: #6366f1;
+  
+  --btn-success-bg: #10b981;
+  --btn-success-bg-hover: #059669;
+  --btn-success-text: #ffffff;
+  
+  --btn-danger-bg: #ef4444;
+  --btn-danger-bg-hover: #dc2626;
+  --btn-danger-text: #ffffff;
+  
+  /* Shadows */
+  --btn-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --btn-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  --btn-shadow-focus: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  
+  /* Transitions */
+  --btn-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --btn-transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Overrides */
+[data-theme='dark'] {
+  --btn-secondary-bg: rgba(255, 255, 255, 0.08);
+  --btn-secondary-bg-hover: rgba(255, 255, 255, 0.12);
+  --btn-secondary-text: #e5e7eb;
+  --btn-secondary-border: #374151;
+  
+  --btn-ghost-bg-hover: rgba(255, 255, 255, 0.05);
+  --btn-ghost-text: #9ca3af;
+  --btn-ghost-text-hover: #e5e7eb;
+  
+  --btn-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --btn-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Auto Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --btn-secondary-bg: rgba(255, 255, 255, 0.08);
+    --btn-secondary-bg-hover: rgba(255, 255, 255, 0.12);
+    --btn-secondary-text: #e5e7eb;
+    --btn-secondary-border: #374151;
+    
+    --btn-ghost-bg-hover: rgba(255, 255, 255, 0.05);
+    --btn-ghost-text: #9ca3af;
+    --btn-ghost-text-hover: #e5e7eb;
+    
+    --btn-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --btn-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* =======================================================
+   🏗️ Base Button Styles
+========================================================== */
+
 .btn {
-  /* Base button styles */
+  /* Layout */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-1);
+  gap: 0.5rem;
+  
+  /* Typography */
   font-family: inherit;
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
   line-height: 1;
   text-decoration: none;
   white-space: nowrap;
-  border: none;
-  border-radius: var(--radius-xl);
+  
+  /* Appearance */
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
   cursor: pointer;
   user-select: none;
   position: relative;
   overflow: hidden;
   
-  /* Enhanced visual foundation */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Transitions */
+  transition: var(--btn-transition);
   
-  /* Smooth transitions for all interactive states */
-  transition: all var(--transition-normal);
+  /* Performance */
+  transform: translateZ(0);
+  will-change: transform, box-shadow, background-color;
   
-  /* Prevent text selection and improve touch targets */
+  /* Accessibility */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-  
-  /* Performance optimizations */
-  transform: translateZ(0);
-  will-change: transform, box-shadow, background;
 }
 
 /* Content wrapper for proper layering */
-.btn-content-wrapper {
+.btn__content {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-1);
+  gap: 0.5rem;
   position: relative;
   z-index: 2;
 }
 
+/* =======================================================
+   📏 Button Sizes
+========================================================== */
+
+.btn--sm {
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  min-height: 2.25rem;
+  border-radius: 0.375rem;
+}
+
+.btn--md {
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  min-height: 2.5rem;
+  border-radius: 0.5rem;
+}
+
+.btn--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  min-height: 3rem;
+  border-radius: 0.5rem;
+}
+
+/* Full width variant */
+.btn--full-width {
+  width: 100%;
+}
+
+/* =======================================================
+   🎨 Button Variants
+========================================================== */
+
+/* Primary Button */
+.btn--primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border-color: var(--btn-primary-border);
+  box-shadow: var(--btn-shadow);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background-color: var(--btn-primary-bg-hover);
+  box-shadow: var(--btn-shadow-hover);
+}
+
+/* Secondary Button */
+.btn--secondary {
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border-color: var(--btn-secondary-border);
+  box-shadow: var(--btn-shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background-color: var(--btn-secondary-bg-hover);
+  box-shadow: var(--btn-shadow-hover);
+}
+
+/* Ghost Button */
+.btn--ghost {
+  background-color: var(--btn-ghost-bg);
+  color: var(--btn-ghost-text);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background-color: var(--btn-ghost-bg-hover);
+  color: var(--btn-ghost-text-hover);
+}
+
+/* Outline Button */
+.btn--outline {
+  background-color: var(--btn-outline-bg);
+  color: var(--btn-outline-text);
+  border-color: var(--btn-outline-border);
+}
+
+.btn--outline:hover:not(:disabled) {
+  background-color: var(--btn-outline-bg-hover);
+  color: var(--btn-outline-text-hover);
+}
+
+/* Success Button */
+.btn--success {
+  background-color: var(--btn-success-bg);
+  color: var(--btn-success-text);
+  border-color: var(--btn-success-bg);
+  box-shadow: var(--btn-shadow);
+}
+
+.btn--success:hover:not(:disabled) {
+  background-color: var(--btn-success-bg-hover);
+  box-shadow: var(--btn-shadow-hover);
+}
+
+/* Danger Button */
+.btn--danger {
+  background-color: var(--btn-danger-bg);
+  color: var(--btn-danger-text);
+  border-color: var(--btn-danger-bg);
+  box-shadow: var(--btn-shadow);
+}
+
+.btn--danger:hover:not(:disabled) {
+  background-color: var(--btn-danger-bg-hover);
+  box-shadow: var(--btn-shadow-hover);
+}
+
+/* =======================================================
+   🌟 Enhanced Effects
+========================================================== */
+
 /* Ripple effect */
-.btn-ripple {
+.btn__ripple {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -68,7 +265,7 @@
 }
 
 /* Shine effect */
-.btn-shine {
+.btn__shine {
   position: absolute;
   top: 0;
   left: -100%;
@@ -85,31 +282,71 @@
   z-index: 1;
 }
 
-/* Focus states for accessibility */
-.btn:focus-visible {
-  outline: none;
-  box-shadow: 
-    0 0 0 2px var(--bg-primary),
-    0 0 0 4px var(--accent-primary),
-    var(--shadow-lg);
-  transform: translateY(-2px) scale(1.02);
-}
-
-/* Enhanced hover effects */
-.btn-enhanced:hover:not(:disabled):not([aria-disabled="true"]) {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: var(--shadow-xl);
-}
-
-.btn-enhanced:hover:not(:disabled):not([aria-disabled="true"]) .btn-shine {
+.btn--enhanced:hover:not(:disabled) .btn__shine {
   left: 100%;
 }
 
-.btn-enhanced:active:not(:disabled):not([aria-disabled="true"]) .btn-ripple {
-  width: 200px;
-  height: 200px;
-  opacity: 1;
-  transition: width 0.1s ease-out, height 0.1s ease-out, opacity 0.1s ease-out;
+/* =======================================================
+   🔄 Loading State
+========================================================== */
+
+.btn--loading {
+  cursor: wait;
+  pointer-events: none;
+}
+
+.btn__spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+.btn__spinner-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.btn__text--loading {
+  opacity: 0.7;
+}
+
+/* =======================================================
+   🎯 Icons
+========================================================== */
+
+.btn__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn__icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.btn--sm .btn__icon svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.btn--lg .btn__icon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* =======================================================
+   ♿ Accessibility & States
+========================================================== */
+
+/* Focus states */
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--btn-shadow-focus);
 }
 
 /* Disabled state */
@@ -119,281 +356,11 @@
   cursor: not-allowed;
   pointer-events: none;
   transform: none !important;
-  box-shadow: none !important;
-}
-
-/* =======================================================
-   📏 Button Sizes
-========================================================== */
-
-.btn-sm {
-  padding: 0.625rem var(--space-3);
-  font-size: var(--font-size-sm);
-  min-height: 2.5rem;
-  border-radius: var(--radius-lg);
-}
-
-.btn-md {
-  padding: 0.875rem var(--space-4);
-  font-size: var(--font-size-base);
-  min-height: 3rem;
-  border-radius: var(--radius-xl);
-}
-
-.btn-lg {
-  padding: 1.125rem var(--space-6);
-  font-size: var(--font-size-lg);
-  min-height: 3.5rem;
-  border-radius: var(--radius-xl);
-}
-
-/* Full width variant */
-.btn-full-width {
-  width: 100%;
-}
-
-/* =======================================================
-   🎨 Button Variants
-========================================================== */
-
-/* Primary Button - Dynamic Island inspired */
-.btn-primary {
-  background: linear-gradient(
-    135deg,
-    var(--accent-primary) 0%,
-    var(--accent-hover) 100%
-  );
-  color: var(--text-inverse);
-  box-shadow: 
-    0 4px 20px rgba(187, 134, 252, 0.3),
-    0 2px 8px rgba(187, 134, 252, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(187, 134, 252, 0.3);
-}
-
-.btn-primary:hover:not(:disabled):not([aria-disabled="true"]) {
-  background: linear-gradient(
-    135deg,
-    var(--accent-hover) 0%,
-    var(--accent-primary) 100%
-  );
-  box-shadow: 
-    0 8px 32px rgba(187, 134, 252, 0.4),
-    0 4px 16px rgba(187, 134, 252, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  border-color: rgba(187, 134, 252, 0.5);
-}
-
-.btn-primary:active:not(:disabled):not([aria-disabled="true"]) {
-  transform: translateY(-1px) scale(0.98);
-  box-shadow: 
-    0 4px 16px rgba(187, 134, 252, 0.3),
-    0 2px 8px rgba(187, 134, 252, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-/* Secondary Button - Glass effect */
-.btn-secondary {
-  background: rgba(var(--bg-elevated-rgb, 45, 45, 45), 0.8);
-  color: var(--text-primary);
-  border: 1px solid var(--border-primary);
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.btn-secondary:hover:not(:disabled):not([aria-disabled="true"]) {
-  background: rgba(var(--bg-elevated-rgb, 45, 45, 45), 0.9);
-  border-color: var(--border-secondary);
-  box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-}
-
-.btn-secondary:active:not(:disabled):not([aria-disabled="true"]) {
-  transform: translateY(-1px) scale(0.98);
-  box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-/* Ghost Button - Minimal with hover effects */
-.btn-ghost {
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid transparent;
-  box-shadow: none;
-}
-
-.btn-ghost:hover:not(:disabled):not([aria-disabled="true"]) {
-  background: var(--hover-overlay);
-  color: var(--text-primary);
-  border-color: var(--border-primary);
-  box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.btn-ghost:active:not(:disabled):not([aria-disabled="true"]) {
-  background: var(--active-overlay);
-  transform: translateY(0) scale(0.98);
-}
-
-/* Success Button */
-.btn-success {
-  background: linear-gradient(
-    135deg,
-    var(--success) 0%,
-    #00A693 100%
-  );
-  color: var(--text-inverse);
-  box-shadow: 
-    0 4px 20px rgba(3, 218, 198, 0.3),
-    0 2px 8px rgba(3, 218, 198, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(3, 218, 198, 0.3);
-}
-
-.btn-success:hover:not(:disabled):not([aria-disabled="true"]) {
-  background: linear-gradient(
-    135deg,
-    #00A693 0%,
-    var(--success) 100%
-  );
-  box-shadow: 
-    0 8px 32px rgba(3, 218, 198, 0.4),
-    0 4px 16px rgba(3, 218, 198, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-/* Danger Button */
-.btn-danger {
-  background: linear-gradient(
-    135deg,
-    var(--error) 0%,
-    #D32F2F 100%
-  );
-  color: var(--text-inverse);
-  box-shadow: 
-    0 4px 20px rgba(207, 102, 121, 0.3),
-    0 2px 8px rgba(207, 102, 121, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(207, 102, 121, 0.3);
-}
-
-.btn-danger:hover:not(:disabled):not([aria-disabled="true"]) {
-  background: linear-gradient(
-    135deg,
-    #D32F2F 0%,
-    var(--error) 100%
-  );
-  box-shadow: 
-    0 8px 32px rgba(207, 102, 121, 0.4),
-    0 4px 16px rgba(207, 102, 121, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-/* =======================================================
-   🌟 Glass Effect Enhancement
-========================================================== */
-
-.btn-glass {
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.btn-glass:hover:not(:disabled):not([aria-disabled="true"]) {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-/* =======================================================
-   🔄 Loading State
-========================================================== */
-
-.btn-loading {
-  cursor: wait;
-  pointer-events: none;
-}
-
-.btn-spinner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0.5rem;
-}
-
-.btn-spinner-icon {
-  width: 100%;
-  height: 100%;
-  animation: btn-spin 1s linear infinite;
-}
-
-.btn-spinner-icon circle {
-  animation: btn-dash 1.5s ease-in-out infinite;
-}
-
-.btn-content-loading {
-  opacity: 0.7;
-}
-
-/* =======================================================
-   🎯 Icons
-========================================================== */
-
-.btn-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.btn-icon svg {
-  width: 1rem;
-  height: 1rem;
-}
-
-.btn-sm .btn-icon svg {
-  width: 0.875rem;
-  height: 0.875rem;
-}
-
-.btn-lg .btn-icon svg {
-  width: 1.125rem;
-  height: 1.125rem;
-}
-
-/* Icon spacing adjustments */
-.btn-icon-left {
-  margin-right: 0.125rem;
-}
-
-.btn-icon-right {
-  margin-left: 0.125rem;
 }
 
 /* =======================================================
    🎭 Animations
 ========================================================== */
-
-@keyframes btn-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 @keyframes btn-dash {
   0% {
@@ -410,30 +377,12 @@
   }
 }
 
-/* Micro-interaction for button press */
-.btn:active:not(:disabled):not([aria-disabled="true"]) {
-  transition: transform 0.1s ease-out;
-}
-
-/* =======================================================
-   🌊 Enhanced Ripple Effect
-========================================================== */
-
-.btn-enhanced:active:not(:disabled):not([aria-disabled="true"]) .btn-ripple {
-  animation: ripple-expand 0.6s ease-out;
-}
-
-@keyframes ripple-expand {
-  0% {
-    width: 0;
-    height: 0;
-    opacity: 1;
-  }
-  100% {
-    width: 200px;
-    height: 200px;
-    opacity: 0;
-  }
+/* Ripple animation on click */
+.btn--enhanced:active:not(:disabled) .btn__ripple {
+  width: 200px;
+  height: 200px;
+  opacity: 1;
+  transition: width 0.1s ease-out, height 0.1s ease-out, opacity 0.1s ease-out;
 }
 
 /* =======================================================
@@ -445,21 +394,12 @@
     min-height: 2.75rem; /* Larger touch targets on mobile */
   }
   
-  .btn-sm {
+  .btn--sm {
     min-height: 2.5rem;
   }
   
-  .btn-lg {
+  .btn--lg {
     min-height: 3.25rem;
-  }
-
-  /* Reduce hover effects on touch devices */
-  .btn-enhanced:hover {
-    transform: none;
-  }
-  
-  .btn-enhanced:active {
-    transform: scale(0.98);
   }
 }
 
@@ -468,15 +408,13 @@
 ========================================================== */
 
 @media (prefers-contrast: high) {
-  .btn-primary,
-  .btn-secondary,
-  .btn-success,
-  .btn-danger {
+  .btn {
     border-width: 2px;
   }
   
-  .btn-ghost:hover {
+  .btn--ghost:hover {
     border-width: 2px;
+    border-color: ButtonText;
   }
 }
 
@@ -486,41 +424,34 @@
 
 @media (prefers-reduced-motion: reduce) {
   .btn,
-  .btn-ripple,
-  .btn-shine {
+  .btn__ripple,
+  .btn__shine {
     transition: none;
   }
   
-  .btn-enhanced:hover .btn-shine {
+  .btn--enhanced:hover .btn__shine {
     left: -100%;
   }
   
-  .btn-spinner-icon {
+  .btn__spinner-icon {
     animation: none;
   }
   
-  .btn-spinner-icon circle {
-    animation: none;
-    stroke-dasharray: none;
-    stroke-dashoffset: 0;
-  }
-  
-  @keyframes ripple-expand {
+  @keyframes btn-dash {
     0%, 100% {
-      width: 0;
-      height: 0;
-      opacity: 0;
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
     }
   }
 }
 
 /* =======================================================
-   🎪 Special Button Groups
+   🎪 Button Groups
 ========================================================== */
 
 .btn-group {
   display: flex;
-  gap: var(--space-2);
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
