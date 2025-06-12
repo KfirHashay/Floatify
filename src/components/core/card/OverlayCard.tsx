@@ -1,14 +1,33 @@
 import React, { useCallback, useRef, useState } from 'react';
+import { motion } from 'motion/react';
 import useAggregator from '../../state/hooks/useAggregator';
 import type { OverlayCard as OverlayCardType } from '../../state/types';
 import LoadingIndicator from '../LoadingIndicator';
+import {
+    secondarySwipe,
+    longPressPulse,
+    prefersReducedMotion,
+} from '../../../motion';
 
 interface OverlayCardProps {
     channelId: string;
     card?: OverlayCardType;
+    swipeActionLeft?: () => void;
+    swipeActionRight?: () => void;
+    onDoubleClickAction?: () => void;
+    onSwipeSecondary?: () => void;
+    onLongPressAction?: () => void;
 }
 
-export function OverlayCard({ channelId, card }: OverlayCardProps) {
+export function OverlayCard({
+    channelId,
+    card,
+    swipeActionLeft,
+    swipeActionRight,
+    onDoubleClickAction,
+    onSwipeSecondary,
+    onLongPressAction,
+}: OverlayCardProps) {
     const {
         state,
         updateChannelState,
@@ -18,10 +37,10 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
         config,
     } = useAggregator();
 
-    const touchStartX = useRef<number | null>(null);
-    const touchDeltaX = useRef(0);
     const swipeTriggered = useRef(false);
+    const longPressTimeout = useRef<number | null>(null);
     const [direction, setDirection] = useState<'next' | 'prev' | null>(null);
+    const reduceMotion = prefersReducedMotion();
 
     const channel = state.channels[channelId];
     
@@ -54,46 +73,63 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
         updateChannelState(channelId, isExpanded ? 'collapsed' : 'expanded');
     }, [channelId, isExpanded, updateChannelState, isLoading, isBubble, isHidden]);
 
-    const handleTouchStart = (e: React.TouchEvent) => {
+    const handleDoubleClick = useCallback(() => {
         if (isLoading || isBubble || isHidden) return;
-        touchStartX.current = e.touches[0].clientX;
-        touchDeltaX.current = 0;
-    };
+        onDoubleClickAction?.();
+    }, [isLoading, isBubble, isHidden, onDoubleClickAction]);
 
-    const handleTouchMove = (e: React.TouchEvent) => {
-        if (isLoading || isBubble || isHidden) return;
-        if (touchStartX.current !== null) {
-            touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
-        }
-    };
+    const handleDragEnd = useCallback(
+        (_: any, info: { offset: { x: number } }) => {
+            if (isLoading || isBubble || isHidden) return;
+            const deltaX = info.offset.x;
+            const THRESHOLD = 50;
 
-    const handleTouchEnd = () => {
-        if (isLoading || isBubble || isHidden) return;
-        if (touchStartX.current === null) return;
-        
-        const deltaX = touchDeltaX.current;
-        const THRESHOLD = 50;
-        
-        if (Math.abs(deltaX) >= THRESHOLD) {
-            swipeTriggered.current = true;
-            if (deltaX < 0) {
-                setDirection('next');
-                swipeNextCard(channelId);
-            } else {
-                setDirection('prev');
-                swipePrevCard(channelId);
+            if (Math.abs(deltaX) >= THRESHOLD) {
+                swipeTriggered.current = true;
+                if (deltaX < 0) {
+                    setDirection('next');
+                    if (swipeActionLeft) swipeActionLeft();
+                    else swipeNextCard(channelId);
+                } else {
+                    setDirection('prev');
+                    if (swipeActionRight) swipeActionRight();
+                    else swipePrevCard(channelId);
+                }
+                onSwipeSecondary?.();
+
+                setTimeout(() => {
+                    setDirection(null);
+                    swipeTriggered.current = false;
+                }, 200);
             }
-            
-            // Reset direction after animation completes
-            setTimeout(() => {
-                setDirection(null);
-                swipeTriggered.current = false;
-            }, 200); // Match animation duration
-        }
-        
-        touchStartX.current = null;
-        touchDeltaX.current = 0;
+        },
+        [
+            isLoading,
+            isBubble,
+            isHidden,
+            swipeActionLeft,
+            swipeActionRight,
+            onSwipeSecondary,
+            swipeNextCard,
+            swipePrevCard,
+            channelId,
+        ]
+    );
+
+    const handlePointerDown = () => {
+        if (!onLongPressAction) return;
+        longPressTimeout.current = window.setTimeout(() => {
+            onLongPressAction();
+        }, 500);
     };
+
+    const handlePointerUp = () => {
+        if (longPressTimeout.current) {
+            clearTimeout(longPressTimeout.current);
+            longPressTimeout.current = null;
+        }
+    };
+
 
     const directionClass =
         direction === 'next'
@@ -113,14 +149,23 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
         : 'overlay-card--collapsed';
     const splitClass = isSplit ? 'overlay-card--split' : '';
 
+    const swipeProps = secondarySwipe();
+    const pressProps = longPressPulse();
+    const motionGestures = { ...swipeProps, ...pressProps };
+    if (reduceMotion) {
+        // Disable inertia when the user prefers reduced motion
+        (motionGestures as any).dragMomentum = false;
+    }
+
     return (
-        <div
+        <motion.div
             data-testid={card?.id}
             className={`overlay-card glass-effect ${stateClass} ${splitClass} ${directionClass}`}
             onClick={handleToggle}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            onDoubleClick={handleDoubleClick}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onDragEnd={handleDragEnd}
             role="button"
             tabIndex={0}
             aria-expanded={isExpanded}
@@ -131,6 +176,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                     handleToggle();
                 }
             }}
+            {...motionGestures}
         >
 
             {isSplit ? (
@@ -238,6 +284,6 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                     </button>
                 </div>
             )}
-        </div>
+        </motion.div>
     );
 }
