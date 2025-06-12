@@ -4,7 +4,12 @@
    - Uses data-state attribute for state management
 ========================================================== */
 
-/* State-based scaling instead of width/height changes */
+.overlay-styled .overlay-portal {
+    transform-origin: center;
+    transition: transform var(--di-duration-fast) var(--di-ease-out);
+}
+
+/* === STATES === */
 .overlay-styled .overlay-portal[data-state='expanded'] {
     transform: scale(var(--di-scale-expanded));
     --di-scale-current: var(--di-scale-expanded);
@@ -17,14 +22,7 @@
     border-radius: calc(var(--overlay-collapsed-height) / 2);
 }
 
-.overlay-styled .overlay-portal[data-state='loading'] {
-    width: var(--overlay-collapsed-height);
-    height: var(--overlay-collapsed-height);
-    border-radius: 50%;
-    transform: scale(var(--di-scale-collapsed));
-    --di-scale-current: var(--di-scale-collapsed);
-}
-
+.overlay-styled .overlay-portal[data-state='loading'],
 .overlay-styled .overlay-portal[data-state='bubble'] {
     width: var(--overlay-collapsed-height);
     height: var(--overlay-collapsed-height);
@@ -46,7 +44,9 @@
     opacity: 0;
     visibility: hidden;
     transform: scale(0.8);
-    transition: opacity var(--di-duration-fast) var(--di-ease-out), transform var(--di-duration-fast) var(--di-ease-out),
+    transition:
+        opacity var(--di-duration-fast) var(--di-ease-out),
+        transform var(--di-duration-fast) var(--di-ease-out),
         visibility 0s linear var(--di-duration-fast);
 }
 

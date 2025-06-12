@@ -1,39 +1,45 @@
-/* =======================================================
-   🌟 Common Glassmorphism Effects
-   - Reusable glass effect styling for multiple components
-   - Can be applied to any element requiring glass morphism
-========================================================== */
+/* =====================================================
+   🪟 Overlay · Glass‑effect utilities
+   -----------------------------------------------------
+   Three tiers of glassmorphism driven by design tokens.
+   - .glass    (default / balanced)
+   - .glass--light
+   - .glass--dark
+   Each class pulls from the same variable set so theming
+   only requires token updates.
+   ===================================================== */
 
-.glass-effect {
-    /* Base glass morphism effect */
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
-    
-    /* Standard glass border */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    
-    /* Common glass shadow effect */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 
-                0 2px 4px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+/* ---------- Default / balanced glass ---------- */
+:where(.glass-effect, .glass) {
+  --_blur   : var(--di-glass-blur, 20px);
+  --_sat    : 180%;
+  --_border : rgba(255,255,255,.10);
+  --_shadow1: 0 8px 16px rgba(0,0,0,.20);
+  --_shadow2: 0 2px 4px  rgba(0,0,0,.10);
+  --_shadow3: inset 0 1px 0 rgba(255,255,255,.05);
+
+  backdrop-filter          : blur(var(--_blur)) saturate(var(--_sat));
+  -webkit-backdrop-filter  : blur(var(--_blur)) saturate(var(--_sat));
+  border                   : 1px solid var(--_border);
+  box-shadow               : var(--_shadow1), var(--_shadow2), var(--_shadow3);
 }
 
-/* Light glass effect variant */
-.glass-effect-light {
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 
-                0 2px 4px rgba(0, 0, 0, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+/* ---------- Light variant ---------- */
+:where(.glass--light) {
+  --_blur   : calc(var(--di-glass-blur, 20px) * .8);
+  --_sat    : 160%;
+  --_border : rgba(255,255,255,.15);
+  --_shadow1: 0 6px 12px rgba(0,0,0,.15);
+  --_shadow2: 0 2px 4px  rgba(0,0,0,.08);
+  --_shadow3: inset 0 1px 0 rgba(255,255,255,.08);
 }
 
-/* Dark glass effect variant */
-.glass-effect-dark {
-    backdrop-filter: blur(32px) saturate(200%);
-    -webkit-backdrop-filter: blur(32px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25), 
-                0 4px 8px rgba(0, 0, 0, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.03);
+/* ---------- Dark variant ---------- */
+:where(.glass--dark) {
+  --_blur   : calc(var(--di-glass-blur, 20px) * 1.2);
+  --_sat    : 200%;
+  --_border : rgba(255,255,255,.08);
+  --_shadow1: 0 12px 24px rgba(0,0,0,.25);
+  --_shadow2: 0 4px 8px   rgba(0,0,0,.15);
+  --_shadow3: inset 0 1px 0 rgba(255,255,255,.03);
 }

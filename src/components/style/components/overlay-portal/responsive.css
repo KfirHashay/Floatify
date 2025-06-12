@@ -1,41 +1,44 @@
-/* =======================================================
-   🌟 Overlay Portal Responsive Styles
-   - Mobile-specific adjustments
-   - Responsive behavior at different screen sizes
-========================================================== */
-
-/* Mobile-specific adjustments - ONLY top/bottom on mobile */
+/* =====================================================
+   🌟 Overlay Portal – Responsive (<480 px)
+   ===================================================== */
 @media (max-width: 480px) {
-    .overlay-styled .overlay-multiple-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    /* Force all positions to top/bottom on mobile */
-    .overlay-styled .overlay-portal--center,
-    .overlay-styled .overlay-portal--top-left,
-    .overlay-styled .overlay-portal--top-right,
-    .overlay-styled .overlay-portal--bottom-left,
-    .overlay-styled .overlay-portal--bottom-right,
-    .overlay-styled .overlay-multiple-container--center,
-    .overlay-styled .overlay-multiple-container--top-left,
-    .overlay-styled .overlay-multiple-container--top-right,
-    .overlay-styled .overlay-multiple-container--bottom-left,
-    .overlay-styled .overlay-multiple-container--bottom-right {
-        top: var(--di-top-offset);
-        left: 50%;
-        right: auto;
-        bottom: auto;
-        transform: translateX(-50%);
-    }
-    
-    /* Keep bottom positioning on mobile */
-    .overlay-styled .overlay-portal--bottom,
-    .overlay-styled .overlay-multiple-container--bottom {
-        top: auto;
-        bottom: var(--di-bottom-offset);
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-    }
+  /* stack children vertically */
+  .overlay-styled .overlay-multiple-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* --------- Top-center variants --------- */
+  .overlay-styled
+    .overlay-portal:is(
+      [class*="--top"],
+      [class*="--center"],
+      [class*="--left"],
+      [class*="--right"]
+    ),
+  .overlay-styled
+    .overlay-multiple-container:is(
+      [class*="--top"],
+      [class*="--center"],
+      [class*="--left"],
+      [class*="--right"]
+    ) {
+    top: var(--di-top-offset);
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  /* --------- Bottom-center variants --------- */
+  .overlay-styled
+    .overlay-portal[class*="--bottom"],
+  .overlay-styled
+    .overlay-multiple-container[class*="--bottom"] {
+    bottom: var(--di-bottom-offset);
+    top: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
 }

@@ -1,57 +1,31 @@
-/* =======================================================
-   🌟 Overlay Card Responsive Styles
-   - Media queries for adapting to different screen sizes
-   - Mobile-first adjustments
-========================================================== */
+/* =====================================================
+   📱 Overlay Card · Responsive tweaks
+   -----------------------------------------------------
+   Only viewport‑specific overrides that cannot be handled
+   by CSS custom‑prop breakpoints in variables.css.
+   ===================================================== */
 
-/* Mobile adjustments */
-@media screen and (max-width: 576px) {
-    /* Reduce expanded card width on small screens */
-    .overlay-styled .overlay-card--expanded {
-        width: 90%;
-        min-height: var(--overlay-expanded-height);
-        max-height: 80vh;
-    }
+@media (max-width: 576px) {
+  /* Expanded card fills most of the viewport width on phones */
+  :where(.overlay-styled .overlay-card--expanded) {
+    inline-size: 95vw;
+    max-block-size: 80vh;
+  }
 
-    .overlay-styled .overlay-card-title {
-        font-size: var(--overlay-font-size-sm);
-    }
+  /* Icon downsizing */
+  :where(.overlay-styled .overlay-card-icon) {
+    inline-size: 16px;
+    block-size : 16px;
+  }
 
-    .overlay-styled .overlay-card--expanded .overlay-card-title {
-        font-size: var(--overlay-font-size-md);
-    }
+  /* Bubble (remove / swipe) touch targets */
+  :where(.overlay-styled .overlay-card-bubble) {
+    inline-size: calc(var(--overlay-collapsed-height, 44px) - 4px);
+    block-size : calc(var(--overlay-collapsed-height, 44px) - 4px);
+  }
 
-    /* Smaller icons on mobile */
-    .overlay-styled .overlay-card-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    /* Adjust button sizes */
-    .overlay-styled .overlay-card-bubble {
-        width: calc(var(--overlay-collapsed-height) - 4px);
-        height: calc(var(--overlay-collapsed-height) - 4px);
-    }
-
-    .overlay-styled .overlay-card--split {
-        gap: var(--overlay-gap-sm); /* Smaller gap on mobile */
-    }
-}
-
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-    .overlay-styled .overlay-card {
-        transition: none;
-        animation: none !important;
-    }
-
-    .overlay-styled .overlay-card--alert {
-        animation: none;
-        transition: none;
-        transform: none;
-    }
-
-    .overlay-styled .overlay-card--split:hover {
-        gap: var(--overlay-gap-md); /* Keep gap visible for reduced motion */
-    }
+  /* Split variant – tighter gap */
+  :where(.overlay-styled .overlay-card--split) {
+    gap: var(--overlay-gap-sm, 6px);
+  }
 }

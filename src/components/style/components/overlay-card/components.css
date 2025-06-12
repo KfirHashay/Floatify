@@ -1,78 +1,77 @@
-/* =======================================================
-   🌟 Overlay Card Components
-   - Styling for child components and UI elements
-   - Action buttons, bubbles, etc.
-========================================================== */
+/* =====================================================
+   🧩 Overlay Card · Sub‑components
+   -----------------------------------------------------
+   Main pill, standalone bubble, spinner, and action
+   buttons.  All design tokens live in variables.css.
+   ===================================================== */
 
-/* 🔹 Main Overlay components */
-.overlay-styled .overlay-card-main {
-    display: flex;
-    align-items: center;
-    gap: var(--overlay-gap-sm);
-    padding: var(--overlay-padding-sm) var(--overlay-padding-md);
+/* ---------- Main pill (used inside split) ---------- */
+:where(.overlay-styled .overlay-card-main) {
+  display: flex;
+  align-items: center;
+  gap: var(--overlay-gap-sm, 6px);
+  padding: var(--overlay-padding-sm, 8px) var(--overlay-padding-md, 12px);
 
-    /* Own styling - separate from bubble */
-    background-color: var(--di-background);
-    border: 1px solid var(--di-glass-border);
-    border-radius: var(--di-border-radius);
-    box-shadow: var(--di-shadow);
-    backdrop-filter: blur(var(--di-glass-blur));
-    -webkit-backdrop-filter: blur(var(--di-glass-blur));
+  background: var(--di-background);
+  border: 1px solid var(--di-glass-border);
+  border-radius: var(--di-border-radius);
+  box-shadow: var(--di-shadow);
+  backdrop-filter: blur(var(--di-glass-blur, 20px));
+  -webkit-backdrop-filter: blur(var(--di-glass-blur, 20px));
 
-    height: var(--overlay-collapsed-height);
-    transition: var(--di-duration-normal) var(--di-spring-timing);
+  block-size: var(--overlay-collapsed-height, 44px);
+  transition: var(--di-overlay-transition);
 }
 
-/* 🔹 Bubble Overlay components */
-.overlay-styled .overlay-card-bubble {
-    width: var(--overlay-collapsed-height);
-    height: var(--overlay-collapsed-height);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+/* ---------- Stand‑alone bubble (clickable) ---------- */
+:where(.overlay-styled .overlay-card-bubble) {
+  --_size: var(--overlay-collapsed-height, 44px);
+  inline-size: var(--_size);
+  block-size : var(--_size);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  flex-shrink: 0;
 
-    /* Own styling - separate from main */
-    background-color: var(--di-background);
-    border: 1px solid var(--di-glass-border);
-    border-radius: 50%;
-    box-shadow: var(--di-shadow);
-    backdrop-filter: blur(var(--di-glass-blur));
-    -webkit-backdrop-filter: blur(var(--di-glass-blur));
+  background: var(--di-background);
+  border: 1px solid var(--di-glass-border);
+  box-shadow: var(--di-shadow);
+  backdrop-filter: blur(var(--di-glass-blur, 20px));
+  -webkit-backdrop-filter: blur(var(--di-glass-blur, 20px));
 
-    transition: var(--di-duration-normal) var(--di-spring-timing);
-    cursor: pointer;
+  cursor: pointer;
+  transition: var(--di-overlay-transition);
 }
 
-/* 🔹 Loading Spinner */
-.overlay-styled .overlay-card-spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top: 2px solid white;
-    border-radius: 50%;
-    animation: spinner-rotate 1s linear infinite;
+/* ---------- Loading spinner ---------- */
+:where(.overlay-styled .overlay-card-spinner) {
+  inline-size: 18px;
+  block-size : 18px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-inline-start-color: #fff;   /* top in LTR / right in RTL */
+  border-radius: 50%;
+  animation: di-rotate 1s linear infinite;
 }
 
-/* 🔹 Action Buttons */
-.overlay-styled .overlay-card-button {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    width: var(--overlay-btn-size, 36px);
-    height: var(--overlay-btn-size, 36px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s var(--di-spring-timing-subtle);
-    color: white;
+/* ---------- Generic action button ---------- */
+:where(.overlay-styled .overlay-card-button) {
+  --_btn-size: var(--overlay-btn-size, 36px);
+  inline-size: var(--_btn-size);
+  block-size : var(--_btn-size);
+  display: grid;
+  place-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.20);
+  color: #fff;
+  transition: transform 200ms var(--di-spring-timing-subtle);
 }
 
-/* Action buttons */
-.overlay-styled .overlay-card-remove,
-.overlay-styled .overlay-card-swipe-prev,
-.overlay-styled .overlay-card-swipe-next {
-    font-size: 16px;
+/* ---------- Specific actions (remove / swipe) ---------- */
+:where(.overlay-styled .overlay-card-remove,
+       .overlay-styled .overlay-card-swipe-prev,
+       .overlay-styled .overlay-card-swipe-next) {
+  font-size: 16px;
 }

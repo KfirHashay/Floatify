@@ -1,41 +1,44 @@
-/* =======================================================
-   🌟 Overlay Card Interactions
-   - Hover, active, and focus states
-   - Accessibility enhancements
-========================================================== */
+/* =====================================================
+   🌟 Overlay · Card Interactions
+   -----------------------------------------------------
+   Hover / active / focus states, scoped to fine pointers
+   so we avoid accidental triggers on touch devices.
+   ===================================================== */
 
-/* 🔹 Enhanced Interaction states (hover/active) */
-.overlay-styled .overlay-card:hover {
-    transform: scale(calc(var(--di-scale-current) * 1.02));
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 4px 6px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.15);
-    transition: transform 300ms var(--di-spring-timing-soft), box-shadow 300ms var(--di-spring-timing-soft), border-color 300ms ease;
-}
+/* ---------- Desktop‑class pointers only ---------- */
+@media (hover:hover) and (pointer:fine) {
+  :where(.overlay-styled .overlay-card:hover) {
+    /* scale from token, preserve current state scale */
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-hover-scale, 1.03)));
+    box-shadow: var(--di-shadow-hover, 0 12px 32px rgba(0,0,0,.45));
+    border-color: var(--di-glass-border, rgba(255,255,255,.15));
+  }
 
-.overlay-styled .overlay-card:active {
-    transform: scale(calc(var(--di-scale-current) * 0.97));
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2), 0 2px 3px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.05);
-    transition: transform 150ms var(--di-spring-timing-subtle), box-shadow 150ms var(--di-spring-timing-subtle);
-}
+  :where(.overlay-styled .overlay-card:active) {
+    transform: scale(calc(var(--di-scale-current, 1) * var(--di-active-scale, 0.97)));
+    box-shadow: 0 5px 10px rgba(0,0,0,.20), 0 2px 3px rgba(0,0,0,.10);
+  }
 
-.overlay-styled .overlay-card:focus-visible {
-    outline: 2px solid var(--overlay-focus-ring, rgba(0, 122, 255, 0.8));
-    outline-offset: 2px;
-}
-
-/* 🔹 Action Buttons interactions */
-.overlay-styled .overlay-card-remove:hover,
-.overlay-styled .overlay-card-swipe-prev:hover,
-.overlay-styled .overlay-card-swipe-next:hover {
-    background: rgba(255, 255, 255, 0.2);
+  /* Action buttons (remove / swipe) */
+  :where(.overlay-styled .overlay-card-remove:hover,
+         .overlay-styled .overlay-card-swipe-prev:hover,
+         .overlay-styled .overlay-card-swipe-next:hover) {
+    background: rgba(255,255,255,.20);
     transform: scale(1.05);
+  }
+
+  :where(.overlay-styled .overlay-card-remove:hover) {
+    background: var(--di-alert-bg, rgba(255,69,58,.98));
+  }
+
+  /* Split layout: widen gap on hover */
+  :where(.overlay-styled .overlay-card--split:hover) {
+    gap: var(--overlay-gap-lg, 14px);
+  }
 }
 
-.overlay-styled .overlay-card-remove:hover {
-    background: rgba(255, 69, 58, 0.9);
-}
-
-/* 🔹 Split state interaction */
-.overlay-styled .overlay-card--split:hover {
-    gap: var(--overlay-gap-lg);
+/* ---------- Focus ring (always on) ---------- */
+:where(.overlay-styled .overlay-card:focus-visible) {
+  outline: 2px solid var(--overlay-focus-ring, rgba(0,122,255,.8));
+  outline-offset: 2px;
 }

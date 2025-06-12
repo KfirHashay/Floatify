@@ -4,67 +4,41 @@
    - Base dimensions and visual appearance
    - Uses common .glass-effect class for glassmorphism styling
 ========================================================== */
-
+/* === Overlay Portal – Base === */
 .overlay-styled .overlay-portal {
-    /* Base positioning - NO container interference */
-    position: relative;
+  position: relative;
+  /* Layout safety */
+  flex: 0 0 auto;
+    background: none;
+    box-shadow: none;
+  /* UX */
+  user-select: none;    /* Remove if you allow text copy */
+  cursor: pointer;      /* Scope to interactive child if needed */
 
-    /* Dynamic Island dimensions - FIXED SIZES */
-    width: auto;
-    height: auto;
+  /* Visual hierarchy */
+  z-index: var(--di-z-index, 9999);
 
-    /* Transform-based scaling for better performance */
-    transform-origin: center;
-    transform: scale(var(--di-scale-collapsed));
-    --di-scale-current: var(--di-scale-collapsed);
-
-    color: var(--di-text);
-    border-radius: calc(var(--overlay-collapsed-height) / 2);
-    overflow: visible;
-    user-select: none;
-    cursor: pointer;
-    z-index: var(--di-z-index, 9999);
-
-    /* Performance optimizations - use sparingly */
-    will-change: transform, opacity; /* More specific than var to prevent overuse */
-
-    /* Optimized transitions using transform */
-    transition: var(--di-overlay-transition);
-
-    /* Ensure interactions work */
-    pointer-events: auto;
-
-    /* CRITICAL: Prevent container expansion */
-    flex-shrink: 0;
-    flex-grow: 0;
-
-    /* Performance hint for browsers */
-    contain: layout style paint;
+  /* Animations */
+  transition: var(--di-overlay-transition);
+  will-change: transform, opacity;
+  contain: paint;      
 }
 
-/* FIXED: Minimal container - NO interference with app */
+/* wrapper that does not mess with layout */
 .overlay-styled .overlay-container {
-    /* CRITICAL: Transparent and minimal - only wraps content */
-    display: contents; /* This makes the container completely transparent */
-    pointer-events: none;
+  display: contents;
+  pointer-events: none;
 }
 
-.overlay-styled .overlay-container > * {
-    pointer-events: auto;
-}
 
-/* Note: Hidden states moved to states.css */
-
-/* LIBRARY ROOT - NO interference with app */
+/* Library root injected at document level */
 .overlay-library {
-    /* CRITICAL: Completely transparent - no visual impact */
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-    z-index: var(--di-z-index, 9999);
-    overflow: visible;
-    /* REMOVED: Any background, border, or visual styling */
+  position: absolute;
+  inset: 0 0 auto;      /* top/left 0, width/height 0 */
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: var(--di-z-index, 9999);
+  overflow: visible;
 }
+

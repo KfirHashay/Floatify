@@ -1,19 +1,27 @@
-.loading-indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--overlay-collapsed-height, 36px);
-    height: var(--overlay-collapsed-height, 36px);
+/* =====================================================
+   ⏳ Overlay · Loading Indicator
+   -----------------------------------------------------
+   Simple centre‑aligned spinner that reuses the di‑rotate
+   keyframe from animations/motion-loading.css.
+   ===================================================== */
+
+:where(.loading-indicator) {
+  display: grid;
+  place-content: center;
+  inline-size : var(--overlay-collapsed-height, 44px);
+  block-size  : var(--overlay-collapsed-height, 44px);
 }
 
-.loading-spinner {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 3px solid rgba(0, 0, 0, 0.2);
-    border-top-color: var(--overlay-primary-color);
-    animation: loading-spin 1s linear infinite;
+:where(.loading-spinner) {
+  --_size: 24px;
+  inline-size : var(--_size);
+  block-size  : var(--_size);
+  border-radius: 50%;
+  border: 3px solid rgba(0,0,0,.20);
+  border-inline-start-color: var(--overlay-primary-color, #007aff);
+  animation: di-rotate 1s linear infinite;
 }
+
 
 @keyframes loading-spin {
     from {

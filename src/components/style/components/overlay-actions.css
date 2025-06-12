@@ -1,59 +1,59 @@
-/* =======================================================
-   🎮 Overlay Actions (Styled)
-   - Styles close, next, and previous buttons
-   - Adds hover & focus effects
-========================================================== */
+/* =====================================================
+   🎮 Overlay Card · Actions bar & buttons
+   -----------------------------------------------------
+   Built on top of generic .overlay-card-button utility.
+   ===================================================== */
 
-.overlay-styled .overlay-card-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: var(--overlay-gap-md);
+/* ---------- Actions container (flex row) ---------- */
+:where(.overlay-styled .overlay-card-actions) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-start: var(--overlay-gap-md, 10px);
 }
 
-/* Close Button */
-.overlay-styled .overlay-card-remove {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    padding: var(--overlay-padding-sm);
-    color: var(--di-text);
-    transition: var(--overlay-transition);
+/* ---------- Close button (cross icon) ---------- */
+:where(.overlay-styled .overlay-card-remove) {
+  background: transparent;
+  border: none;
+  color: var(--di-text);
+  font-size: 18px;
+  padding: var(--overlay-padding-sm, 8px);
+  cursor: pointer;
+  transition: opacity var(--di-duration-fast, 200ms) var(--di-ease-out);
 }
 
-.overlay-styled .overlay-card-remove:hover {
-    opacity: 0.7;
+@media (hover:hover) and (pointer:fine) {
+  :where(.overlay-styled .overlay-card-remove:hover) {
+    opacity: .7;
+  }
 }
 
-/* Swipe Buttons */
-.overlay-styled .overlay-card-swipe-prev,
-.overlay-styled .overlay-card-swipe-next {
-    background: var(--overlay-primary-color);
-    color: var(--di-text);
-    font-size: var(--overlay-font-size-md);
-    padding: var(--overlay-padding-sm) var(--overlay-padding-md);
-    border-radius: var(--di-border-radius);
-    cursor: pointer;
-    transition: var(--overlay-transition);
+/* ---------- Swipe buttons (prev / next) ---------- */
+:where(.overlay-styled .overlay-card-swipe-prev,
+       .overlay-styled .overlay-card-swipe-next) {
+  background: var(--overlay-primary-color);
+  color: #fff;
+  font-size: var(--overlay-font-size-md, 16px);
+  padding: var(--overlay-padding-sm, 8px) var(--overlay-padding-md, 12px);
+  border-radius: var(--di-border-radius);
+  cursor: pointer;
+  transition: background var(--di-duration-fast, 200ms) var(--di-ease-out);
 }
 
-.overlay-styled .overlay-card-swipe-prev:hover,
-.overlay-styled .overlay-card-swipe-next:hover {
+@media (hover:hover) and (pointer:fine) {
+  :where(.overlay-styled .overlay-card-swipe-prev:hover,
+         .overlay-styled .overlay-card-swipe-next:hover) {
     background: var(--overlay-secondary-color);
+  }
 }
 
-.overlay-styled .overlay-card-swipe-prev:disabled,
-.overlay-styled .overlay-card-swipe-next:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+:where(.overlay-styled .overlay-card-swipe-prev:disabled,
+       .overlay-styled .overlay-card-swipe-next:disabled) {
+  opacity: .4;
+  cursor: not-allowed;
 }
 
-/* Swipe Button Positioning */
-.overlay-styled .overlay-card-swipe-prev {
-    margin-right: auto;
-}
-
-.overlay-styled .overlay-card-swipe-next {
-    margin-left: auto;
-}
+/* Alignment helpers */
+:where(.overlay-styled .overlay-card-swipe-prev) { margin-inline-end: auto; }
+:where(.overlay-styled .overlay-card-swipe-next) { margin-inline-start: auto; }

@@ -1,148 +1,142 @@
-/* =======================================================
+/* =====================================================
    🎨 Overlay Library Design Tokens
-   - Enhanced variables for Dynamic Island appearance
-   - Improved positioning and interactions
-   - Mobile-optimized dimensions and spacing
-========================================================== */
+   -----------------------------------------------------
+   Logical grouping, same variable names – no behavioral
+   change. All tokens remain 100 % backward‑compatible.
+   ===================================================== */
 
-/* Root: Default (Light Mode) */
+/* ---------- Root (Light ‑ default) ---------- */
 :root {
-    /* Primary Colors - ENHANCED CONTRAST */
-    --overlay-primary-color: #007aff;
-    --overlay-secondary-color: #0051cb;
-    --overlay-text-color: #1a1a1a;
-    --overlay-bg-color: #ffffff;
+  /* --- Palette --- */
+  --overlay-primary-color      : #007aff;
+  --overlay-secondary-color    : #0051cb;
+  --overlay-text-color         : #1a1a1a;
+  --overlay-bg-color           : #ffffff;
 
-    /* Dark Mode Colors - IMPROVED VISIBILITY */
-    --overlay-dark-primary: #0a84ff;
-    --overlay-dark-secondary: #0055ff;
-    --overlay-dark-text: #ffffff;
-    --overlay-dark-bg: #000000;
+  /* Dark‑theme companions (referenced in media query) */
+  --overlay-dark-primary       : #0a84ff;
+  --overlay-dark-secondary     : #0055ff;
+  --overlay-dark-text          : #ffffff;
+  --overlay-dark-bg            : #000000;
 
-    /* Typography - ENHANCED READABILITY */
-    --overlay-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --overlay-font-size-sm: 14px;
-    --overlay-font-size-md: 16px;
-    --overlay-font-size-lg: 18px;
-    --overlay-font-weight-light: 300;
-    --overlay-font-weight-normal: 400;
-    --overlay-font-weight-bold: 600;
+  /* --- Typography --- */
+  --overlay-font-family        : system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --overlay-font-size-sm       : 14px;
+  --overlay-font-size-md       : 16px;
+  --overlay-font-size-lg       : 18px;
+  --overlay-font-weight-light  : 300;
+  --overlay-font-weight-normal : 400;
+  --overlay-font-weight-bold   : 600;
 
-    /* Spacing & Layout - OPTIMIZED FOR INTERACTIONS */
-    --overlay-padding-sm: 8px;
-    --overlay-padding-md: 12px;
-    --overlay-padding-lg: 16px;
-    --overlay-gap-sm: 6px;
-    --overlay-gap-md: 10px;
-    --overlay-gap-lg: 14px;
-    --overlay-border-radius: 16px;
-    
-    /* Dynamic Island Defaults - PROPER DIMENSIONS */
-    --di-border-radius: var(--overlay-border-radius);
-    --di-glass-opacity: 0.95; /* More opaque for better visibility */
-    --di-top-offset: 20px; /* Top positioning offset */
-    --di-bottom-offset: 60px; /* INCREASED: Bottom positioning offset for better spacing */
-    --di-side-offset: 20px; /* Side positioning offset for corners */
+  /* --- Layout & Spacing --- */
+  --overlay-padding-sm         : 8px;
+  --overlay-padding-md         : 12px;
+  --overlay-padding-lg         : 16px;
+  --overlay-gap-sm             : 6px;
+  --overlay-gap-md             : 10px;
+  --overlay-gap-lg             : 14px;
+  --overlay-border-radius      : 16px;
 
-    /* Shadows - ENHANCED DEPTH */
-    --overlay-shadow-sm: 0px 2px 8px rgba(0, 0, 0, 0.15);
-    --overlay-shadow-md: 0px 4px 16px rgba(0, 0, 0, 0.2);
-    --overlay-shadow-lg: 0px 8px 32px rgba(0, 0, 0, 0.25);
-    --di-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+  /* --- Island Dimensions --- */
+  --overlay-collapsed-width    : 160px;
+  --overlay-collapsed-height   : 44px;
+  --overlay-expanded-width     : 400px;
+  --overlay-expanded-height    : 160px;
 
-    /* Borders - IMPROVED VISIBILITY */
-    --overlay-border-color: rgba(0, 0, 0, 0.1);
-    --overlay-border-width: 1px;
+  /* --- Positional Offsets --- */
+  --di-top-offset              : 20px;
+  --di-bottom-offset           : 60px;
+  --di-side-offset             : 20px;
 
-    /* Dynamic Island Dimensions - OPTIMIZED SIZES */
-    --overlay-collapsed-width: 160px; /* Wider for better text visibility */
-    --overlay-collapsed-height: 44px; /* Taller for better touch targets */
-    --overlay-expanded-width: 400px; /* Wider for more content */
-    --overlay-expanded-height: 160px; /* Taller for better content layout */
+  /* --- Glass / Shadow --- */
+  --di-border-radius           : var(--overlay-border-radius);
+  --di-glass-opacity           : 0.95;
+  --overlay-shadow-sm          : 0px 2px 8px  rgba(0, 0, 0, 0.15);
+  --overlay-shadow-md          : 0px 4px 16px rgba(0, 0, 0, 0.20);
+  --overlay-shadow-lg          : 0px 8px 32px rgba(0, 0, 0, 0.25);
+  --di-shadow                  : 0 8px 32px rgba(0, 0, 0, 0.30);
+  --overlay-border-color       : rgba(0, 0, 0, 0.10);
+  --overlay-border-width       : 1px;
 
-    /* Scale factors for transform-based sizing */
-    --di-scale-collapsed: 1;
-    --di-scale-expanded: calc(var(--overlay-expanded-width) / var(--overlay-collapsed-width));
+  /* --- Scale factors --- */
+  --di-scale-collapsed         : 1;
+  --di-scale-expanded          : calc(var(--overlay-expanded-width) / var(--overlay-collapsed-width));
 
-    /* Animation Durations - Optimized for Dynamic Island feel */
-    --di-duration-fast: 200ms;
-    --di-duration-normal: 400ms;
-    --di-duration-slow: 600ms;
-    
-    /* Spring-like timing functions for Dynamic Island feel */
-    --di-transition-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --di-spring-timing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    --di-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    
-    /* Enhanced iOS-like physics timing functions */
-    --di-spring-timing-soft: cubic-bezier(0.28, 0.11, 0.32, 1);       /* iOS soft spring for subtle movements */
-    --di-spring-timing-bounce: cubic-bezier(0.17, 0.67, 0.13, 1.53);  /* iOS bounce spring for emphasis */
-    --di-spring-timing-subtle: cubic-bezier(0.25, 0.1, 0.25, 1);      /* iOS subtle timing for secondary elements */
-    --di-spring-timing-expand: cubic-bezier(0.32, 0.72, 0, 1);        /* iOS expand timing for state changes */
+  /* --- Durations --- */
+  --di-duration-fast           : 200ms;
+  --di-duration-normal         : 400ms;
+  --di-duration-slow           : 600ms;
 
-    /* Optimized transition for overlay components - transform only */
-    --di-overlay-transition:
-        transform var(--di-duration-normal) var(--di-spring-timing),
-        opacity var(--di-duration-fast) var(--di-ease-out),
-        border-radius var(--di-duration-normal) var(--di-transition-timing),
-        box-shadow var(--di-duration-normal) var(--di-ease-out);
+  /* --- Timing functions --- */
+  --di-transition-timing       : cubic-bezier(0.34, 1.56, 0.64, 1);  /* main */
+  --di-spring-timing           : cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --di-ease-out                : cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* iOS‑inspired variants */
+  --di-spring-timing-soft      : cubic-bezier(0.28, 0.11, 0.32, 1);
+  --di-spring-timing-bounce    : cubic-bezier(0.17, 0.67, 0.13, 1.53);
+  --di-spring-timing-subtle    : cubic-bezier(0.25, 0.10, 0.25, 1);
+  --di-spring-timing-expand    : cubic-bezier(0.32, 0.72, 0, 1);
 
-    /* Legacy animation properties - kept for backward compatibility */
-    --overlay-transition: var(--di-overlay-transition);
-    --overlay-scale-hover: 1.02;
+  /* --- Composite transitions --- */
+  --di-overlay-transition      :
+    transform     var(--di-duration-normal) var(--di-spring-timing),
+    opacity       var(--di-duration-fast)   var(--di-ease-out),
+    border-radius var(--di-duration-normal) var(--di-transition-timing),
+    box-shadow    var(--di-duration-normal) var(--di-ease-out);
+  /* backward compat */
+  --overlay-transition         : var(--di-overlay-transition);
 
-    /* Z-index - PROPER LAYERING */
-    --overlay-z-index: 1000;
-    --di-z-index: 9999;
+  /* --- Interaction scaling --- */
+  --overlay-scale-hover        : 1.02; /* legacy */
+  --di-hover-scale             : 1.03;
+  --di-active-scale            : 0.97;
 
-    /* Performance optimizations */
-    --di-will-change: transform, opacity, border-radius, box-shadow;
-    
-    /* Interaction states - ENHANCED FEEDBACK */
-    --di-hover-scale: 1.03;
-    --di-active-scale: 0.97;
-    
-    /* Focus ring for accessibility */
-    --overlay-focus-ring: rgba(0, 122, 255, 0.8);
+  /* --- Layering & Performance --- */
+  --overlay-z-index            : 1000;
+  --di-z-index                 : 9999;
+  --di-will-change             : transform, opacity, border-radius, box-shadow;
+
+  /* --- Accessibility --- */
+  --overlay-focus-ring         : rgba(0, 122, 255, 0.8);
 }
 
-/* 🌙 Dark Mode - ENHANCED CONTRAST */
+/* ---------- Dark‑mode overrides ---------- */
 @media (prefers-color-scheme: dark) {
-    :root {
-        --overlay-primary-color: var(--overlay-dark-primary);
-        --overlay-secondary-color: var(--overlay-dark-secondary);
-        --overlay-text-color: var(--overlay-dark-text);
-        --overlay-bg-color: var(--overlay-dark-bg);
-        --overlay-border-color: rgba(255, 255, 255, 0.15); /* More visible border */
-        --overlay-focus-ring: rgba(255, 255, 255, 0.7);
-    }
+  :root {
+    --overlay-primary-color  : var(--overlay-dark-primary);
+    --overlay-secondary-color: var(--overlay-dark-secondary);
+    --overlay-text-color     : var(--overlay-dark-text);
+    --overlay-bg-color       : var(--overlay-dark-bg);
+    --overlay-border-color   : rgba(255, 255, 255, 0.15);
+    --overlay-focus-ring     : rgba(255, 255, 255, 0.7);
+  }
 }
 
-/* 📱 Mobile Optimizations */
+/* ---------- Mobile (≤480 px) overrides ---------- */
 @media (max-width: 480px) {
-    :root {
-        /* Adjust dimensions for mobile */
-        --overlay-collapsed-width: 140px;
-        --overlay-collapsed-height: 40px;
-        --overlay-expanded-width: 340px;
-        --overlay-expanded-height: 140px;
-        
-        /* Adjust spacing for mobile */
-        --di-top-offset: 16px;
-        --di-bottom-offset: 40px; /* Adjusted for mobile */
-        --di-side-offset: 16px;
-        --overlay-padding-sm: 6px;
-        --overlay-padding-md: 10px;
-        --overlay-padding-lg: 14px;
-        
-        /* Adjust font sizes for mobile */
-        --overlay-font-size-sm: 13px;
-        --overlay-font-size-md: 15px;
-        --overlay-font-size-lg: 17px;
-        
-        /* Adjust gaps for mobile */
-        --overlay-gap-sm: 4px;
-        --overlay-gap-md: 8px;
-        --overlay-gap-lg: 12px;
-    }
+  :root {
+    /* Dimensions */
+    --overlay-collapsed-width  : 140px;
+    --overlay-collapsed-height : 40px;
+    --overlay-expanded-width   : 340px;
+    --overlay-expanded-height  : 140px;
+
+    /* Offsets */
+    --di-top-offset    : 16px;
+    --di-bottom-offset : 40px;
+    --di-side-offset   : 16px;
+
+    /* Typography */
+    --overlay-font-size-sm : 13px;
+    --overlay-font-size-md : 15px;
+    --overlay-font-size-lg : 17px;
+
+    /* Spacing */
+    --overlay-padding-sm : 6px;
+    --overlay-padding-md : 10px;
+    --overlay-padding-lg : 14px;
+    --overlay-gap-sm     : 4px;
+    --overlay-gap-md     : 8px;
+    --overlay-gap-lg     : 12px;
+  }
 }

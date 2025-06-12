@@ -1,93 +1,88 @@
-/* =======================================================
-   🌟 Overlay Portal Positioning
-   - Fixed positioning for single and multiple overlays
-   - Various position utilities (top, center, bottom, corners)
-========================================================== */
+/* =====================================================
+   🌟 Overlay Portal – Positioning (visibility-proof)
+   ===================================================== */
 
-/* Fixed positioning for single overlays */
+/* Single fixed overlay */
 .overlay-styled .overlay-portal--fixed {
-    position: fixed;
-    pointer-events: auto;
+  position: fixed;
+  z-index: var(--di-z-index, 9999);
 }
 
-/* Multiple overlay container positioning */
+/* Wrapper for multiple overlays */
 .overlay-styled .overlay-multiple-container--fixed {
-    position: fixed;
-    z-index: var(--di-z-index, 9999);
-    pointer-events: none;
+  position: fixed;
+  z-index: var(--di-z-index, 9999);
+  pointer-events: none;
 }
 
-/* Layout container for multiple overlays */
+/* Flex stack */
 .overlay-styled .overlay-multiple-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--overlay-gap-lg, 12px);
-    pointer-events: none;
-    /* CRITICAL: Minimal sizing - no visual container */
-    width: fit-content;
-    height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--overlay-gap-lg, 12px);
+  pointer-events: none;
+  width: fit-content;
+  height: fit-content;
 }
 
-.overlay-styled .overlay-multiple-container > * {
-    pointer-events: auto;
+.overlay-styled .overlay-multiple-container > * { pointer-events:auto; }
+
+/* ---------- Core anchors ---------- */
+.overlay-styled .overlay-portal--center,
+.overlay-styled .overlay-multiple-container--center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-/* Position classes for fixed overlays - CORRECTED POSITIONING */
 .overlay-styled .overlay-portal--top,
 .overlay-styled .overlay-multiple-container--top {
-    top: var(--di-top-offset);
-    left: 50%;
-    transform: translateX(-50%);
+  top: var(--di-top-offset);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .overlay-styled .overlay-portal--bottom,
 .overlay-styled .overlay-multiple-container--bottom {
-    bottom: var(--di-bottom-offset);
-    left: 50%;
-    transform: translateX(-50%);
+  bottom: var(--di-bottom-offset);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.overlay-styled .overlay-portal--center,
-.overlay-styled .overlay-multiple-container--center {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* Corner positioning with proper alignment */
+/* ---------- Corners (override centre props) ---------- */
 .overlay-styled .overlay-portal--top-left,
 .overlay-styled .overlay-multiple-container--top-left {
-    top: var(--di-top-offset);
-    left: var(--di-side-offset);
-    transform: none;
-    align-items: flex-start;
-    justify-content: flex-start;
+  top: var(--di-top-offset);
+  left: var(--di-side-offset);
+  right: auto;                /* override any right from combos */
+  transform: none;            /* kill previous translateX */
+  align-items:flex-start;
 }
 
 .overlay-styled .overlay-portal--top-right,
 .overlay-styled .overlay-multiple-container--top-right {
-    top: var(--di-top-offset);
-    right: var(--di-side-offset);
-    transform: none;
-    align-items: flex-start;
-    justify-content: flex-end;
+  top: var(--di-top-offset);
+  right: var(--di-side-offset);
+  left: auto;                 /* override 50% left */
+  transform: none;            /* kill translateX(-50%) */
+  align-items:flex-start;
 }
 
 .overlay-styled .overlay-portal--bottom-left,
 .overlay-styled .overlay-multiple-container--bottom-left {
-    bottom: var(--di-bottom-offset);
-    left: var(--di-side-offset);
-    transform: none;
-    align-items: flex-end;
-    justify-content: flex-start;
+  bottom: var(--di-bottom-offset);
+  left: var(--di-side-offset);
+  right: auto;
+  transform: none;
+  align-items:flex-end;
 }
 
 .overlay-styled .overlay-portal--bottom-right,
 .overlay-styled .overlay-multiple-container--bottom-right {
-    bottom: var(--di-bottom-offset);
-    right: var(--di-side-offset);
-    transform: none;
-    align-items: flex-end;
-    justify-content: flex-end;
+  bottom: var(--di-bottom-offset);
+  right: var(--di-side-offset);
+  left: auto;
+  transform: none;
+  align-items:flex-end;
 }
