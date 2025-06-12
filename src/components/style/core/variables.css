@@ -2,7 +2,7 @@
    🎨 Overlay Library Design Tokens
    -----------------------------------------------------
    Logical grouping, same variable names – no behavioral
-   change. All tokens remain 100 % backward‑compatible.
+   change. All tokens remain 100 % backward‑compatible.
    ===================================================== */
 
 /* ---------- Root (Light ‑ default) ---------- */
@@ -42,6 +42,12 @@
   --overlay-collapsed-height   : 44px;
   --overlay-expanded-width     : 400px;
   --overlay-expanded-height    : 160px;
+
+  /* --- Dynamic Island Split Layout --- */
+  --di-split-gap               : 12px;
+  --di-split-main-width        : 140px;
+  --di-split-bubble-size       : 44px;
+  --di-split-total-width       : calc(var(--di-split-main-width) + var(--di-split-bubble-size) + var(--di-split-gap));
 
   /* --- Positional Offsets --- */
   --di-top-offset              : 20px;
@@ -112,7 +118,7 @@
   }
 }
 
-/* ---------- Mobile (≤480 px) overrides ---------- */
+/* ---------- Mobile (≤480 px) overrides ---------- */
 @media (max-width: 480px) {
   :root {
     /* Dimensions */
@@ -120,6 +126,11 @@
     --overlay-collapsed-height : 40px;
     --overlay-expanded-width   : 340px;
     --overlay-expanded-height  : 140px;
+
+    /* Split layout adjustments for mobile */
+    --di-split-gap             : 10px;
+    --di-split-main-width      : 120px;
+    --di-split-bubble-size     : 40px;
 
     /* Offsets */
     --di-top-offset    : 16px;

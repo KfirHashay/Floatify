@@ -35,14 +35,105 @@
   padding: var(--overlay-padding-sm, 8px);
 }
 
-/* ---------- Split (pill + bubble) ---------- */
+/* ---------- Split (pill + bubble) - Enhanced Dynamic Island Style ---------- */
 :where(.overlay-styled .overlay-card--split) {
-  inline-size : calc(var(--overlay-collapsed-width, 160px) + var(--overlay-collapsed-height, 44px) + var(--overlay-gap-sm, 6px));
-  block-size  : var(--overlay-collapsed-height, 44px);
-  border-radius: calc(var(--overlay-collapsed-height, 44px) / 2);
-  padding: var(--overlay-padding-sm, 8px) var(--overlay-padding-md, 12px);
-  gap: var(--overlay-gap-md, 10px);
+  /* Container for the split layout */
+  display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: var(--di-split-gap, 12px);
+  
+  /* Total width includes main + bubble + gap */
+  inline-size: var(--di-split-total-width);
+  block-size: var(--overlay-collapsed-height, 44px);
+  
+  /* Transparent background for the container */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  
+  /* Smooth transitions for gap changes */
+  transition: gap var(--di-duration-normal) var(--di-spring-timing-subtle);
+}
+
+/* Split main content (left pill) */
+:where(.overlay-styled .overlay-card--split .overlay-card-split-main) {
+  display: flex;
+  align-items: center;
+  gap: var(--overlay-gap-sm, 6px);
+  
+  /* Pill dimensions */
+  inline-size: var(--di-split-main-width, 140px);
+  block-size: var(--overlay-collapsed-height, 44px);
+  
+  /* Pill styling */
+  background: var(--di-background);
+  border: 1px solid var(--di-glass-border);
+  border-radius: calc(var(--overlay-collapsed-height, 44px) / 2);
+  box-shadow: var(--di-shadow);
+  backdrop-filter: blur(var(--di-glass-blur, 20px));
+  -webkit-backdrop-filter: blur(var(--di-glass-blur, 20px));
+  
+  /* Content padding */
+  padding: var(--overlay-padding-sm, 8px) var(--overlay-padding-md, 12px);
+  
+  /* Smooth transitions */
+  transition: 
+    transform var(--di-duration-normal) var(--di-spring-timing-subtle),
+    border-radius var(--di-duration-normal) var(--di-spring-timing-subtle),
+    inline-size var(--di-duration-normal) var(--di-spring-timing-subtle);
+}
+
+/* Split bubble (right circle) */
+:where(.overlay-styled .overlay-card--split .overlay-card-split-bubble) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Bubble dimensions */
+  inline-size: var(--di-split-bubble-size, 44px);
+  block-size: var(--di-split-bubble-size, 44px);
+  
+  /* Circle styling */
+  background: var(--di-background);
+  border: 1px solid var(--di-glass-border);
+  border-radius: 50%;
+  box-shadow: var(--di-shadow);
+  backdrop-filter: blur(var(--di-glass-blur, 20px));
+  -webkit-backdrop-filter: blur(var(--di-glass-blur, 20px));
+  
+  /* Icon styling */
+  color: var(--di-text);
+  font-size: 18px;
+  
+  /* Smooth transitions */
+  transition: 
+    transform var(--di-duration-normal) var(--di-spring-timing-subtle),
+    opacity var(--di-duration-normal) var(--di-spring-timing-subtle);
+  
+  /* Ensure it stays visible by default */
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* Hover effect: Merge bubble back into main pill */
+:where(.overlay-styled .overlay-card--split:hover) {
+  /* Reduce gap to create merge effect */
+  gap: 0;
+}
+
+:where(.overlay-styled .overlay-card--split:hover .overlay-card-split-main) {
+  /* Expand main pill to accommodate the bubble */
+  inline-size: var(--di-split-total-width);
+  border-radius: calc(var(--overlay-collapsed-height, 44px) / 2);
+}
+
+:where(.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble) {
+  /* Slide bubble into the main pill and scale down */
+  transform: translateX(calc(-1 * var(--di-split-main-width, 140px) / 2)) scale(0.8);
+  opacity: 0.7;
 }
 
 /* ---------- Expanded (card) ---------- */
@@ -107,13 +198,24 @@
   box-shadow: 0 8px 24px rgba(255, 69, 58, .4), 0 2px 8px rgba(255,69,58,.3);
 }
 
-/* ---------- Split bubble hover (already in interactions but required for motion safety) ---------- */
-:where(.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble) {
-  transform: scale(0);
-}
-
 /* ---------- Loading spinner icon size ---------- */
 :where(.overlay-styled .overlay-card--loading .overlay-card-icon) {
   inline-size: 24px;
   block-size : 24px;
+}
+
+/* ---------- Bubble icon styling ---------- */
+:where(.overlay-styled .overlay-card--bubble .overlay-card-bubble-icon,
+       .overlay-styled .overlay-card--split .overlay-card-split-bubble) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--di-text);
+}
+
+:where(.overlay-styled .overlay-card--bubble .overlay-card-bubble-icon svg,
+       .overlay-styled .overlay-card--split .overlay-card-split-bubble svg) {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
 }
