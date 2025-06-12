@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Code, Zap, Settings, Database, MessageCircle, Loader2, AlertCircle } from 'lucide-react';
+import { Book, Code, Database, Settings, Github, ExternalLink } from 'lucide-react';
+import { motion } from 'motion/react';
+import PageHeader from '../components/PageHeader';
 import APITopNavigation from '../components/APITopNavigation';
 import APISection from '../components/APISection';
 import CodeBlock from '../components/CodeBlock';
+import Button from '../components/Button';
 
 interface APISection {
   id: string;
@@ -28,7 +31,7 @@ const apiSections: APISection[] = [
     id: 'floatify-component',
     title: 'Floatify Component',
     description: 'Main provider component that wraps your application and manages overlay state',
-    icon: <Zap size={20} />,
+    icon: <Code size={20} />,
     category: 'components',
     items: [
       {
@@ -48,11 +51,11 @@ const apiSections: APISection[] = [
         since: 'v0.1.0'
       },
       {
-        name: 'sticky',
+        name: 'fixedToViewport',
         type: 'boolean',
         description: 'Makes overlays stick to viewport when scrolling',
-        defaultValue: 'false',
-        example: `<Floatify sticky>`,
+        defaultValue: 'true',
+        example: `<Floatify fixedToViewport>`,
         since: 'v0.2.0'
       },
       {
@@ -91,7 +94,7 @@ const apiSections: APISection[] = [
     id: 'use-aggregator-hook',
     title: 'useAggregator Hook',
     description: 'Primary hook for managing overlay state and performing actions',
-    icon: <Code size={20} />,
+    icon: <Settings size={20} />,
     category: 'hooks',
     items: [
       {
@@ -203,7 +206,7 @@ registerChannel('notifications', 1);`,
     id: 'overlay-state-types',
     title: 'OverlayState Types',
     description: 'Available states for overlay channels and their behaviors',
-    icon: <Settings size={20} />,
+    icon: <Book size={20} />,
     category: 'types',
     items: [
       {
@@ -229,6 +232,18 @@ registerChannel('notifications', 1);`,
         type: 'OverlayState',
         description: 'Channel shows a loading spinner',
         since: 'v0.2.0'
+      },
+      {
+        name: 'split',
+        type: 'OverlayState',
+        description: 'Channel uses split layout with content and bubble',
+        since: 'v0.4.0'
+      },
+      {
+        name: 'bubble',
+        type: 'OverlayState',
+        description: 'Channel is minimized to a bubble icon',
+        since: 'v0.4.0'
       },
       {
         name: 'alert',
@@ -277,44 +292,77 @@ export default function APIReference() {
 
   return (
     <div className="api-reference">
-      {/* Compact Header */}
-      <header className="api-header">
-        <div className="api-header-content">
-          <div className="api-header-badge">
-            <Book size={16} />
-            API Documentation
-          </div>
-          <h1>API Reference</h1>
-        </div>
-      </header>
-
-      {/* Top Navigation */}
-      <APITopNavigation 
-        sections={apiSections}
-        activeSection={activeSection}
-        onSectionClick={scrollToSection}
+      {/* Reusable Page Header */}
+      <PageHeader
+        title="API Reference"
+        subtitle="Complete documentation for all Floatify components, hooks, and types with examples."
+        badge="Documentation"
+        icon={<Book size={16} />}
+        theme="secondary"
+        actions={
+          <Button
+            as="a"
+            href="https://github.com/yourusername/floatify"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="secondary"
+            leftIcon={<Github size={16} />}
+            rightIcon={<ExternalLink size={16} />}
+          >
+            View on GitHub
+          </Button>
+        }
       />
 
+      {/* Top Navigation */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+      >
+        <APITopNavigation 
+          sections={apiSections}
+          activeSection={activeSection}
+          onSectionClick={scrollToSection}
+        />
+      </motion.div>
+
       {/* Main Content */}
-      <main className="api-main">
+      <motion.main 
+        className="api-main"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
         <div className="api-sections">
-          {apiSections.map((section) => (
-            <APISection
+          {apiSections.map((section, index) => (
+            <motion.div
               key={section.id}
-              id={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              category={section.category}
-              items={section.items}
-              isExpanded={true} // Always expanded for better readability
-              onToggle={() => {}} // No toggle needed
-            />
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+            >
+              <APISection
+                id={section.id}
+                title={section.title}
+                description={section.description}
+                icon={section.icon}
+                category={section.category}
+                items={section.items}
+                isExpanded={true}
+                onToggle={() => {}}
+              />
+            </motion.div>
           ))}
         </div>
 
         {/* TypeScript Usage Guide */}
-        <section className="api-typescript-guide">
+        <motion.section 
+          className="api-typescript-guide"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
           <div className="api-guide-header">
             <h2>TypeScript Usage</h2>
             <p>Floatify is built with TypeScript and provides full type safety out of the box.</p>
@@ -345,8 +393,8 @@ export default function APIReference() {
               </ul>
             </div>
           </div>
-        </section>
-      </main>
+        </motion.section>
+      </motion.main>
     </div>
   );
 }

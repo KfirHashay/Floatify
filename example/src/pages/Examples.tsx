@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Play, RotateCcw, Zap, MessageCircle, Loader2, Bell, AlertCircle, ChevronRight } from 'lucide-react';
+import { Play, RotateCcw, Zap, MessageCircle, Loader2, Bell, AlertCircle, ChevronRight, Sparkles } from 'lucide-react';
+import PageHeader from '../components/PageHeader';
 import Demo from '../components/Demo';
 import Button from '../components/Button';
 import CodeBlock from '../components/CodeBlock';
@@ -258,18 +259,14 @@ export default function Examples({
 
   return (
     <div className="examples">
-      {/* Header */}
-      <motion.section 
-        className="examples-header"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h1>Examples & Demos</h1>
-        <p>
-          Explore Floatify's overlay system with interactive demos and ready-to-use code examples.
-        </p>
-      </motion.section>
+      {/* Reusable Page Header */}
+      <PageHeader
+        title="Examples & Demos"
+        subtitle="Explore Floatify's overlay system with interactive demos and ready-to-use code examples."
+        badge="Interactive"
+        icon={<Sparkles size={16} />}
+        theme="primary"
+      />
 
       {/* Demo Mode Navigation */}
       <motion.section 

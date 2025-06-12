@@ -1,5 +1,7 @@
 import React from 'react';
-import { CheckCircle, Clock, Lightbulb, Zap, Users, Globe, ArrowRight, Calendar, Target } from 'lucide-react';
+import { CheckCircle, Clock, Lightbulb, Zap, Users, Globe, ArrowRight, Calendar, Target, Rocket } from 'lucide-react';
+import { motion } from 'motion/react';
+import PageHeader from '../components/PageHeader';
 import Button from '../components/Button';
 
 interface RoadmapItem {
@@ -168,118 +170,179 @@ export default function Roadmap() {
 
   return (
     <div className="roadmap">
-      {/* Hero Section */}
-      <section className="roadmap-hero">
-        <div className="roadmap-hero-content">
-          <h1>Development Roadmap</h1>
-          <p>
-            Our journey to build the most developer-friendly overlay library for React.
-            Track our progress and see what's coming next.
-          </p>
-        </div>
-      </section>
+      {/* Reusable Page Header */}
+      <PageHeader
+        title="Development Roadmap"
+        subtitle="Our journey to build the most developer-friendly overlay library for React. Track our progress and see what's coming next."
+        badge="Roadmap"
+        icon={<Rocket size={16} />}
+        theme="accent"
+      />
 
       {/* Progress Overview */}
-      <section className="roadmap-overview">
+      <motion.section 
+        className="roadmap-overview"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+      >
         <div className="overview-grid">
-          <div className="overview-card overview-card--completed">
-            <div className="overview-icon">
-              <CheckCircle size={24} />
-            </div>
-            <div className="overview-content">
-              <div className="overview-number">{completedItems.length}</div>
-              <div className="overview-label">Completed</div>
-            </div>
-          </div>
-          
-          <div className="overview-card overview-card--progress">
-            <div className="overview-icon">
-              <Clock size={24} />
-            </div>
-            <div className="overview-content">
-              <div className="overview-number">{inProgressItems.length}</div>
-              <div className="overview-label">In Progress</div>
-            </div>
-          </div>
-          
-          <div className="overview-card overview-card--planned">
-            <div className="overview-icon">
-              <Lightbulb size={24} />
-            </div>
-            <div className="overview-content">
-              <div className="overview-number">{plannedItems.length}</div>
-              <div className="overview-label">Planned</div>
-            </div>
-          </div>
-          
-          <div className="overview-card overview-card--target">
-            <div className="overview-icon">
-              <Target size={24} />
-            </div>
-            <div className="overview-content">
-              <div className="overview-number">v1.0</div>
-              <div className="overview-label">Target Release</div>
-            </div>
-          </div>
+          {[
+            {
+              icon: <CheckCircle size={24} />,
+              number: completedItems.length,
+              label: 'Completed',
+              color: 'var(--success)',
+              bgColor: 'rgba(16, 185, 129, 0.1)'
+            },
+            {
+              icon: <Clock size={24} />,
+              number: inProgressItems.length,
+              label: 'In Progress',
+              color: 'var(--warning)',
+              bgColor: 'rgba(245, 158, 11, 0.1)'
+            },
+            {
+              icon: <Lightbulb size={24} />,
+              number: plannedItems.length,
+              label: 'Planned',
+              color: 'var(--accent-primary)',
+              bgColor: 'var(--accent-light)'
+            },
+            {
+              icon: <Target size={24} />,
+              number: 'v1.0',
+              label: 'Target Release',
+              color: 'var(--error)',
+              bgColor: 'rgba(239, 68, 68, 0.1)'
+            }
+          ].map((item, index) => (
+            <motion.div
+              key={item.label}
+              className="overview-card"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+              whileHover={{ scale: 1.02, y: -4 }}
+              style={{
+                '--gradient': `linear-gradient(90deg, ${item.color}, ${item.color}dd)`,
+                '--bg-color': item.bgColor
+              } as React.CSSProperties}
+            >
+              <div className="overview-icon" style={{ color: item.color }}>
+                {item.icon}
+              </div>
+              <div className="overview-content">
+                <div className="overview-number">{item.number}</div>
+                <div className="overview-label">{item.label}</div>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* Roadmap Timeline */}
-      <section className="roadmap-timeline">
+      <motion.section 
+        className="roadmap-timeline"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
         {/* Completed Section */}
         <div className="timeline-section">
-          <div className="timeline-header">
+          <motion.div 
+            className="timeline-header"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
             <div className="timeline-status timeline-status--completed">
               <CheckCircle size={20} />
               <h2>Completed Features</h2>
               <span className="timeline-count">({completedItems.length})</span>
             </div>
-          </div>
+          </motion.div>
           
           <div className="timeline-grid">
             {completedItems.map((item, index) => (
-              <RoadmapCard key={`completed-${index}`} item={item} />
+              <motion.div
+                key={`completed-${index}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+              >
+                <RoadmapCard item={item} />
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* In Progress Section */}
         <div className="timeline-section">
-          <div className="timeline-header">
+          <motion.div 
+            className="timeline-header"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
             <div className="timeline-status timeline-status--progress">
               <Clock size={20} />
               <h2>Currently Working On</h2>
               <span className="timeline-count">({inProgressItems.length})</span>
             </div>
-          </div>
+          </motion.div>
           
           <div className="timeline-grid">
             {inProgressItems.map((item, index) => (
-              <RoadmapCard key={`progress-${index}`} item={item} />
+              <motion.div
+                key={`progress-${index}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
+              >
+                <RoadmapCard item={item} />
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Planned Section */}
         <div className="timeline-section">
-          <div className="timeline-header">
+          <motion.div 
+            className="timeline-header"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+          >
             <div className="timeline-status timeline-status--planned">
               <Lightbulb size={20} />
               <h2>Upcoming Features</h2>
               <span className="timeline-count">({plannedItems.length})</span>
             </div>
-          </div>
+          </motion.div>
           
           <div className="timeline-grid">
             {plannedItems.map((item, index) => (
-              <RoadmapCard key={`planned-${index}`} item={item} />
+              <motion.div
+                key={`planned-${index}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.9 + index * 0.1 }}
+              >
+                <RoadmapCard item={item} />
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Contributing Section */}
-      <section className="roadmap-contribute">
+      <motion.section 
+        className="roadmap-contribute"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 1.2 }}
+      >
         <div className="contribute-content">
           <div className="contribute-text">
             <h2>Want to Contribute?</h2>
@@ -311,7 +374,7 @@ export default function Roadmap() {
             </Button>
           </div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 }
@@ -323,7 +386,11 @@ function RoadmapCard({ item }: { item: RoadmapItem }) {
   const CategoryIcon = categoryInfo.icon;
 
   return (
-    <div className={`roadmap-card roadmap-card--${item.status}`}>
+    <motion.div 
+      className={`roadmap-card roadmap-card--${item.status}`}
+      whileHover={{ scale: 1.02, y: -4 }}
+      transition={{ duration: 0.2 }}
+    >
       <div className="roadmap-card-header">
         <div className="roadmap-card-title">
           <h3>{item.title}</h3>
@@ -358,6 +425,6 @@ function RoadmapCard({ item }: { item: RoadmapItem }) {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
