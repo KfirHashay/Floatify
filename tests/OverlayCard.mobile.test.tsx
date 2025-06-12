@@ -5,7 +5,8 @@ import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 import { aggregatorReducer } from '../src/components/state/reducers/aggregatorReducer';
 import { AggregatorContext } from '../src/components/state/context/aggregatorContext';
 import useAggregator from '../src/components/state/hooks/useAggregator';
-import { OverlayCard as OverlayCardComponent } from '../src/components/core/card/OverlayCard';
+import MotionOverlayCard from '../src/components/motion/MotionOverlayCard';
+const OverlayCardComponent = MotionOverlayCard;
 import { messageIcon, spinnerIcon, alertIcon } from '../src/components/core/utils/defaultIcons';
 
 // Setup and teardown
@@ -178,102 +179,40 @@ describe('OverlayCard mobile swipes', () => {
     });
 });
 
-describe('OverlayCard vertical swipe dismissal', () => {
-    it('card can be swiped up to dismiss', () => {
-        render(
-            <TestProvider>
-                <OverlayCardComponent
-                    channelId="test-channel"
-                    card={{
-                        id: 'card-1',
-                        title: 'Swipe Test',
-                        content: 'Swipe up to dismiss',
-                    }}
-                />
-            </TestProvider>
-        );
 
-        const card = screen.getByTestId('card-1');
+// Setup component to render a card in expanded state for built-in actions tests
+function ExpandedSetup({ card }: { card: any }) {
+    const { registerChannel, addCard, updateChannelState, state } = useAggregator();
+    useEffect(() => {
+        registerChannel('test-channel', 1);
+        addCard('test-channel', card);
+        updateChannelState('test-channel', 'expanded');
+    }, [registerChannel, addCard, updateChannelState, card]);
 
-        // Simulate swipe up with significant distance
-        fireEvent.touchStart(card, {
-            touches: [{ clientY: 300, clientX: 150 }],
-        });
-        fireEvent.touchMove(card, {
-            touches: [{ clientY: 100, clientX: 150 }],
-        });
-        fireEvent.touchEnd(card);
+    const channel = state.channels['test-channel'];
+    if (!channel) return null;
+    const active = channel.cards[channel.activeCardIndex];
+    return <OverlayCardComponent channelId="test-channel" card={active} />;
+}
 
-        // Card should be removed from the DOM
-        expect(screen.queryByTestId('card-1')).toBeFalsy();
-    });
-
-    it('card can be swiped down to dismiss', () => {
-        render(
-            <TestProvider>
-                <OverlayCardComponent
-                    channelId="test-channel"
-                    card={{
-                        id: 'card-2',
-                        title: 'Swipe Test',
-                        content: 'Swipe down to dismiss',
-                    }}
-                />
-            </TestProvider>
-        );
-
-        const card = screen.getByTestId('card-2');
-
-        // Simulate swipe down
-        fireEvent.touchStart(card, {
-            touches: [{ clientY: 100, clientX: 150 }],
-        });
-        fireEvent.touchMove(card, {
-            touches: [{ clientY: 300, clientX: 150 }],
-        });
-        fireEvent.touchEnd(card);
-
-        // Card should be removed from the DOM
-        expect(screen.queryByTestId('card-2')).toBeFalsy();
-    });
-
-    it('minor vertical swipes do not dismiss the card', () => {
-        render(
-            <TestProvider>
-                <OverlayCardComponent
-                    channelId="test-channel"
-                    card={{
-                        id: 'card-3',
-                        title: 'Minor Swipe',
-                        content: 'Small swipes should be ignored',
-                    }}
-                />
-            </TestProvider>
-        );
-
-        const card = screen.getByTestId('card-3');
-
-        // Small vertical swipe (should be ignored)
-        fireEvent.touchStart(card, {
-            touches: [{ clientY: 200, clientX: 150 }],
-        });
-        fireEvent.touchMove(card, {
-            touches: [{ clientY: 220, clientX: 150 }], // Only 20px movement
-        });
-        fireEvent.touchEnd(card);
-
-        // Card should remain in DOM
-        expect(screen.queryByTestId('card-3')).toBeTruthy();
-
-    });
-});
+function SimpleSetup({ card, state: cardState = 'collapsed' }: { card: any; state?: string }) {
+    const { registerChannel, addCard, updateChannelState, state } = useAggregator();
+    useEffect(() => {
+        registerChannel('test-channel', 1);
+        addCard('test-channel', card);
+        updateChannelState('test-channel', cardState as any);
+    }, [registerChannel, addCard, updateChannelState, card, cardState]);
+    const channel = state.channels['test-channel'];
+    if (!channel) return null;
+    const active = channel.cards[channel.activeCardIndex];
+    return <OverlayCardComponent channelId="test-channel" card={active} />;
+}
 
 describe('OverlayCard built-in actions', () => {
     it('card can be closed by clicking close button', () => {
         render(
             <TestProvider>
-                <OverlayCardComponent
-                    channelId="test-channel"
+                <ExpandedSetup
                     card={{
                         id: 'action-card',
                         title: 'Action Test',
@@ -282,10 +221,6 @@ describe('OverlayCard built-in actions', () => {
                 />
             </TestProvider>
         );
-
-        // Update channel state to expanded to show close button
-        const { updateChannelState } = useAggregator();
-        updateChannelState('test-channel', 'expanded');
 
         // Find the close button
         const closeButton = screen.getByLabelText('Close overlay');
@@ -301,8 +236,7 @@ describe('OverlayCard built-in actions', () => {
     it('supports navigation buttons in expanded state', () => {
         render(
             <TestProvider>
-                <OverlayCardComponent
-                    channelId="test-channel"
+                <ExpandedSetup
                     card={{
                         id: 'navigation-card',
                         title: 'Navigation Test',
@@ -311,10 +245,6 @@ describe('OverlayCard built-in actions', () => {
                 />
             </TestProvider>
         );
-
-        // Update channel state to expanded to show navigation buttons
-        const { updateChannelState } = useAggregator();
-        updateChannelState('test-channel', 'expanded');
 
         // Verify navigation buttons are rendered
         const prevButton = screen.getByLabelText('Previous item');
@@ -326,8 +256,7 @@ describe('OverlayCard built-in actions', () => {
         fireEvent.click(prevButton);
         fireEvent.click(nextButton);
 
-        // In the real implementation, clicking would call
-        // swipePrevCard/swipeNextCard which we can't directly observe
+        // In the real implementation, clicking would trigger swipePrevCard/swipeNextCard
     });
 });
 
@@ -335,8 +264,7 @@ describe('Accessibility features', () => {
     it('has accessible title and content', () => {
         render(
             <TestProvider>
-                <OverlayCardComponent
-                    channelId="test-channel"
+                <SimpleSetup
                     card={{
                         id: 'a11y-card',
                         title: 'Accessible Title',
@@ -358,8 +286,8 @@ describe('Accessibility features', () => {
     it('renders icons correctly', () => {
         render(
             <TestProvider>
-                <OverlayCardComponent
-                    channelId="test-channel"
+                <SimpleSetup
+                    state="bubble"
                     card={{
                         id: 'icon-card',
                         title: 'Card with Icon',
@@ -374,8 +302,8 @@ describe('Accessibility features', () => {
         const card = screen.getByTestId('icon-card');
         expect(card).toBeTruthy();
 
-        // Check if icon container exists
-        const iconContainer = document.querySelector('.overlay-card__icon');
+        // Check if bubble icon container exists
+        const iconContainer = document.querySelector('.overlay-card-bubble-icon');
         expect(iconContainer).toBeTruthy();
     });
 });

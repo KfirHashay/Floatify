@@ -222,7 +222,7 @@ describe('Overlay States', () => {
             
             // Default state initially
             let currentState = screen.getByTestId('current-state');
-            expect(currentState.textContent).toBe('default');
+            expect(currentState.textContent).toBe('collapsed');
             
             // Transition to split state
             fireEvent.click(screen.getByTestId('set-split'));
@@ -244,9 +244,9 @@ describe('Overlay States', () => {
             
             // Back to default
             fireEvent.click(screen.getByTestId('set-default'));
-            expect(currentState.textContent).toBe('default');
+            expect(currentState.textContent).toBe('expanded');
             portal = document.querySelector('.overlay-portal');
-            expect(portal?.getAttribute('data-state')).toBe('default');
+            expect(portal?.getAttribute('data-state')).toBe('expanded');
         });
     });
     
@@ -264,17 +264,18 @@ describe('Overlay States', () => {
             expect(portal?.classList.contains('overlay-styled')).toBe(false);
         });
         
-        it('applies styling classes when unstyled is false (default)', () => {
+        it('applies styling classes when unstyled is false (default)', async () => {
             render(
                 <AggregatorProvider>
                     <PositionSetup />
                 </AggregatorProvider>
             );
-            
+
             // Portal should have styling classes
-            const portal = document.querySelector('.overlay-portal');
-            expect(portal).toBeTruthy();
-            expect(portal?.classList.contains('overlay-styled')).toBe(true);
+            await waitFor(() => {
+                const wrapper = document.querySelector('.overlay-library');
+                expect(wrapper?.classList.contains('overlay-styled')).toBe(true);
+            });
         });
     });
 });

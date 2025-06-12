@@ -55,6 +55,8 @@ describe('Floatify Component', () => {
     });
 
     it('supports deprecated sticky prop for backwards compatibility', () => {
+        const originalEnv = process.env.NODE_ENV;
+        process.env.NODE_ENV = 'development';
         const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
         render(
@@ -70,6 +72,7 @@ describe('Floatify Component', () => {
         expect(consoleSpy).toHaveBeenCalledWith('[Floatify] The `sticky` prop is deprecated. Use `fixedToViewport` instead.');
 
         consoleSpy.mockRestore();
+        process.env.NODE_ENV = originalEnv;
     });
 
     it('forwards all other props to AggregatorProvider', () => {
@@ -88,7 +91,8 @@ describe('Floatify Component', () => {
             </Floatify>
         );
 
-        expect(AggregatorProvider).toHaveBeenCalledWith(
+        const call = (AggregatorProvider as unknown as { mock: { calls: any[] } }).mock.calls[0][0];
+        expect(call).toEqual(
             expect.objectContaining({
                 debug: true,
                 position: 'bottom',
@@ -98,8 +102,7 @@ describe('Floatify Component', () => {
                 unstyled: true,
                 splitLoading: false,
                 fixedToViewport: true,
-            }),
-            expect.anything()
+            })
         );
     });
 });

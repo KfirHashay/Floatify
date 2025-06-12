@@ -115,6 +115,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
 
     return (
         <div
+            data-testid={card?.id}
             className={`overlay-card glass-effect ${stateClass} ${splitClass} ${directionClass}`}
             onClick={handleToggle}
             onTouchStart={handleTouchStart}
