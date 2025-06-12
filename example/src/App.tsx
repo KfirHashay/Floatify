@@ -6,7 +6,6 @@ import Home from './pages/Home'
 import Examples from './pages/Examples'
 import APIReference from './pages/APIReference'
 import Roadmap from './pages/Roadmap'
-import SplitBubbleExample from './pages/SplitBubbleExample'
 import { Position } from './types'
 
 // Centralized CSS imports
@@ -50,7 +49,6 @@ export default function App() {
               />
             }
           />
-          <Route path="/split-bubble" element={<SplitBubbleExample />} />
           <Route path="/api" element={<APIReference />} />
           <Route path="/roadmap" element={<Roadmap />} />
         </Routes>

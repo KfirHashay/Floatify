@@ -40,7 +40,7 @@ export default function Demo({
       title: 'Loading…',
       content: 'Please wait',
       bubbleIcon: <Loader2 className="spin" />,
-      autoDismiss: false // Don't auto-dismiss loading states
+      autoDismiss: false
     })
 
     setTimeout(() => {
@@ -51,7 +51,7 @@ export default function Demo({
         content: 'Operation successful',
         bubbleIcon: <CheckCircle />,
         autoDismiss: true,
-        autoDismissDuration: 2000 // Shorter duration for success messages
+        autoDismissDuration: 2000
       })
     }, 1500)
   }
@@ -61,7 +61,7 @@ export default function Demo({
       id: Date.now().toString(),
       title: 'Persistent Message',
       content: 'This message will not auto-dismiss. Click to expand and dismiss manually.',
-      autoDismiss: false // This card won't auto-dismiss
+      autoDismiss: false
     })
   }
 
