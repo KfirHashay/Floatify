@@ -15,6 +15,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
         removeCard,
         swipeNextCard,
         swipePrevCard,
+        config,
     } = useAggregator();
 
     const touchStartX = useRef<number | null>(null);
@@ -23,11 +24,25 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
     const [direction, setDirection] = useState<'next' | 'prev' | null>(null);
 
     const channel = state.channels[channelId];
-    if (!channel) return null;
+    
+    if (!channel) {
+        return null;
+    }
+
+    const { splitLoading, defaultBubbleIcons } = config;
 
     const isExpanded = channel.state === 'expanded';
     const isLoading = channel.state === 'loading';
-    const isIconOnly = channel.state === 'icon';
+    const isBubble = channel.state === 'bubble';
+    const isSplit = channel.state === 'split' || (isLoading && splitLoading);
+    const isHidden = channel.state === 'hidden';
+    const bubbleIconNode =
+        card?.bubbleIcon ??
+        (isLoading
+            ? defaultBubbleIcons.loading
+            : channel.state === 'alert'
+            ? defaultBubbleIcons.alert
+            : defaultBubbleIcons.message);
 
     // 🔹 Toggle expand/collapse on click
     const handleToggle = useCallback(() => {
@@ -35,28 +50,30 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             swipeTriggered.current = false;
             return;
         }
-        if (isLoading || isIconOnly) return;
+        if (isLoading || isBubble || isHidden) return;
         updateChannelState(channelId, isExpanded ? 'collapsed' : 'expanded');
-    }, [channelId, isExpanded, updateChannelState, isLoading, isIconOnly]);
+    }, [channelId, isExpanded, updateChannelState, isLoading, isBubble, isHidden]);
 
     const handleTouchStart = (e: React.TouchEvent) => {
-        if (isLoading || isIconOnly) return;
+        if (isLoading || isBubble || isHidden) return;
         touchStartX.current = e.touches[0].clientX;
         touchDeltaX.current = 0;
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
-        if (isLoading || isIconOnly) return;
+        if (isLoading || isBubble || isHidden) return;
         if (touchStartX.current !== null) {
             touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
         }
     };
 
     const handleTouchEnd = () => {
-        if (isLoading || isIconOnly) return;
+        if (isLoading || isBubble || isHidden) return;
         if (touchStartX.current === null) return;
+        
         const deltaX = touchDeltaX.current;
         const THRESHOLD = 50;
+        
         if (Math.abs(deltaX) >= THRESHOLD) {
             swipeTriggered.current = true;
             if (deltaX < 0) {
@@ -66,8 +83,14 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                 setDirection('prev');
                 swipePrevCard(channelId);
             }
-            setTimeout(() => setDirection(null), 200);
+            
+            // Reset direction after animation completes
+            setTimeout(() => {
+                setDirection(null);
+                swipeTriggered.current = false;
+            }, 200); // Match animation duration
         }
+        
         touchStartX.current = null;
         touchDeltaX.current = 0;
     };
@@ -79,17 +102,20 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             ? 'overlay-card--swipe-right'
             : '';
 
-    const stateClass = isLoading
+    const stateClass = isHidden
+        ? 'overlay-card--hidden'
+        : isLoading
         ? 'overlay-card--loading'
-        : isIconOnly
-        ? 'overlay-card--icon'
+        : isBubble
+        ? 'overlay-card--bubble'
         : isExpanded
         ? 'overlay-card--expanded'
         : 'overlay-card--collapsed';
+    const splitClass = isSplit ? 'overlay-card--split' : '';
 
     return (
         <div
-            className={`overlay-card ${stateClass} ${directionClass}`}
+            className={`overlay-card glass-effect ${stateClass} ${splitClass} ${directionClass}`}
             onClick={handleToggle}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -97,7 +123,7 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
             role="button"
             tabIndex={0}
             aria-expanded={isExpanded}
-            aria-label={`Overlay Card - ${card?.title ?? ''}`}
+            aria-label={`Overlay Card - ${card?.title ?? 'Loading'}`}
             onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -105,46 +131,77 @@ export function OverlayCard({ channelId, card }: OverlayCardProps) {
                 }
             }}
         >
-            {/* 🔹 Loading State */}
-            {isLoading && (
-                <>
-                    <LoadingIndicator />
-                    {card?.title && (
-                        <span className="overlay-card-title">{card.title}</span>
-                    )}
-                </>
-            )}
 
-            {/* 🔹 Icon Only State */}
-            {isIconOnly && card?.icon && (
-                <div className="overlay-card-icon" aria-hidden="true">
-                    {card.icon}
-                </div>
-            )}
-
-            {/* 🔹 Normal Content */}
-            {!isLoading && !isIconOnly && card && (
+            {isSplit ? (
                 <>
-                    {card.icon && (
-                        <div className="overlay-card-icon" aria-hidden="true">
-                            {card.icon}
-                        </div>
-                    )}
-                    <div className="overlay-card-content">
-                        <h3 className="overlay-card-title">{card.title}</h3>
-                        <p
-                            className="overlay-card-body"
-                            style={{
-                                opacity: isExpanded ? 1 : 0,
-                                height: isExpanded ? 'auto' : 0,
-                            }}
-                        >
-                            {card.content}
-                        </p>
+                    <div className="overlay-card-split-main">
+                        {isLoading ? (
+                            <>
+                                <LoadingIndicator />
+                                {card?.title && (
+                                    <span className="overlay-card-title">{card.title}</span>
+                                )}
+                            </>
+                        ) : (
+                            !isHidden && card && (
+                                <>
+                                    <div className="overlay-card-content">
+                                        {card.title && (
+                                            <h3 className="overlay-card-title">{card.title}</h3>
+                                        )}
+                                        <p className="overlay-card-body">{card.content}</p>
+                                    </div>
+                                </>
+                            )
+                        )}
+                    </div>
+                    <div
+                        className="overlay-card-split-bubble"
+                        role="button"
+                        aria-label={card?.title ? `Show ${card.title}` : 'Show overlay'}
+                        aria-haspopup="true"
+                    >
+                        {bubbleIconNode}
                     </div>
                 </>
-            )}
+            ) : (
+                <>
+                    {/* 🔹 Loading State */}
+                    {isLoading && (
+                        <>
+                            <LoadingIndicator />
+                            {card?.title && (
+                                <span className="overlay-card-title">{card.title}</span>
+                            )}
+                        </>
+                    )}
 
+
+                    {/* 🔹 Bubble State */}
+                    {isBubble && (
+                        <div
+                            className="overlay-card-bubble-icon"
+                            role="button"
+                            aria-label={card?.title ? `Show ${card.title}` : 'Show overlay'}
+                            aria-haspopup="true"
+                        >
+                            {bubbleIconNode}
+                        </div>
+                    )}
+
+                    {/* 🔹 Normal Content */}
+                    {!isLoading && !isBubble && !isHidden && card && (
+                        <>
+                            <div className="overlay-card-content">
+                                {card.title && (
+                                    <h3 className="overlay-card-title">{card.title}</h3>
+                                )}
+                                <p className="overlay-card-body">{card.content}</p>
+                            </div>
+                        </>
+                    )}
+                </>
+            )}
             {/* 🔹 Actions (only in expanded mode) */}
             {isExpanded && (
                 <div className="overlay-card-actions">

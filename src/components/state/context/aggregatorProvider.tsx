@@ -5,11 +5,13 @@ import React, {
     useRef,
     useCallback,
     PropsWithChildren,
+    ReactNode,
 } from 'react';
 import { aggregatorReducer } from '../reducers/aggregatorReducer';
 import { OverlayAggregatorState, OverlayAggregatorAction } from '../types';
 import { AggregatorContext } from './aggregatorContext';
 import { OverlayPortal } from '../../core/portal';
+import { messageIcon, spinnerIcon, alertIcon } from '../../core/utils/defaultIcons';
 import '../../style/index.css';
 
 // Possible concurrency modes
@@ -41,9 +43,10 @@ export interface AggregatorProviderConfig {
     unstyled?: boolean;
 
     /**
-     * Keep the overlay fixed to the viewport when scrolling.
+     * Keep the overlay fixed to the viewport (renamed from 'sticky' for clarity).
+     * Default is true.
      */
-    sticky?: boolean;
+    fixedToViewport?: boolean;
 
     /**
      * Preferred placement for the overlay portal. Use only `top` or `bottom`
@@ -57,6 +60,21 @@ export interface AggregatorProviderConfig {
         | 'top-right'
         | 'bottom-left'
         | 'bottom-right';
+
+    /**
+     * When true, the loading state uses the split layout.
+     * Defaults to true.
+     */
+    splitLoading?: boolean;
+
+    /**
+     * Icons used when a bubble icon isn't supplied.
+     */
+    defaultBubbleIcons?: {
+        message: ReactNode;
+        loading: ReactNode;
+        alert: ReactNode;
+    };
 }
 
 export interface AggregatorProviderProps extends PropsWithChildren<AggregatorProviderConfig> {}
@@ -80,13 +98,19 @@ const initialAggregatorState: OverlayAggregatorState = {
 export default function AggregatorProvider({
     children,
     concurrencyMode = 'single',
-    autoDismiss = false,
+    autoDismiss = true, // FIXED: Changed default to true
     autoDismissTimeout = 3000,
     debug = false,
     portalRoot,
     unstyled = false,
-    sticky = false,
+    fixedToViewport = true,
     position = 'top',
+    splitLoading = true,
+    defaultBubbleIcons = {
+        message: messageIcon,
+        loading: spinnerIcon,
+        alert: alertIcon,
+    },
 }: AggregatorProviderProps) {
     const [state, baseDispatch] = useReducer(aggregatorReducer, initialAggregatorState);
 
@@ -96,6 +120,9 @@ export default function AggregatorProvider({
     useEffect(() => {
         stateRef.current = state;
     }, [state]);
+
+    // Ref to track active auto-dismiss timeouts with improved key management
+    const timeoutsRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
 
     // Dispatch wrapper that logs action and state transitions when debug is enabled
     const debugDispatch = useCallback(
@@ -117,20 +144,86 @@ export default function AggregatorProvider({
     // Use the debug wrapper only when the flag is true
     const dispatch = debug ? debugDispatch : baseDispatch;
 
-    // If concurrencyMode = 'priority', you might do additional logic in the aggregator reducer
-    // or here in a side effect (e.g., watch new channels or new cards and auto-select highest priority).
-    // Currently, we rely on aggregatorReducer logic for concurrency.
-
-    // Auto-dismiss example: watch for newly added cards and set a timer
+    // FIXED: Improved auto-dismiss logic with better timeout management
     useEffect(() => {
-        if (!autoDismiss) return;
-        // Minimal example: you could track newly added cards. In practice, you'd store times or track item changes.
-    }, [autoDismiss, autoDismissTimeout, state.channels]);
+        if (!autoDismiss) {
+            // Clear all timeouts if auto-dismiss is disabled
+            timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
+            timeoutsRef.current.clear();
+            if (debug) {
+                console.log('[Floatify] Auto-dismiss disabled, clearing all timeouts');
+            }
+            return;
+        }
+
+        // Clear existing timeouts
+        timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
+        timeoutsRef.current.clear();
+
+        if (debug) {
+            console.log('[Floatify] Setting up auto-dismiss timers');
+        }
+
+        // Set up auto-dismiss for all active cards
+        Object.values(state.channels).forEach((channel) => {
+            channel.cards.forEach((card) => {
+                // FIXED: Improved card-level auto-dismiss logic
+                const shouldAutoDismiss = card.autoDismiss !== undefined ? card.autoDismiss : autoDismiss;
+                
+                if (shouldAutoDismiss) {
+                    // Use card-specific duration or global timeout
+                    const duration = card.autoDismissDuration || autoDismissTimeout;
+                    
+                    // FIXED: Use unique key combining channelId and cardId
+                    const timeoutKey = `${channel.channelId}-${card.id}`;
+                    
+                    if (debug) {
+                        console.log(`[Floatify] Setting auto-dismiss timer for card ${card.id} in channel ${channel.channelId} (${duration}ms)`);
+                    }
+                    
+                    const timeoutId = setTimeout(() => {
+                        try {
+                            if (debug) {
+                                console.log(`[Floatify] Auto-dismissing card ${card.id} from channel ${channel.channelId} after ${duration}ms`);
+                            }
+                            dispatch({
+                                type: 'REMOVE_CARD',
+                                payload: {
+                                    channelId: channel.channelId,
+                                    cardId: card.id,
+                                },
+                            });
+                        } catch (error) {
+                            console.error('[Floatify] Error during auto-dismiss:', error);
+                        } finally {
+                            // Clean up the timeout reference
+                            timeoutsRef.current.delete(timeoutKey);
+                        }
+                    }, duration);
+
+                    // Store the timeout reference with unique key
+                    timeoutsRef.current.set(timeoutKey, timeoutId);
+                } else if (debug) {
+                    console.log(`[Floatify] Card ${card.id} in channel ${channel.channelId} has auto-dismiss disabled`);
+                }
+            });
+        });
+
+        // Cleanup function
+        return () => {
+            timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
+            timeoutsRef.current.clear();
+        };
+    }, [state.channels, autoDismiss, autoDismissTimeout, dispatch, debug]);
 
     // Memoize the context value so we don't cause re-renders beyond the aggregator state changes
     const contextValue = useMemo(() => {
-        return { state, dispatch };
-    }, [state, dispatch]);
+        return {
+            state,
+            dispatch,
+            config: { splitLoading, defaultBubbleIcons },
+        };
+    }, [state, dispatch, splitLoading, defaultBubbleIcons]);
 
     return (
         <AggregatorContext.Provider value={contextValue}>
@@ -141,7 +234,7 @@ export default function AggregatorProvider({
                 concurrencyMode={concurrencyMode}
                 unstyled={unstyled}
                 autoDismiss={autoDismiss}
-                sticky={sticky}
+                fixedToViewport={fixedToViewport}
                 position={position}
                 // autoDismissTimeout={autoDismissTimeout}
             />

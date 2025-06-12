@@ -1,0 +1,11 @@
+/* =====================================================
+   🎞️ Overlay Motion · Index
+   -----------------------------------------------------
+   Single entry‑point that aggregates every animation
+   sheet, so consumers just @import this file once.
+   ===================================================== */
+
+@import './motion-core.css';
+@import './motion-feedback.css';
+@import './motion-loading.css';
+@import './motion-accessibility.css';

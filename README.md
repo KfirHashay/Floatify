@@ -87,10 +87,9 @@ On mobile devices only `top` or `bottom` positions are recommended.
 </Floatify>
 ```
 
-### Loading & Icon States
+### Loading & Bubble State
 
-Set a channel to `'loading'` to show a spinner or `'icon'` to display just the icon.
-A typical pattern is to drive this from a loading boolean:
+Set a channel to `'loading'` to show a spinner and switch to `'bubble'` once loading completes. A typical pattern is to drive this from a loading boolean:
 
 ```tsx
 const { registerChannel, updateChannelState } = useAggregator();
@@ -104,7 +103,35 @@ useEffect(() => {
   updateChannelState('playback', loading ? 'loading' : 'collapsed');
 }, [loading, updateChannelState]);
 
-// later: setLoading(false); updateChannelState('playback', 'icon');
+// later: setLoading(false); updateChannelState('playback', 'bubble');
+```
+
+### Split Loading & Bubble Icons
+
+Use the `splitLoading` prop to show the split layout while a channel is loading.
+Provide bubble icons globally through `defaultBubbleIcons` or per card via the
+`bubbleIcon` field.
+
+```tsx
+import { MessageCircle, Loader2, Bell, AlertCircle } from 'lucide-react';
+
+<Floatify
+  splitLoading
+  defaultBubbleIcons={{
+    message: <MessageCircle />,
+    loading: <Loader2 className="animate-spin" />,
+    alert: <AlertCircle />
+  }}
+>
+  {/* rest of your app */}
+</Floatify>
+
+addCard('updates', {
+  id: 'done',
+  title: 'Complete',
+  content: 'Process finished',
+  bubbleIcon: <Bell />
+});
 ```
 
 ## Debug Mode
@@ -125,9 +152,34 @@ the action object and the next state, helping you trace overlay updates.
 
 The `example` folder doubles as the documentation site. After running the steps in the *Linking the local build* section above, run `npm run dev` inside `example` and visit `http://localhost:5173` to explore the docs and interactive demos.
 
+### Split & Bubble Demo
+
+Navigate to **Examples → Split & Bubble Demo** to see how split loading and custom bubble icons work together. The page registers a `demo-split` channel and updates it to the `split` state after adding a card:
+
+```tsx
+addCard('demo-split', {
+  id: '1',
+  title: 'Processing...',
+  content: 'Demonstrating the split layout during loading.',
+  bubbleIcon: <Bell />
+});
+updateChannelState('demo-split', 'split');
+```
+
 ## Accessibility
 
 Overlay updates are announced to assistive technologies using a polite live region. Overlay cards are focusable and respond to **Enter** or **Space** so keyboard users can toggle or dismiss them.
+
+## Running Tests
+
+Install dependencies and execute the test suite with:
+
+```bash
+npm install
+npm test
+```
+
+The `test` script runs `vitest` in single-run mode so it exits after completing all tests.
 
 ## Roadmap
 

@@ -1,0 +1,20 @@
+/* =======================================================
+   🌟 Overlay Card - Main Import File
+   - Master file that imports all overlay card modules
+   - Makes maintenance and extension easier
+========================================================== */
+
+/* Import base styles */
+@import './base.css';
+
+/* Import state-specific styles */
+@import './states.css';
+
+/* Import interactions */
+@import './interactions.css';
+
+/* Import UI components */
+@import './components.css';
+
+/* Import responsive styles */
+@import './responsive.css';

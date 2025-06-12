@@ -94,12 +94,26 @@ export function aggregatorReducer(state: OverlayAggregatorState, action: Overlay
                 },
             };
 
-            // Optional concurrency example:
-            // If a card is added to a higher-priority channel, switch active
+            // FIXED: When adding a card, automatically show the channel with proper immutability
             if (action.type === 'ADD_CARD') {
-                const newChannelPriority = updatedChannel.priority;
-                const currentActive = nextState.activeChannelId ? nextState.channels[nextState.activeChannelId] : null;
+                // Create a new channel object with proper state transition
+                const visibleChannel: Channel = {
+                    ...updatedChannel,
+                    // If channel is hidden, show it as collapsed
+                    state: updatedChannel.state === 'hidden' ? 'collapsed' : updatedChannel.state,
+                };
 
+                nextState = {
+                    ...nextState,
+                    channels: {
+                        ...nextState.channels,
+                        [channelId]: visibleChannel,
+                    },
+                };
+
+                // Set as active channel if higher priority or no active channel
+                const newChannelPriority = visibleChannel.priority;
+                const currentActive = nextState.activeChannelId ? nextState.channels[nextState.activeChannelId] : null;
                 const isHigherPriority = !currentActive || newChannelPriority > currentActive.priority;
 
                 if (isHigherPriority) {

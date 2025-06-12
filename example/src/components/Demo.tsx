@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react'
 import { useAggregator } from 'floatify'
-import { CheckCircle, Loader2 } from 'lucide-react'
+import { CheckCircle, Loader2, Sparkles, Zap, Bell } from 'lucide-react'
+import Button from './Button'
 import { Position, POSITIONS } from '../types'
 
 interface Props {
-  sticky: boolean
+  fixedToViewport: boolean
   position: Position
-  onStickyChange: (value: boolean) => void
+  onFixedToViewportChange: (value: boolean) => void
   onPositionChange: (value: Position) => void
 }
 
 export default function Demo({
-  sticky,
+  fixedToViewport,
   position,
-  onStickyChange,
+  onFixedToViewportChange,
   onPositionChange
 }: Props) {
   const { registerChannel, addCard, removeCard } = useAggregator()
@@ -26,7 +27,9 @@ export default function Demo({
     addCard('demo', {
       id: Date.now().toString(),
       title: 'Hello from Floatify',
-      content: 'This card was triggered by a button click.'
+      content: 'This card was triggered by a button click.',
+      autoDismiss: true,
+      autoDismissDuration: 3000
     })
   }
 
@@ -36,7 +39,8 @@ export default function Demo({
       id,
       title: 'Loading…',
       content: 'Please wait',
-      icon: <Loader2 className="spin" />
+      bubbleIcon: <Loader2 className="spin" />,
+      autoDismiss: false // Don't auto-dismiss loading states
     })
 
     setTimeout(() => {
@@ -45,9 +49,20 @@ export default function Demo({
         id: `${id}-done`,
         title: 'Complete',
         content: 'Operation successful',
-        icon: <CheckCircle />
+        bubbleIcon: <CheckCircle />,
+        autoDismiss: true,
+        autoDismissDuration: 2000 // Shorter duration for success messages
       })
     }, 1500)
+  }
+
+  const handlePersistent = () => {
+    addCard('demo', {
+      id: Date.now().toString(),
+      title: 'Persistent Message',
+      content: 'This message will not auto-dismiss. Click to expand and dismiss manually.',
+      autoDismiss: false // This card won't auto-dismiss
+    })
   }
 
   const handlePositionChange = (value: string) => {
@@ -62,21 +77,48 @@ export default function Demo({
         <label>
           <input
             type="checkbox"
-            checked={sticky}
-            onChange={(e) => onStickyChange(e.target.checked)}
-          />{' '}
-          Sticky
+            checked={fixedToViewport}
+            onChange={(e) => onFixedToViewportChange(e.target.checked)}
+          />
+          Fixed to viewport
         </label>
         <select value={position} onChange={(e) => handlePositionChange(e.target.value)}>
           {POSITIONS.map((pos) => (
             <option key={pos} value={pos}>
-              {pos}
+              {pos.charAt(0).toUpperCase() + pos.slice(1)}
             </option>
           ))}
         </select>
       </div>
-      <button onClick={handleShow}>Show Card</button>
-      <button onClick={handleLoading}>Loading Example</button>
+      
+      <div className="btn-group">
+        <Button 
+          variant="primary" 
+          onClick={handleShow}
+          leftIcon={<Sparkles size={16} />}
+          enhanced
+        >
+          Auto-Dismiss (3s)
+        </Button>
+        
+        <Button 
+          variant="secondary" 
+          onClick={handleLoading}
+          leftIcon={<Zap size={16} />}
+          enhanced
+        >
+          Loading Example
+        </Button>
+        
+        <Button 
+          variant="ghost" 
+          onClick={handlePersistent}
+          leftIcon={<Bell size={16} />}
+          enhanced
+        >
+          Persistent Message
+        </Button>
+      </div>
     </div>
   )
 }

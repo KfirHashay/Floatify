@@ -1,0 +1,119 @@
+/* =====================================================
+   🌟 Overlay Card · State Variants
+   -----------------------------------------------------
+   Pure state-token rules – no base styles here.  Relies on
+   motion-core keyframes (di-expand / di-collapse etc.).
+   ===================================================== */
+
+/* ---------- Loading (circular) ---------- */
+:where(.overlay-styled .overlay-card--loading) {
+  /* square bubble */
+  inline-size : var(--overlay-collapsed-height, 44px);
+  block-size  : var(--overlay-collapsed-height, 44px);
+  border-radius: 50%;
+  display: flex;
+  place-content: center;
+  padding: var(--overlay-padding-sm, 8px);
+}
+
+/* ---------- Collapsed (pill) ---------- */
+:where(.overlay-styled .overlay-card--collapsed) {
+  inline-size : var(--overlay-collapsed-width, 160px);
+  block-size  : var(--overlay-collapsed-height, 44px);
+  border-radius: calc(var(--overlay-collapsed-height, 44px) / 2);
+  padding: var(--overlay-padding-sm, 8px) var(--overlay-padding-md, 12px);
+  transform-origin: center;
+}
+
+/* ---------- Bubble ---------- */
+:where(.overlay-styled .overlay-card--bubble) {
+  inline-size : var(--overlay-collapsed-height, 44px);
+  block-size  : var(--overlay-collapsed-height, 44px);
+  border-radius: 50%;
+  display: flex;
+  place-content: center;
+  padding: var(--overlay-padding-sm, 8px);
+}
+
+/* ---------- Split (pill + bubble) ---------- */
+:where(.overlay-styled .overlay-card--split) {
+  inline-size : calc(var(--overlay-collapsed-width, 160px) + var(--overlay-collapsed-height, 44px) + var(--overlay-gap-sm, 6px));
+  block-size  : var(--overlay-collapsed-height, 44px);
+  border-radius: calc(var(--overlay-collapsed-height, 44px) / 2);
+  padding: var(--overlay-padding-sm, 8px) var(--overlay-padding-md, 12px);
+  gap: var(--overlay-gap-md, 10px);
+  justify-content: space-between;
+}
+
+/* ---------- Expanded (card) ---------- */
+:where(.overlay-styled .overlay-card--expanded) {
+  inline-size : var(--overlay-expanded-width, 400px);
+  min-block-size: var(--overlay-expanded-height, 160px);
+  max-block-size: min(80vh, calc(var(--overlay-expanded-height,160px) * 2));
+  padding: var(--overlay-padding-lg, 16px);
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: var(--overlay-gap-md, 10px);
+  transform-origin: top center;
+  overflow: visible;
+  animation: di-expand var(--di-duration-normal, 400ms) var(--di-spring-timing-bounce) forwards;
+}
+
+/* Expanded – internal adjustments */
+:where(.overlay-styled .overlay-card--expanded .overlay-card-content) {
+  flex-direction: column;
+  place-items: center;
+  text-align: center;
+  width: 100%;
+  flex: 1 1 auto;
+  animation: di-enter 300ms var(--di-spring-timing-subtle) both;
+}
+
+:where(.overlay-styled .overlay-card--expanded .overlay-card-title) {
+  font-size: var(--overlay-font-size-lg, 18px);
+  white-space: normal;
+  text-align: center;
+}
+
+:where(.overlay-styled .overlay-card--expanded .overlay-card-body) {
+  opacity: 1;
+  overflow-y: auto;
+  max-block-size: min(60vh, calc(var(--overlay-expanded-height,160px) * 2));
+  width: 100%;
+  white-space: normal;
+  margin: var(--overlay-gap-sm, 6px) 0;
+  padding: 0 var(--overlay-padding-sm, 8px);
+  box-sizing: border-box;
+}
+
+:where(.overlay-styled .overlay-card--expanded .overlay-card-actions) {
+  display: flex;
+  opacity: 1;
+}
+
+/* ---------- Hidden ---------- */
+:where(.overlay-styled .overlay-card--hidden) {
+  pointer-events: none;
+  animation: di-exit var(--di-duration-normal, 400ms) var(--di-ease-out) forwards;
+}
+
+/* ---------- Alert (pulse) ---------- */
+:where(.overlay-styled .overlay-card--alert) {
+  background: var(--di-alert-bg, rgba(255,69,58,.98));
+  color: #fff;
+  border-radius: calc(var(--overlay-collapsed-height, 44px) / 2);
+  animation: di-pulse 2.5s infinite var(--di-spring-timing-bounce);
+  box-shadow: 0 8px 24px rgba(255, 69, 58, .4), 0 2px 8px rgba(255,69,58,.3);
+}
+
+/* ---------- Split bubble hover (already in interactions but required for motion safety) ---------- */
+:where(.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble) {
+  transform: scale(0);
+}
+
+/* ---------- Loading spinner icon size ---------- */
+:where(.overlay-styled .overlay-card--loading .overlay-card-icon) {
+  inline-size: 24px;
+  block-size : 24px;
+}

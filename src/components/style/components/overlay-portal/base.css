@@ -1,0 +1,44 @@
+/* =======================================================
+   🌟 Overlay Portal Base Styles
+   - Core styling for the overlay portal component
+   - Base dimensions and visual appearance
+   - Uses common .glass-effect class for glassmorphism styling
+========================================================== */
+/* === Overlay Portal – Base === */
+.overlay-styled .overlay-portal {
+  position: relative;
+  /* Layout safety */
+  flex: 0 0 auto;
+    background: none;
+    box-shadow: none;
+  /* UX */
+  user-select: none;    /* Remove if you allow text copy */
+  cursor: pointer;      /* Scope to interactive child if needed */
+
+  /* Visual hierarchy */
+  z-index: var(--di-z-index, 9999);
+
+  /* Animations */
+  transition: var(--di-overlay-transition);
+  will-change: transform, opacity;
+  contain: paint;      
+}
+
+/* wrapper that does not mess with layout */
+.overlay-styled .overlay-container {
+  display: contents;
+  pointer-events: none;
+}
+
+
+/* Library root injected at document level */
+.overlay-library {
+  position: absolute;
+  inset: 0 0 auto;      /* top/left 0, width/height 0 */
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: var(--di-z-index, 9999);
+  overflow: visible;
+}
+

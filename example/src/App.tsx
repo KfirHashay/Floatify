@@ -4,11 +4,13 @@ import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Examples from './pages/Examples'
+import APIReference from './pages/APIReference'
 import Roadmap from './pages/Roadmap'
+import SplitBubbleExample from './pages/SplitBubbleExample'
 import { Position } from './types'
 
-import './index.css'
-
+// Centralized CSS imports
+import './styles/index.css'
 
 export default function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -19,29 +21,21 @@ export default function App() {
     )
   })
 
-  const [sticky, setSticky] = useState(false)
+  const [fixedToViewport, setFixedToViewport] = useState(false)
   const [position, setPosition] = useState<Position>('top')
 
   useEffect(() => {
     const html = document.documentElement
     html.dataset.theme = theme
-
-    let meta = document.querySelector('meta[name="color-scheme"]')
-    if (!meta) {
-      meta = document.createElement('meta')
-      meta.setAttribute('name', 'color-scheme')
-      document.head.appendChild(meta)
-    }
-    meta.setAttribute('content', theme)
     localStorage.setItem('theme', theme)
   }, [theme])
 
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark')
-  const handleStickyChange = (value: boolean) => setSticky(value)
+  const handleFixedToViewportChange = (value: boolean) => setFixedToViewport(value)
   const handlePositionChange = (value: Position) => setPosition(value)
 
   return (
-    <Floatify concurrencyMode="multiple" debug sticky={sticky} position={position}>
+    <Floatify concurrencyMode="multiple" debug fixedToViewport={fixedToViewport} position={position}>
       <Layout theme={theme} onToggleTheme={toggleTheme}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -49,13 +43,15 @@ export default function App() {
             path="/examples"
             element={
               <Examples
-                sticky={sticky}
+                fixedToViewport={fixedToViewport}
                 position={position}
-                onStickyChange={handleStickyChange}
+                onFixedToViewportChange={handleFixedToViewportChange}
                 onPositionChange={handlePositionChange}
               />
             }
           />
+          <Route path="/split-bubble" element={<SplitBubbleExample />} />
+          <Route path="/api" element={<APIReference />} />
           <Route path="/roadmap" element={<Roadmap />} />
         </Routes>
       </Layout>

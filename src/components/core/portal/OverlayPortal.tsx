@@ -1,7 +1,7 @@
 /**
  * OverlayPortal.tsx
  *
- * Manages overlay rendering through React Portal.
+ * Fixed portal rendering with minimal DOM impact and proper positioning
  */
 import React, { JSX } from 'react';
 import ReactDOM from 'react-dom';
@@ -14,7 +14,7 @@ interface OverlayPortalProps {
     portalRoot?: HTMLElement;
     unstyled?: boolean;
     autoDismiss?: boolean;
-    sticky?: boolean;
+    fixedToViewport?: boolean;
     position?:
         | 'top'
         | 'bottom'
@@ -28,34 +28,40 @@ interface OverlayPortalProps {
 export function OverlayPortal({
     concurrencyMode = 'single',
     portalRoot,
-    unstyled,
-    sticky = false,
+    unstyled = false,
+    fixedToViewport = false,
     position = 'top',
 }: OverlayPortalProps) {
-    const overlayClass = `overlay-library ${unstyled ? '' : 'overlay-styled'}`;
     const { state, getActiveChannel, getActiveCard } = useAggregator();
     const root = portalRoot ?? document.body;
 
     // 🔹 SINGLE CONCURRENCY MODE: Only show the active channel's card
     if (concurrencyMode === 'single') {
         const activeChannel = getActiveChannel();
+        
         // Nothing to render when there is no active channel
         if (!activeChannel) return null;
 
         const activeCard = getActiveCard(activeChannel.channelId);
-        if (!activeCard &&
-            activeChannel.state !== 'loading' &&
-            activeChannel.state !== 'icon') {
-            return null;
-        }
+        
+        // Show overlay if there's a card or the channel is in a visible state
+        const shouldShow =
+            activeCard ||
+            activeChannel.state === 'loading' ||
+            activeChannel.state === 'split' ||
+            activeChannel.state === 'bubble';
+        
+        if (!shouldShow) return null;
+
+        const overlayClass = `overlay-library ${unstyled ? '' : 'overlay-styled'}`;
 
         return ReactDOM.createPortal(
             <div className={overlayClass}>
                 <div role="status" aria-live="polite">
                     <DefaultOverlay
                         channelId={activeChannel.channelId}
-                        cardId={activeCard?.id}
-                        sticky={sticky}
+                        card={activeCard}
+                        fixedToViewport={fixedToViewport}
                         position={position}
                     />
                 </div>
@@ -67,10 +73,25 @@ export function OverlayPortal({
     // 🔹 MULTIPLE CONCURRENCY MODE: Display multiple active overlays
     const activeChannels = Object.values(state.channels).filter(
         (ch) =>
-            ch.cards.length > 0 || ch.state === 'loading' || ch.state === 'icon'
+            ch.cards.length > 0 ||
+            ch.state === 'loading' ||
+            ch.state === 'split' ||
+            ch.state === 'bubble'
     );
+    
     // Nothing to render if no channel currently holds cards
     if (activeChannels.length === 0) return null;
+
+    const overlayClass = `overlay-library ${unstyled ? '' : 'overlay-styled'}`;
+
+    // Create container with fixed positioning for multiple overlays
+    const multipleContainerClasses = [
+        'overlay-multiple-container',
+        fixedToViewport ? 'overlay-multiple-container--fixed' : '',
+        `overlay-multiple-container--${position}`,
+    ]
+        .filter(Boolean)
+        .join(' ');
 
     const overlays = activeChannels
         .map((channel) => {
@@ -79,23 +100,18 @@ export function OverlayPortal({
                 <DefaultOverlay
                     key={channel.channelId}
                     channelId={channel.channelId}
-                    cardId={activeCard?.id}
-                    sticky={sticky}
-                    position={position}
+                    card={activeCard}
+                    fixedToViewport={false} // Individual overlays don't need fixed positioning in multiple mode
+                    position="relative" // Use relative positioning within the container
                 />
             );
         }) as JSX.Element[];
 
-
-    // Guard against channels that have no active cards
-    if (overlays.length === 0) return null;
-
     return ReactDOM.createPortal(
         <div className={overlayClass}>
-            <div role="status" aria-live="polite" className="overlay-multiple-container">
+            <div role="status" aria-live="polite" className={multipleContainerClasses}>
                 {overlays}
             </div>
-
         </div>,
         root
     );
@@ -104,31 +120,39 @@ export function OverlayPortal({
 /**
  * DefaultOverlay
  *
- * Fetches the correct card from the aggregator and renders it.
+ * Minimal overlay component with proper positioning and no app interference
  */
 function DefaultOverlay({
     channelId,
-    cardId,
-    sticky,
+    card,
+    fixedToViewport,
     position,
 }: {
     channelId: string;
-    cardId?: string;
-    sticky: boolean;
+    card?: any;
+    fixedToViewport: boolean;
     position: string;
 }) {
-    const { removeCard, swipeNextCard, swipePrevCard, state } = useAggregator();
+    const { state } = useAggregator();
 
     const channel = state.channels[channelId];
     if (!channel) return null;
 
-    const card = cardId ? channel.cards.find((c) => c.id === cardId) : undefined;
-    if (!card && channel.state !== 'loading' && channel.state !== 'icon') return null;
+    // Show overlay if there's a card or the channel is visible
+    const shouldShow =
+        card ||
+        channel.state === 'loading' ||
+        channel.state === 'split' ||
+        channel.state === 'bubble';
+    
+    if (!shouldShow) return null;
 
+    // Build portal classes with proper positioning and glass effect
     const portalClasses = [
         'overlay-portal',
-        sticky ? 'overlay-portal--sticky' : '',
-        `overlay-portal--${position}`,
+        'glass-effect',
+        fixedToViewport ? 'overlay-portal--fixed' : '',
+        position !== 'relative' ? `overlay-portal--${position}` : '',
     ]
         .filter(Boolean)
         .join(' ');
@@ -139,9 +163,6 @@ function DefaultOverlay({
                 <DefaultCardUI
                     channelId={channelId}
                     card={card}
-                    //     onRemove={() => removeCard(channelId, cardId)}
-                    // onSwipeNext={() => swipeNextCard(channelId)}
-                    //   onSwipePrev={() => swipePrevCard(channelId)}
                 />
             </div>
         </div>

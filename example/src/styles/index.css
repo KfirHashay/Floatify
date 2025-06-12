@@ -1,0 +1,25 @@
+/* =======================================================
+   📦 Centralized CSS Imports - Example App
+   - All styles imported from a single entry point
+   - Proper import order for cascading
+   - Easy maintenance and organization
+========================================================== */
+
+/* Core Styles - Foundation */
+@import './globals.css';
+
+/* Layout Styles - Structure */
+@import './layout.css';
+
+/* Page Styles - Content */
+@import './pages.css';
+
+/* Component Styles - Interactive Elements */
+@import './examples.css';
+@import './api.css';
+@import './roadmap.css';
+
+/* Component Library Styles */
+@import './components/button.css';
+@import './components/code-block.css';
+@import './components/split-bubble-demo.css';

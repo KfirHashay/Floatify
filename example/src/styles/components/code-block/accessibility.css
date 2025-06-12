@@ -1,0 +1,285 @@
+/* =======================================================
+   ♿ CodeBlock Accessibility
+   - WCAG 2.1 AA compliance
+   - Screen reader support
+   - Keyboard navigation
+   - High contrast mode support
+   - Focus management
+========================================================== */
+
+/* Focus Management */
+.code-copy-btn:focus-visible {
+  outline: 2px solid var(--cb-accent);
+  outline-offset: 2px;
+  border-radius: var(--cb-border-radius);
+}
+
+.code-content:focus-visible {
+  outline: 2px solid var(--cb-accent);
+  outline-offset: -2px;
+}
+
+.code-line-number:focus-visible {
+  outline: 1px solid var(--cb-accent);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+/* Keyboard Navigation */
+.code-copy-btn {
+  /* Ensure button is keyboard accessible */
+  cursor: pointer;
+}
+
+.code-copy-btn:focus {
+  /* Remove default focus outline in favor of custom one */
+  outline: none;
+}
+
+.code-copy-btn:focus-visible {
+  /* Custom focus ring for keyboard users */
+  box-shadow: 
+    0 0 0 2px var(--cb-bg-primary),
+    0 0 0 4px var(--cb-accent);
+}
+
+/* Screen Reader Support */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Announce copy state changes */
+[aria-live="polite"] {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .code-block {
+    border-width: 2px;
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  
+  .code-header {
+    border-bottom-width: 2px;
+    border-bottom-color: ButtonText;
+    background: Canvas;
+  }
+  
+  .code-line-numbers {
+    border-right-width: 2px;
+    border-right-color: ButtonText;
+    background: Canvas;
+  }
+  
+  .code-copy-btn {
+    border-width: 2px;
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  
+  .code-copy-btn:hover {
+    background: Highlight;
+    color: HighlightText;
+  }
+  
+  .code-copy-btn:focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+  
+  .code-language-tag {
+    border-width: 2px;
+    border-color: ButtonText;
+    background: Canvas;
+    color: ButtonText;
+  }
+  
+  /* Ensure syntax highlighting is visible in high contrast */
+  .code-syntax .token {
+    color: ButtonText !important;
+  }
+  
+  .code-syntax .token.comment {
+    color: GrayText !important;
+  }
+  
+  .code-syntax .token.string {
+    color: ButtonText !important;
+    text-decoration: underline;
+  }
+  
+  .code-syntax .token.keyword {
+    color: ButtonText !important;
+    font-weight: bold;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .code-block,
+  .code-copy-btn,
+  .code-language-tag,
+  .code-line-number,
+  .code-copy-icon {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .code-copy-ripple {
+    display: none !important;
+  }
+  
+  .code-line-number::before {
+    display: none !important;
+  }
+  
+  /* Keep essential focus transitions */
+  .code-copy-btn:focus-visible {
+    transition: box-shadow 0.1s ease !important;
+  }
+}
+
+/* Color Blindness Support */
+@media (prefers-color-scheme: no-preference) {
+  /* Use patterns and shapes in addition to color for state indication */
+  .code-copy-btn--success::after {
+    content: '✓';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 12px;
+    height: 12px;
+    background: var(--cb-success);
+    border-radius: 50%;
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  
+  .code-copy-btn--error::after {
+    content: '!';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 12px;
+    height: 12px;
+    background: var(--cb-error);
+    border-radius: 50%;
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (pointer: coarse) {
+  .code-copy-btn {
+    /* Larger touch targets */
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+  }
+  
+  .code-line-number {
+    /* Larger touch targets for line numbers */
+    min-height: 24px;
+    padding: 2px var(--cb-padding-lg);
+  }
+  
+  /* Remove hover effects on touch devices */
+  .code-copy-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .code-language-tag:hover {
+    transform: none;
+    animation: none;
+  }
+  
+  .code-line-number:hover {
+    background: none;
+  }
+}
+
+/* Voice Control Support */
+.code-copy-btn[aria-label] {
+  /* Ensure voice control can target the button */
+  speak: normal;
+}
+
+/* Ensure proper reading order for screen readers */
+.code-block {
+  /* Establish reading order */
+  position: relative;
+}
+
+.code-header {
+  /* Header should be read first */
+  order: 1;
+}
+
+.code-content {
+  /* Content should be read after header */
+  order: 2;
+}
+
+/* Skip link for long code blocks */
+.code-block[data-long="true"]::before {
+  content: "Skip code block";
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--cb-bg-secondary);
+  color: var(--cb-text-primary);
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.code-block[data-long="true"]:focus-within::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Ensure proper contrast ratios */
+.code-block {
+  /* Minimum contrast ratio of 4.5:1 for normal text */
+  --cb-min-contrast: 4.5;
+}
+
+/* Language announcement for screen readers */
+.code-syntax[class*="language-"]::before {
+  content: attr(class);
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  speak: literal-punctuation;
+}

@@ -1,0 +1,8 @@
+/* =======================================================
+   💻 CodeBlock Component - Main Entry Point
+   - Imports modular CSS architecture
+   - Maintains backward compatibility
+   - Clean and organized structure
+========================================================== */
+
+@import './code-block/index.css';

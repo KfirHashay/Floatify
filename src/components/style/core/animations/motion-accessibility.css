@@ -1,0 +1,13 @@
+/* =====================================================
+   ♿ Overlay Motion · Accessibility overrides
+   -----------------------------------------------------
+   Disables complex motion for users that opt‑out.
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.overlay-styled [class*="overlay-"],
+        .overlay-styled .overlay-card) {
+    animation: none !important;
+    transition-duration: 0.01ms !important; /* near-zero but non‑zero to avoid some bugs */
+  }
+}

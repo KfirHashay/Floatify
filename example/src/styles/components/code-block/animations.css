@@ -1,0 +1,173 @@
+/* =======================================================
+   🎭 CodeBlock Animations
+   - Smooth transitions and micro-interactions
+   - Copy button ripple effects
+   - Hover and focus animations
+   - Performance-optimized animations
+========================================================== */
+
+/* Copy Ripple Animation */
+@keyframes copy-ripple {
+  to {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+  }
+}
+
+/* Fade In Animation */
+@keyframes code-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Spin Animation for Loading */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Block Entrance Animation */
+.code-block {
+  animation: code-fadeIn 0.5s var(--cb-transition-normal);
+}
+
+/* Hover Lift Animation */
+.code-block:hover {
+  animation: none; /* Prevent conflict with entrance animation */
+}
+
+/* Focus Ring Animation */
+@keyframes focus-ring {
+  0% {
+    box-shadow: 0 0 0 0 var(--cb-accent);
+  }
+  100% {
+    box-shadow: 0 0 0 4px transparent;
+  }
+}
+
+.code-copy-btn:focus-visible {
+  animation: focus-ring 0.6s ease-out;
+}
+
+/* Line Number Hover Animation */
+.code-line-number {
+  position: relative;
+  overflow: hidden;
+}
+
+.code-line-number::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left var(--cb-transition-normal);
+}
+
+.code-line-number:hover::before {
+  left: 100%;
+}
+
+/* Language Tag Pulse Animation */
+@keyframes language-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.code-language-tag:hover {
+  animation: language-pulse 0.6s ease-in-out;
+}
+
+/* Success State Animation */
+@keyframes success-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(-2px) scale(1.1);
+  }
+  40% {
+    transform: translateY(-4px) scale(1.15);
+  }
+  60% {
+    transform: translateY(-2px) scale(1.1);
+  }
+}
+
+.code-copy-btn--success {
+  animation: success-bounce 0.8s ease-out;
+}
+
+/* Error Shake Animation */
+@keyframes error-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+.code-copy-btn--error {
+  animation: error-shake 0.5s ease-out;
+}
+
+/* Smooth Theme Transitions */
+.code-block,
+.code-header,
+.code-content,
+.code-copy-btn,
+.code-language-tag,
+.code-line-number {
+  transition: 
+    background-color var(--cb-transition-normal),
+    border-color var(--cb-transition-normal),
+    color var(--cb-transition-normal),
+    box-shadow var(--cb-transition-normal);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .code-block,
+  .code-copy-btn,
+  .code-language-tag,
+  .code-line-number {
+    animation: none !important;
+    transition: opacity var(--cb-transition-fast) !important;
+  }
+  
+  .code-copy-ripple {
+    display: none;
+  }
+  
+  .code-copy-icon,
+  .code-line-indicator {
+    transition: none !important;
+  }
+  
+  .code-line-number::before {
+    display: none;
+  }
+}

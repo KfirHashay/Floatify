@@ -29,14 +29,20 @@ export interface OverlayCard {
     autoDismiss?: boolean;
 
     /**
+     * Duration in milliseconds before auto-dismissing this specific card.
+     * Overrides the global autoDismissTimeout setting.
+     */
+    autoDismissDuration?: number;
+
+    /**
      * Optional timestamp or numeric marker for sorting/analytics.
      */
     timestamp?: number;
 
     /**
-     * Optional visual icon element to display with the card.
+     * Optional icon used when the channel displays the card as a bubble.
      */
-    icon?: ReactNode;
+    bubbleIcon?: ReactNode;
 
     /**
      * Future expansion: place icons, images, or other metadata here.

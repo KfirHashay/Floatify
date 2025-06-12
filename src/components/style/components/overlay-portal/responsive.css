@@ -1,0 +1,44 @@
+/* =====================================================
+   🌟 Overlay Portal – Responsive (<480 px)
+   ===================================================== */
+@media (max-width: 480px) {
+  /* stack children vertically */
+  .overlay-styled .overlay-multiple-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* --------- Top-center variants --------- */
+  .overlay-styled
+    .overlay-portal:is(
+      [class*="--top"],
+      [class*="--center"],
+      [class*="--left"],
+      [class*="--right"]
+    ),
+  .overlay-styled
+    .overlay-multiple-container:is(
+      [class*="--top"],
+      [class*="--center"],
+      [class*="--left"],
+      [class*="--right"]
+    ) {
+    top: var(--di-top-offset);
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  /* --------- Bottom-center variants --------- */
+  .overlay-styled
+    .overlay-portal[class*="--bottom"],
+  .overlay-styled
+    .overlay-multiple-container[class*="--bottom"] {
+    bottom: var(--di-bottom-offset);
+    top: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+}

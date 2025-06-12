@@ -17,7 +17,8 @@ export type OverlayState =
     | 'alert'
     | 'swiping'
     | 'loading'
-    | 'icon';
+    | 'split'
+    | 'bubble';
 
 /**
  * Channel represents a distinct data stream in the overlay system

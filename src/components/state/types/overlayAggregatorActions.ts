@@ -42,7 +42,7 @@ export type OverlayAggregatorAction =
     /**
      * Update the overlay state of a channel.
      * Supported states: 'hidden', 'collapsed', 'expanded', 'alert',
-     * 'swiping', 'loading', and 'icon'.
+     * 'swiping', 'loading', 'split', and 'bubble'.
      */
     | {
           type: 'UPDATE_CHANNEL_STATE';

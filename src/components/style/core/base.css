@@ -1,76 +1,84 @@
-/* =======================================================
-   🏗️ Base Styles for Overlay Library
-   - Provides default layout & structure
-   - Ensures consistent positioning for overlays
-   - Establishes a scalable foundation for spacing & alignment
-========================================================== */
+/* =====================================================
+   🏗️  Overlay Library · Base Layer
+   - Token-driven, zero-bloat foundation
+   - No theming / animation here — lives in component & state layers
+   ===================================================== */
 
-/* 🌍 Global Styles for the Overlay Library */
+/* ---------- Root ---------- */
 :where(.overlay-library) {
-    font-family: var(--overlay-font-family);
-    line-height: 1.5;
-    font-size: var(--overlay-font-size-md);
-    color: var(--overlay-text-color);
+  /* design-tokens fallbacks for safety */
+  --_font-family: var(--overlay-font-family, system-ui, sans-serif);
+  --_font-size   : var(--overlay-font-size-md, 14px);
+  --_text-color  : var(--overlay-text-color, currentColor);
+
+  font: var(--_font-size)/1.5 var(--_font-family);
+  color: var(--_text-color);
 }
 
-/* 🎯 Default Layout for Overlay Components */
+/* ---------- Fixed container that hosts islands / stacks ---------- */
 :where(.overlay-library .overlay-container) {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-    max-width: 90vw;
-    z-index: var(--overlay-z-index);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--overlay-gap-md);
-    padding: var(--overlay-padding-md);
+  position: fixed;
+  inset-block-start: 0;          /* logical top */
+  inset-inline-start: 50%;       /* logical left + centre */
+  transform: translateX(-50%);
+
+  z-index: var(--overlay-z-index, 9999);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--overlay-gap-md, 12px);
+  padding: var(--overlay-padding-md, 8px);
+
+  width: auto;
+  max-inline-size: 90vw;         /* replaces max-width */
 }
 
-/* 📏 General Spacing & Alignment */
+/* ---------- Layout helpers ---------- */
 :where(.overlay-library .overlay-flex) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--overlay-gap-sm);
+  display: flex;
+  place-content: center;
+  place-items:   center;
+  gap: var(--overlay-gap-sm, 6px);
 }
 
 :where(.overlay-library .overlay-grid) {
-    display: grid;
-    gap: var(--overlay-gap-md);
+  display: grid;
+  gap: var(--overlay-gap-md, 12px);
 }
 
-/* 🎭 Visibility Utilities */
-:where(.overlay-library .overlay-hidden) {
-    display: none !important;
-}
+/* ---------- Visibility utilities ---------- */
+:where(.overlay-library .is-hidden)  { display: none }
+:where(.overlay-library .is-visible) { display: block }
 
-:where(.overlay-library .overlay-visible) {
-    display: block !important;
-}
-
-/* 🚀 Overflow Handling */
+/* ---------- Scroll area ---------- */
 :where(.overlay-library .overlay-scroll) {
-    overflow: auto;
-    max-height: 80vh;
+  overflow: auto;
+  max-block-size: 80vh;          /* logical height */
 }
 
-/* 🛑 Focus & Interaction */
-:where(.overlay-library button, .overlay-library input, .overlay-library select) {
-    cursor: pointer;
+/* ---------- Focus ring (a11y) ---------- */
+:where(.overlay-library
+       button,
+       input,
+       select,
+       textarea) {
+  cursor: pointer;
 }
 
-:where(.overlay-library button:focus, .overlay-library input:focus) {
-    outline: 2px solid var(--overlay-primary-color);
-    outline-offset: 2px;
+:where(.overlay-library
+       button:focus-visible,
+       input:focus-visible,
+       select:focus-visible,
+       textarea:focus-visible) {
+  outline: 2px solid var(--overlay-primary-color, #007aff);
+  outline-offset: 2px;
 }
 
-/* 🖥️ Responsive Behavior */
+/* ---------- Mobile tweaks ---------- */
 @media (max-width: 768px) {
-    :where(.overlay-library .overlay-container) {
-        width: 95vw;
-        padding: var(--overlay-padding-sm);
-    }
+  :where(.overlay-library .overlay-container) {
+    max-inline-size: 95vw;
+    padding: var(--overlay-padding-sm, 4px);
+  }
 }

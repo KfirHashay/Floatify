@@ -1,57 +1,105 @@
-/* =======================================================
-   🔄 Overlay State Styles
-   - Manages how the overlay appears in different states
-========================================================== */
+/* =====================================================
+   🔄 Overlay Card · State Layer (lean edition)
+   ===================================================== */
 
-/* 🔹 Expanded State */
-.overlay-styled .overlay-card--expanded {
-    border-radius: var(--di-expanded-radius, 32px);
-    backdrop-filter: blur(calc(var(--di-glass-blur, 12px) * 1.2));
-    -webkit-backdrop-filter: blur(calc(var(--di-glass-blur, 12px) * 1.2));
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
-    visibility: visible;
-    opacity: 1;
-    transition: width var(--di-duration-normal) var(--di-transition-timing), height var(--di-duration-normal) var(--di-transition-timing),
-        transform var(--di-duration-normal) var(--di-transition-timing), opacity var(--di-duration-fast) ease-out, visibility 0s linear;
+/* ---------- Base card ---------- */
+:where(.overlay-styled .overlay-card) {
+  /* one source of truth for core transition */
+  transition:
+    transform var(--di-duration-normal, .4s) var(--di-transition-timing, cubic-bezier(.4,0,.2,1)),
+    opacity   var(--di-duration-fast,   .2s) ease-out,
+    visibility 0s linear;
 }
 
-/* 🔹 Compact State (Default) */
-.overlay-styled .overlay-card--collapsed {
-    border-radius: calc(var(--overlay-collapsed-height, 36px) / 2);
+/* ---------- Expanded ---------- */
+:where(.overlay-styled .overlay-card--expanded) {
+  border-radius: var(--di-expanded-radius, 32px);
+  backdrop-filter: blur(calc(var(--di-glass-blur, 12px) * 1.2));
+  -webkit-backdrop-filter: blur(calc(var(--di-glass-blur, 12px) * 1.2));
+  box-shadow: 0 12px 36px rgba(0, 0, 0, .2);
+}
+
+/* ---------- Collapsed (default) ---------- */
+:where(.overlay-styled .overlay-card--collapsed) {
+  border-radius: calc(var(--overlay-collapsed-height, 36px) / 2);
+}
+
+/* ---------- Hidden ---------- */
+:where(.overlay-styled .overlay-card--hidden) {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-100%);
+  inline-size : var(--overlay-collapsed-width, 120px);
+  block-size  : var(--overlay-collapsed-height, 36px);
+  transition:                                         /* delayed visibility hide */
+    opacity     var(--di-duration-fast, .2s)   ease-out,
+    transform   var(--di-duration-normal, .4s) ease-out,
+    visibility  0s linear var(--di-duration-normal, .4s);
+}
+
+/* ---------- Alert ---------- */
+:where(.overlay-styled .overlay-card--alert) {
+  inline-size : var(--overlay-collapsed-width ,120px);
+  block-size  : var(--overlay-collapsed-height, 36px);
+  border-radius: calc(var(--overlay-collapsed-height, 36px) / 2);
+  background  : var(--di-alert-bg, rgba(255,69,58,.95));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  animation: alert-pulse 2s infinite ease-in-out;
+}
+
+/* ---------- Bubble ---------- */
+:where(.overlay-styled .overlay-card--bubble) {
+  --_bubble-size: var(--overlay-collapsed-height, 36px);
+  inline-size : var(--_bubble-size);
+  block-size  : var(--_bubble-size);
+  border-radius: 50%;
+  display: flex;
+  place-content: center;
+  padding: var(--overlay-padding-sm, 4px);
+}
+
+/* ---------- Split Layout ---------- */
+:where(.overlay-styled .overlay-card--split) {
+  display: flex;
+  align-items: center;
+  gap: var(--overlay-gap-sm, 6px);
+}
+
+:where(.overlay-styled .overlay-card-split-bubble) {
+  --_bubble-size: var(--overlay-collapsed-height, 36px);
+  inline-size : var(--_bubble-size);
+  block-size  : var(--_bubble-size);
+  border-radius: 50%;
+  display: flex;
+  place-content: center;
+  transition: transform var(--di-duration-normal, .4s) var(--di-spring-timing, cubic-bezier(.34,1.56,.64,1));
+}
+
+:where(.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble) {
+  transform: scale(0);
+}
+
+/* ---------- Motion safety ---------- */
+@media (prefers-reduced-motion: reduce) {
+  :where(.overlay-styled .overlay-card-split-bubble),
+  :where(.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble) {
+    transition: none;
     transform: none;
-    visibility: visible;
-    opacity: 1;
-    transition: width var(--di-duration-normal) var(--di-transition-timing), height var(--di-duration-normal) var(--di-transition-timing),
-        transform var(--di-duration-normal) var(--di-transition-timing), opacity var(--di-duration-fast) ease-out, visibility 0s linear;
+  }
 }
 
-/* 🔹 Hidden State */
-.overlay-styled .overlay-card--hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(-100%);
-    width: var(--overlay-collapsed-width, 120px);
-    height: var(--overlay-collapsed-height, 36px);
-    transition: opacity var(--di-duration-fast) ease-out, transform var(--di-duration-normal) ease-out, visibility 0s linear var(--di-duration-normal);
+/* ---------- Mobile tweak ---------- */
+@media (max-width: 480px) {
+  :where(.overlay-styled .overlay-card--bubble,
+         .overlay-styled .overlay-card-split-bubble) {
+    --_bubble-size: calc(var(--overlay-collapsed-height, 36px) - 4px);
+  }
 }
 
-/* 🔹 Alert State */
-.overlay-styled .overlay-card--alert {
-    width: var(--overlay-collapsed-width, 120px);
-    height: var(--overlay-collapsed-height, 36px);
-    border-radius: calc(var(--overlay-collapsed-height, 36px) / 2);
-    background-color: var(--di-alert-bg, rgba(255, 69, 58, 0.95));
-    transform: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    animation: alert-pulse 2s infinite ease-in-out;
-    visibility: visible;
-    opacity: 1;
-}
-
-/* 🔹 Enhanced Focus States for Accessibility */
-.overlay-styled .overlay-card:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px var(--di-focus-ring, rgba(0, 122, 255, 0.8));
+/* ---------- Focus ring ---------- */
+:where(.overlay-styled .overlay-card:focus-visible) {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--di-focus-ring, rgba(0,122,255,.8));
 }

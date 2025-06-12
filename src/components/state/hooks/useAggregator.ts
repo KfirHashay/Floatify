@@ -35,7 +35,7 @@ export default function useAggregator() {
         throw new Error('useAggregator must be used within an AggregatorProvider');
     }
 
-    const { state, dispatch } = context;
+    const { state, dispatch, config } = context;
 
     // ----- CHANNEL LIFECYCLE -----
 
@@ -77,7 +77,8 @@ export default function useAggregator() {
     // ----- CHANNEL STATE -----
 
     /**
-     * Updates a channel's overlay state (e.g., 'collapsed', 'expanded', 'alert').
+     * Updates a channel's overlay state (e.g., 'collapsed', 'expanded', 'alert',
+     * 'split', 'bubble').
      * @param channelId Channel to update.
      * @param newState The new overlay state.
      */
@@ -216,5 +217,6 @@ export default function useAggregator() {
         getChannel,
         getActiveChannel,
         getActiveCard,
+        config,
     };
 }
