@@ -21,11 +21,7 @@
   gap          : var(--overlay-gap-sm, 6px);
   padding      : var(--overlay-padding-md, 12px);
 
-  /* Transform baseline */
-  transform-origin: center;
-
-  /* GPU hint – applied only while animating via JS */
-  will-change: transform, opacity;
+  /* Transform baseline removed */
 }
 
 /* ---------- Content wrapper ---------- */
