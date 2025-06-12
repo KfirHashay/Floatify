@@ -1,4 +1,4 @@
-import { useReducedMotion, type Variant } from 'motion';
+import { useReducedMotion, type Variant } from 'motion/react';
 
 export function prefersReducedMotion(): boolean {
     const shouldReduceMotion = useReducedMotion();
