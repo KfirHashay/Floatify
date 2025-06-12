@@ -19,7 +19,7 @@
   z-index: var(--di-z-index, 9999);
 
   /* Animations */
-  transition: var(--di-overlay-transition);
+  /* Transition removed */
   will-change: transform, opacity;
   contain: paint;      
 }

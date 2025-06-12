@@ -6,7 +6,7 @@
 
 .overlay-styled .overlay-portal {
     transform-origin: center;
-    transition: transform var(--di-duration-fast) var(--di-ease-out);
+    /* Transition removed */
 }
 
 /* === STATES === */
@@ -44,10 +44,7 @@
     opacity: 0;
     visibility: hidden;
     transform: scale(0.8);
-    transition:
-        opacity var(--di-duration-fast) var(--di-ease-out),
-        transform var(--di-duration-fast) var(--di-ease-out),
-        visibility 0s linear var(--di-duration-fast);
+    /* Transition removed */
 }
 
 /* Hide empty portals */
@@ -58,9 +55,9 @@
 
 /* Swipe animation states */
 .overlay-styled .overlay-container[data-direction='next'] {
-    animation: slide-left var(--di-duration-fast) var(--di-ease-out) forwards;
+    /* Animation removed */
 }
 
 .overlay-styled .overlay-container[data-direction='prev'] {
-    animation: slide-right var(--di-duration-fast) var(--di-ease-out) forwards;
+    /* Animation removed */
 }

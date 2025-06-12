@@ -20,7 +20,7 @@
   -webkit-backdrop-filter: blur(var(--di-glass-blur, 20px));
 
   block-size: var(--overlay-collapsed-height, 44px);
-  transition: var(--di-overlay-transition);
+  /* Transition removed */
 }
 
 /* ---------- Stand‑alone bubble (clickable) ---------- */
@@ -40,7 +40,7 @@
   -webkit-backdrop-filter: blur(var(--di-glass-blur, 20px));
 
   cursor: pointer;
-  transition: var(--di-overlay-transition);
+  /* Transition removed */
 }
 
 /* ---------- Loading spinner ---------- */
@@ -50,7 +50,7 @@
   border: 2px solid rgba(255,255,255,.3);
   border-inline-start-color: #fff;   /* top in LTR / right in RTL */
   border-radius: 50%;
-  animation: di-rotate 1s linear infinite;
+  /* Animation removed */
 }
 
 /* ---------- Generic action button ---------- */
@@ -66,7 +66,7 @@
   background: rgba(255,255,255,.10);
   border: 1px solid rgba(255,255,255,.20);
   color: #fff;
-  transition: transform 200ms var(--di-spring-timing-subtle);
+  /* Transition removed */
 }
 
 /* ---------- Specific actions (remove / swipe) ---------- */
