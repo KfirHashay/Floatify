@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Code, Database, Settings, Github, ExternalLink } from 'lucide-react';
+import { Book, Code, Database, Settings, Github, ExternalLink, Sparkles, Zap, Users, Globe } from 'lucide-react';
 import { motion } from 'motion/react';
 import PageHeader from '../components/PageHeader';
 import APITopNavigation from '../components/APITopNavigation';
@@ -292,7 +292,7 @@ export default function APIReference() {
 
   return (
     <div className="api-reference">
-      {/* Reusable Page Header */}
+      {/* Enhanced Page Header */}
       <PageHeader
         title="API Reference"
         subtitle="Complete documentation for all Floatify components, hooks, and types with examples."
@@ -314,11 +314,56 @@ export default function APIReference() {
         }
       />
 
+      {/* API Overview Section */}
+      <motion.section 
+        className="api-overview"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+      >
+        <div className="api-overview-content">
+          <div className="api-overview-text">
+            <h2>Developer-First API Design</h2>
+            <p>
+              Floatify provides a clean, intuitive API that follows React best practices. 
+              Built with TypeScript from the ground up for excellent developer experience.
+            </p>
+          </div>
+          
+          <div className="api-overview-stats">
+            {[
+              { icon: <Code size={20} />, label: 'Components', count: '4+', color: 'var(--accent-primary)' },
+              { icon: <Settings size={20} />, label: 'Hooks', count: '6+', color: 'var(--success)' },
+              { icon: <Database size={20} />, label: 'Types', count: '12+', color: 'var(--warning)' },
+              { icon: <Zap size={20} />, label: 'Methods', count: '20+', color: 'var(--error)' }
+            ].map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                className="api-stat-card"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                whileHover={{ scale: 1.05, y: -4 }}
+                style={{ '--stat-color': stat.color } as React.CSSProperties}
+              >
+                <div className="api-stat-icon">
+                  {stat.icon}
+                </div>
+                <div className="api-stat-content">
+                  <div className="api-stat-count">{stat.count}</div>
+                  <div className="api-stat-label">{stat.label}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
       {/* Top Navigation */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
       >
         <APITopNavigation 
           sections={apiSections}
@@ -332,7 +377,7 @@ export default function APIReference() {
         className="api-main"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
       >
         <div className="api-sections">
           {apiSections.map((section, index) => (
@@ -340,7 +385,7 @@ export default function APIReference() {
               key={section.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+              transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
             >
               <APISection
                 id={section.id}
@@ -356,41 +401,153 @@ export default function APIReference() {
           ))}
         </div>
 
-        {/* TypeScript Usage Guide */}
+        {/* Enhanced TypeScript Guide */}
         <motion.section 
           className="api-typescript-guide"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <div className="api-guide-header">
-            <h2>TypeScript Usage</h2>
-            <p>Floatify is built with TypeScript and provides full type safety out of the box.</p>
+          <div className="api-guide-hero">
+            <div className="api-guide-icon">
+              <Sparkles size={32} />
+            </div>
+            <div className="api-guide-content">
+              <h2>TypeScript First</h2>
+              <p>
+                Floatify is built with TypeScript and provides full type safety out of the box.
+                Get IntelliSense, auto-completion, and compile-time error checking.
+              </p>
+            </div>
           </div>
           
-          <div className="api-guide-content">
+          <div className="api-guide-features">
+            {[
+              {
+                icon: <Zap size={20} />,
+                title: 'Auto-completion',
+                description: 'Full IntelliSense support in VS Code and other editors'
+              },
+              {
+                icon: <Users size={20} />,
+                title: 'Type Safety',
+                description: 'Catch errors at compile time, not runtime'
+              },
+              {
+                icon: <Globe size={20} />,
+                title: 'Documentation',
+                description: 'JSDoc comments provide inline documentation'
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                className="api-guide-feature"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.9 + index * 0.1 }}
+                whileHover={{ x: 4 }}
+              >
+                <div className="api-guide-feature-icon">
+                  {feature.icon}
+                </div>
+                <div className="api-guide-feature-content">
+                  <h3>{feature.title}</h3>
+                  <p>{feature.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="api-guide-code">
             <CodeBlock
               code={`import { 
   Floatify, 
   useAggregator, 
   type OverlayCard, 
   type OverlayState 
-} from 'floatify';`}
+} from 'floatify';
+
+// Full type safety and IntelliSense
+const { addCard } = useAggregator();
+
+const card: OverlayCard = {
+  id: 'welcome',
+  title: 'Welcome!',
+  content: 'Thanks for trying Floatify',
+  autoDismiss: true,
+  autoDismissDuration: 3000
+};
+
+addCard('notifications', card);`}
               language="typescript"
-              title="Import Types"
+              title="TypeScript Example"
               showLineNumbers={true}
               enableCopy={true}
               showLanguage={true}
             />
+          </div>
+        </motion.section>
 
-            <div className="api-guide-tips">
-              <h3>Pro Tips</h3>
-              <ul>
-                <li>All interfaces are exported as types for better tree-shaking</li>
-                <li>Use TypeScript's strict mode for the best development experience</li>
-                <li>The library provides comprehensive JSDoc comments for IntelliSense</li>
-                <li>Generic types are available for custom card data structures</li>
-              </ul>
+        {/* Getting Started Section */}
+        <motion.section 
+          className="api-getting-started"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.0 }}
+        >
+          <div className="api-getting-started-content">
+            <div className="api-getting-started-text">
+              <h2>Ready to Get Started?</h2>
+              <p>
+                Jump into the examples to see Floatify in action, or check out the GitHub repository 
+                for installation instructions and more detailed documentation.
+              </p>
+              
+              <div className="api-getting-started-actions">
+                <Button
+                  as="a"
+                  href="/examples"
+                  variant="primary"
+                  size="lg"
+                  rightIcon={<Sparkles size={16} />}
+                  enhanced
+                >
+                  View Examples
+                </Button>
+                <Button
+                  as="a"
+                  href="https://github.com/yourusername/floatify"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="secondary"
+                  size="lg"
+                  leftIcon={<Github size={16} />}
+                  enhanced
+                >
+                  GitHub Repository
+                </Button>
+              </div>
+            </div>
+            
+            <div className="api-getting-started-quick">
+              <h3>Quick Start</h3>
+              <CodeBlock
+                code={`npm install floatify
+
+import { Floatify } from 'floatify';
+
+function App() {
+  return (
+    <Floatify>
+      {/* Your app */}
+    </Floatify>
+  );
+}`}
+                language="bash"
+                showLineNumbers={false}
+                enableCopy={true}
+                showLanguage={false}
+              />
             </div>
           </div>
         </motion.section>
