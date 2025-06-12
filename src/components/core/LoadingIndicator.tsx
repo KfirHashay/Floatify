@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from "motion/react";
 import '../style/components/loading-indicator.css';
-import { prefersReducedMotion } from '../../motion/utils';
+import { prefersReducedMotion } from '../../motion';
 
 export default function LoadingIndicator() {
     const reduceMotion = prefersReducedMotion();
