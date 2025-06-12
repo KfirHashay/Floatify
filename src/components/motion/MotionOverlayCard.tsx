@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion';
+import { motion } from "motion/react";
 import useAggregator from '../state/hooks/useAggregator';
 import { OverlayCard } from '../core/card/OverlayCard';
 import type { OverlayCard as OverlayCardType } from '../state/types';

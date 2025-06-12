@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'motion';
+import { motion } from "motion/react"
 import { OverlayPortal, OverlayPortalProps } from '../core/portal';
 
 function usePrefersReducedMotion() {
