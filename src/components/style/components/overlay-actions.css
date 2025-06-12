@@ -20,13 +20,9 @@
   font-size: 18px;
   padding: var(--overlay-padding-sm, 8px);
   cursor: pointer;
-  transition: opacity var(--di-duration-fast, 200ms) var(--di-ease-out);
 }
 
 @media (hover:hover) and (pointer:fine) {
-  :where(.overlay-styled .overlay-card-remove:hover) {
-    opacity: .7;
-  }
 }
 
 /* ---------- Swipe buttons (prev / next) ---------- */
@@ -38,14 +34,9 @@
   padding: var(--overlay-padding-sm, 8px) var(--overlay-padding-md, 12px);
   border-radius: var(--di-border-radius);
   cursor: pointer;
-  transition: background var(--di-duration-fast, 200ms) var(--di-ease-out);
 }
 
 @media (hover:hover) and (pointer:fine) {
-  :where(.overlay-styled .overlay-card-swipe-prev:hover,
-         .overlay-styled .overlay-card-swipe-next:hover) {
-    background: var(--overlay-secondary-color);
-  }
 }
 
 :where(.overlay-styled .overlay-card-swipe-prev:disabled,

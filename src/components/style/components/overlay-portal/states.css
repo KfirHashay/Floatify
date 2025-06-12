@@ -11,39 +11,26 @@
 
 /* === STATES === */
 .overlay-styled .overlay-portal[data-state='expanded'] {
-    transform: scale(var(--di-scale-expanded));
-    --di-scale-current: var(--di-scale-expanded);
     border-radius: var(--di-border-radius);
 }
 
 .overlay-styled .overlay-portal[data-state='collapsed'] {
-    transform: scale(var(--di-scale-collapsed));
-    --di-scale-current: var(--di-scale-collapsed);
     border-radius: calc(var(--overlay-collapsed-height) / 2);
 }
 
 .overlay-styled .overlay-portal[data-state='loading'],
 .overlay-styled .overlay-portal[data-state='bubble'] {
-    width: var(--overlay-collapsed-height);
-    height: var(--overlay-collapsed-height);
     border-radius: 50%;
-    transform: scale(var(--di-scale-collapsed));
-    --di-scale-current: var(--di-scale-collapsed);
 }
 
 .overlay-styled .overlay-portal[data-state='split'] {
-    width: calc(var(--overlay-collapsed-width) + var(--overlay-collapsed-height) + var(--overlay-gap-sm));
-    height: var(--overlay-collapsed-height);
     border-radius: calc(var(--overlay-collapsed-height) / 2);
-    transform: scale(var(--di-scale-collapsed));
-    --di-scale-current: var(--di-scale-collapsed);
 }
 
 /* Hidden state */
 .overlay-styled .overlay-portal[data-hidden='true'] {
     opacity: 0;
     visibility: hidden;
-    transform: scale(0.8);
     /* Transition removed */
 }
 

@@ -7,22 +7,13 @@
 
 @media (max-width: 576px) {
   /* Expanded card fills most of the viewport width on phones */
-  :where(.overlay-styled .overlay-card--expanded) {
-    inline-size: 95vw;
-    max-block-size: 80vh;
-  }
+  :where(.overlay-styled .overlay-card--expanded) {}
 
   /* Icon downsizing */
-  :where(.overlay-styled .overlay-card-icon) {
-    inline-size: 16px;
-    block-size : 16px;
-  }
+  :where(.overlay-styled .overlay-card-icon) {}
 
   /* Bubble (remove / swipe) touch targets */
-  :where(.overlay-styled .overlay-card-bubble) {
-    inline-size: calc(var(--overlay-collapsed-height, 44px) - 4px);
-    block-size : calc(var(--overlay-collapsed-height, 44px) - 4px);
-  }
+  :where(.overlay-styled .overlay-card-bubble) {}
 
   /* Split variant – tighter gap */
   :where(.overlay-styled .overlay-card--split) {

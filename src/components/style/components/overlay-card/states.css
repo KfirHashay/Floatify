@@ -8,8 +8,6 @@
 /* ---------- Loading (circular) ---------- */
 :where(.overlay-styled .overlay-card--loading) {
   /* square bubble */
-  inline-size : var(--overlay-collapsed-height, 44px);
-  block-size  : var(--overlay-collapsed-height, 44px);
   border-radius: 50%;
   display: flex;
   place-content: center;
@@ -18,8 +16,6 @@
 
 /* ---------- Collapsed (pill) ---------- */
 :where(.overlay-styled .overlay-card--collapsed) {
-  inline-size : var(--overlay-collapsed-width, 160px);
-  block-size  : var(--overlay-collapsed-height, 44px);
   border-radius: calc(var(--overlay-collapsed-height, 44px) / 2);
   padding: var(--overlay-padding-sm, 8px) var(--overlay-padding-md, 12px);
   transform-origin: center;
@@ -27,8 +23,6 @@
 
 /* ---------- Bubble ---------- */
 :where(.overlay-styled .overlay-card--bubble) {
-  inline-size : var(--overlay-collapsed-height, 44px);
-  block-size  : var(--overlay-collapsed-height, 44px);
   border-radius: 50%;
   display: flex;
   place-content: center;
@@ -37,8 +31,6 @@
 
 /* ---------- Split (pill + bubble) ---------- */
 :where(.overlay-styled .overlay-card--split) {
-  inline-size : calc(var(--overlay-collapsed-width, 160px) + var(--overlay-collapsed-height, 44px) + var(--overlay-gap-sm, 6px));
-  block-size  : var(--overlay-collapsed-height, 44px);
   border-radius: calc(var(--overlay-collapsed-height, 44px) / 2);
   padding: var(--overlay-padding-sm, 8px) var(--overlay-padding-md, 12px);
   gap: var(--overlay-gap-md, 10px);
@@ -47,9 +39,6 @@
 
 /* ---------- Expanded (card) ---------- */
 :where(.overlay-styled .overlay-card--expanded) {
-  inline-size : var(--overlay-expanded-width, 400px);
-  min-block-size: var(--overlay-expanded-height, 160px);
-  max-block-size: min(80vh, calc(var(--overlay-expanded-height,160px) * 2));
   padding: var(--overlay-padding-lg, 16px);
   flex-direction: column;
   justify-content: space-between;
@@ -79,7 +68,6 @@
 :where(.overlay-styled .overlay-card--expanded .overlay-card-body) {
   opacity: 1;
   overflow-y: auto;
-  max-block-size: min(60vh, calc(var(--overlay-expanded-height,160px) * 2));
   width: 100%;
   white-space: normal;
   margin: var(--overlay-gap-sm, 6px) 0;
@@ -108,12 +96,5 @@
 }
 
 /* ---------- Split bubble hover (already in interactions but required for motion safety) ---------- */
-:where(.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble) {
-  transform: scale(0);
-}
 
 /* ---------- Loading spinner icon size ---------- */
-:where(.overlay-styled .overlay-card--loading .overlay-card-icon) {
-  inline-size: 24px;
-  block-size : 24px;
-}

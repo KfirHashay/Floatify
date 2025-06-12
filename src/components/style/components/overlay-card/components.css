@@ -19,15 +19,12 @@
   backdrop-filter: blur(var(--di-glass-blur, 20px));
   -webkit-backdrop-filter: blur(var(--di-glass-blur, 20px));
 
-  block-size: var(--overlay-collapsed-height, 44px);
   /* Transition removed */
 }
 
 /* ---------- Stand‑alone bubble (clickable) ---------- */
 :where(.overlay-styled .overlay-card-bubble) {
   --_size: var(--overlay-collapsed-height, 44px);
-  inline-size: var(--_size);
-  block-size : var(--_size);
   border-radius: 50%;
   display: grid;
   place-content: center;
@@ -45,8 +42,6 @@
 
 /* ---------- Loading spinner ---------- */
 :where(.overlay-styled .overlay-card-spinner) {
-  inline-size: 18px;
-  block-size : 18px;
   border: 2px solid rgba(255,255,255,.3);
   border-inline-start-color: #fff;   /* top in LTR / right in RTL */
   border-radius: 50%;
@@ -56,8 +51,6 @@
 /* ---------- Generic action button ---------- */
 :where(.overlay-styled .overlay-card-button) {
   --_btn-size: var(--overlay-btn-size, 36px);
-  inline-size: var(--_btn-size);
-  block-size : var(--_btn-size);
   display: grid;
   place-content: center;
   border-radius: 50%;

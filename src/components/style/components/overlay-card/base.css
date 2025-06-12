@@ -21,12 +21,8 @@
   gap          : var(--overlay-gap-sm, 6px);
   padding      : var(--overlay-padding-md, 12px);
 
-  /* Transform baseline (collapsed scale) */
+  /* Transform baseline */
   transform-origin: center;
-  transform       : scale(var(--di-scale-collapsed));
-  --di-scale-current: var(--di-scale-collapsed);
-
-  /* Transition removed */
 
   /* GPU hint – applied only while animating via JS */
   will-change: transform, opacity;
