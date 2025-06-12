@@ -61,14 +61,6 @@
 }
 
 
-/* ---------- Motion safety ---------- */
-@media (prefers-reduced-motion: reduce) {
-  :where(.overlay-styled .overlay-card-split-bubble),
-  :where(.overlay-styled .overlay-card--split:hover .overlay-card-split-bubble) {
-    transition: none;
-    transform: none;
-  }
-}
 
 /* ---------- Mobile tweak ---------- */
 @media (max-width: 480px) {
