@@ -70,6 +70,7 @@ function App() {
 `floatify` installs the `motion` dependency automatically. Import
 the Motion components to animate overlays:
 
+
 ```tsx
 import { MotionOverlayPortal, MotionOverlayCard } from 'floatify';
 
@@ -78,6 +79,33 @@ import { MotionOverlayPortal, MotionOverlayCard } from 'floatify';
 
 // When rendering cards directly
 <MotionOverlayCard channelId="alerts" card={card} />
+```
+
+### Motion Gesture Helpers
+
+Compose micro-interactions with helper functions that return `motion` props:
+
+```tsx
+import { motion } from 'motion/react';
+import { secondarySwipe, longPressPulse } from 'floatify';
+
+const gestures = { ...secondarySwipe(), ...longPressPulse() };
+
+<motion.button {...gestures}>Swipe or hold me</motion.button>
+```
+
+`MotionOverlayCard` also exposes callbacks for gesture actions:
+
+```tsx
+<MotionOverlayCard
+  channelId="alerts"
+  card={card}
+  swipeActionLeft={() => console.log('Swiped left')}
+  swipeActionRight={() => console.log('Swiped right')}
+  onSwipeSecondary={() => console.log('Secondary swipe')}
+  onLongPressAction={() => console.log('Long press')}
+  onDoubleClickAction={() => console.log('Double click')}
+/>
 ```
 
 ### Custom Portal Root
