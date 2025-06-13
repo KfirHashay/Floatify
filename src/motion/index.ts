@@ -23,3 +23,12 @@ export {
     secondarySwipe,
     longPressPulse,
 } from './gestures';
+
+export type {
+    HoverExpandProps,
+    TapToggleProps,
+    BounceProps,
+    InertiaDismissProps,
+    SecondarySwipeProps,
+    LongPressPulseProps,
+} from './gestures';
